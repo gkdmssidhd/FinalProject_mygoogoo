@@ -1,17 +1,48 @@
-
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5 ">
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Spring Security Example</title>
-</head>
-<body>
-<h1>Welcome!</h1>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<p>Click <a th:href="@{/user}">user</a> to see a greeting.</p>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <style>
+        body {font-family: Arial, Helvetica, sans-serif; margin: 0;}
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+            padding: 0;
+        }
+        .container > .box{
+            text-align:center;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+<div class="container">
+    <p class="alert alert-info" th:if="${message}" th:text="${message}"></p>
+    <div class="box" th:if="${account != null}">
+        <h2 class="text-muted mb-4" th:text="${account?.nickname}+'님, 안녕하세요!'"></h2>
+        <form th:action="@{/log-out}" method="post">
+            <button type="submit" class="btn btn-info" style="width:auto;">log out</button>
+        </form>
+    </div>
+    <div class="box" th:if="${account == null}">
+        <h2 class="text-muted ">간단하게 구현해본 회원가입, 로그인</h2>
+        <p><small class="text-muted mb-4">Covered by, mygugu</small></p>
+        <a th:href="@{/join}" class="btn btn-lg btn-outline-primary">join</a>
+        <a th:href="@{/log-in}" class="btn btn-lg btn-outline-primary">login</a>
+    </div>
+</div>
+
+<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
 </body>
 </html>

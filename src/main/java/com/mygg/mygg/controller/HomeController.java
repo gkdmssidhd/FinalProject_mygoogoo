@@ -15,18 +15,8 @@ public class HomeController {
         return "home";
     }
     @GetMapping("/user")
-    public String dispUser(Model model){
+    public String User(Model model){
         log.info("home controller");
         return "/user/user";
-    }
-    @GetMapping("/manager")
-    public String dispManager(Model model){
-        log.info("home controller");
-        return "/user/manager";
-    }
-    @GetMapping("/admin")
-    public String dispAdmin(Model model){
-        log.info("home controller");
-        return "/user/admin";
     }
 }
