@@ -13,9 +13,9 @@
     <form th:action="@{/join}" th:object="${CreateUserForm}" method="post">
         <div class="mb-3">
             <label th:for="username" class="form-label"><b>Email address</b></label>
-            <input type="email" class="form-control" th:field="*{username}" placeholder="이메일을 입력하세요" aria-describedby="emailHelp">
+            <input type="email" class="form-control" th:field="*{email}" placeholder="이메일을 입력하세요" aria-describedby="emailHelp">
             <div id="emailHelp" class="form-text">이메일은 중복될 수 없습니다.</div>
-            <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">email Error</p>
+            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email Error</p>
         </div>
         <div class="mb-3">
             <label th:for="password"><b>Password</b></label>
