@@ -10,7 +10,7 @@
     <h1>Sign Up</h1>
     <p>Please fill in this form to create an account.</p>
     <hr>
-    <form th:action="@{/sign-up}" th:object="${CreateUserForm}" method="post">
+    <form th:action="@{/join}" th:object="${CreateUserForm}" method="post">
         <div class="mb-3">
             <label th:for="username" class="form-label"><b>Email address</b></label>
             <input type="email" class="form-control" th:field="*{username}" placeholder="이메일을 입력하세요" aria-describedby="emailHelp">
@@ -30,7 +30,7 @@
             <input type="checkbox" th:field="*{remember}" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label"  for="exampleCheck1">아이디 기억하기</label>
         </div>
-        <button type="submit" th:href="@{/sign-up}" class="btn btn-primary">Sign Up</button>
+        <button type="submit" th:href="@{/join}" class="btn btn-primary">Sign Up</button>
     </form>
 </div>
 

@@ -18,16 +18,15 @@ public class UserController {
     @GetMapping("/join")
     public String createUserForm(Model model) {
         model.addAttribute("userForm", new AccountForm());
-        return "/user/login/register";
+        return "/user/login/join";
     }
 
     @PostMapping("/join")
     public String createUser(AccountForm form, BindingResult result) {
         if(result.hasErrors()) {
-            return "/user/login/register";
+            return "/user/login/join";
         }
         accountService.createUser(form);
         return "redirect:/";
     }
 }
-
