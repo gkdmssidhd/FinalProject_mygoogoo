@@ -9,8 +9,8 @@ import java.util.Map;
 public interface NoticeRepository {
     List<Map<String,Object>> getNotices();   // 마이바티스와 직접 매핑되는 List불러오기
     Map<String,Object> getNotice(int board_id);
-    int insertNotice();
-    int updateNotice();
+    int insertNotice(Map<String,String> writedValue);
+    int updateNotice(Map<String,String> updatedValue);
     int deleteNotice();
     List<Map<String,Object>> searchNotices();
 

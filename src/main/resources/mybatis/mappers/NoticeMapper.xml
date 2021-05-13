@@ -12,7 +12,12 @@
         SELECT * FROM noticeBoard WHERE board_id= #{board_id};
     </select>
 
+    <insert id="insertNotice" parameterType="java.util.HashMap">
+        INSERT INTO noticeBoard(title,content,writer) VALUES(#{title},#{content},#{writer})
+    </insert>
 
-
+    <update id="updateNotice" parameterType="java.util.HashMap">
+        UPDATE noticeBoard SET title=#{title},content=#{content} WHERE board_id= #{board_id}
+    </update>
 
 </mapper>

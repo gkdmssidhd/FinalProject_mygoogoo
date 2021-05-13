@@ -15,24 +15,36 @@
   background: lightgray;
   height:1000px;
 }
+.ck-content{
+  min-height: 500px;
+}
+.title{
+  padding:10px
+}
 </style>
 <body>
 <div class="container">
-  <div class="form_items">
-    <div>
-      <input type="text" id="title">
+  <form action="" method="POST">
+    <div class="form_items">
+      <div class="title">
+        <input type="text" id="title" name="title" style="border:none; width:100%;">
+        <input type="hidden" name="writer" value="admin">
+      </div>
+      <div class="textarea">
+        <textarea name="content" id="editor" cols="30" rows="10"></textarea>
+      </div>
+      <div>
+        <input type="submit" class="submit" id="submit" value="제출">
+      </div>
     </div>
-    <div>
-      <textarea name=""content id="editor" cols="30" rows="10"></textarea>
-    </div>
-  </div>
+  </form>
 </div>
 <script>
   ClassicEditor
-  .create(document.getElementById('editor'))
-  .catch(error=>{
-    console.log(error);
-  })
+          .create(document.getElementById('editor'))
+          .catch(error => {
+            console.log(error);
+          });
 </script>
 </body>
 </html>

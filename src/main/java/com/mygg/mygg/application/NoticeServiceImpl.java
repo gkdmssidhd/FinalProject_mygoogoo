@@ -24,14 +24,15 @@ public class NoticeServiceImpl implements NoticeService{
     }
 
     @Override
-    public int insertNotice() {
-        return 0;
+    public int insertNotice(Map<String, String> writedValue) {
+        return noticeRepository.insertNotice(writedValue);
     }
 
     @Override
-    public int updateNotice() {
-        return 0;
+    public int updateNotice(Map<String, String> updatedValue) {
+        return noticeRepository.updateNotice(updatedValue);
     }
+
 
     @Override
     public int deleteNotice() {

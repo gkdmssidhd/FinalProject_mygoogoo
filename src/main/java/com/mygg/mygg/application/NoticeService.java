@@ -6,8 +6,8 @@ import java.util.Map;
 public interface NoticeService {
     List<Map<String,Object>> getNotices();
     Map<String,Object> getNotice(int board_id);
-    int insertNotice();
-    int updateNotice();
+    int insertNotice(Map<String,String> writedValue);
+    int updateNotice(Map<String,String> updatedValue);
     int deleteNotice();
     List<Map<String,Object>> searchNotices();
 

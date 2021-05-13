@@ -8,6 +8,7 @@
 <style>
 .table{
   border:1px solid;
+  width: 1000px;
 }
 thead{
   border-bottom: 1px solid gray;
@@ -23,8 +24,7 @@ thead{
     <thead>
       <tr>
         <th>No</th>
-        <th>Title</th>
-        <th>Content</th>
+        <th style="width:60%;">Title</th>
         <th>Wrtier</th>
         <th>Date</th>
       </tr>
@@ -32,8 +32,7 @@ thead{
     <tbody class="tbody" id="tbody"></tbody>
       <tr th:each="notice :${notices}" class="notice">
         <td th:text="${notice.board_id}" ></td>
-        <td style="width:150px;" ><a th:href="@{/notice/detail/{id}(id=${notice.board_id})}" th:text="${notice.title}"></a></td>
-        <td th:text="${notice.content}" style="width:400px" ></td>
+        <td  ><a th:href="@{/notice/detail/{id}(id=${notice.board_id})}" th:text="${notice.title}"></a></td>
         <td th:text="${notice.writer}" ></td>
         <td th:text="${notice.regdate}" ></td>
       </tr>
