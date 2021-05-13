@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<style>
+  .table{
+    border:1px solid;
+  }
+  thead{
+    border-bottom: 1px solid gray;
+  }
+  .notice{
+    border:1px solid;
+  }
+
+</style>
+<body>
+<div class="container">
+  <div th:text="${notice.title}"></div>
+  <div th:text="${notice.writer}"></div>
+  <div th:text="${notice.content}"></div>
+  <div th:text="${notice.regdate}"></div>
+</div>
+</body>
+</html>

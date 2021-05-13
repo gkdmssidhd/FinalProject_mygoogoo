@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mygg.mygg.domain.NoticeRepository">
+
+    <select id="getNotices" resultType="java.util.HashMap">
+        SELECT * FROM noticeBoard ORDER BY board_id DESC;
+    </select>
+
+    <select id="getNotice" resultType="java.util.HashMap" parameterType="int">
+        SELECT * FROM noticeBoard WHERE board_id= #{board_id};
+    </select>
+
+
+
+
+</mapper>

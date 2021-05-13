@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
+<style>
+.container{
+  display:flex;
+  justify-content: center;
+}
+.form_items{
+  width:1000px;
+  background: lightgray;
+  height:1000px;
+}
+</style>
+<body>
+<div class="container">
+  <div class="form_items">
+    <div>
+      <input type="text" id="title">
+    </div>
+    <div>
+      <textarea name=""content id="editor" cols="30" rows="10"></textarea>
+    </div>
+  </div>
+</div>
+<script>
+  ClassicEditor
+  .create(document.getElementById('editor'))
+  .catch(error=>{
+    console.log(error);
+  })
+</script>
+</body>
+</html>

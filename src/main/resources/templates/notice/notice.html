@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<style>
+.table{
+  border:1px solid;
+}
+thead{
+  border-bottom: 1px solid gray;
+}
+.notice{
+  border:1px solid;
+}
+
+</style>
+<body>
+<div class="container">
+  <table class="table" id="table">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Title</th>
+        <th>Content</th>
+        <th>Wrtier</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody class="tbody" id="tbody"></tbody>
+      <tr th:each="notice :${notices}" class="notice">
+        <td th:text="${notice.board_id}" ></td>
+        <td style="width:150px;" ><a th:href="@{/notice/detail/{id}(id=${notice.board_id})}" th:text="${notice.title}"></a></td>
+        <td th:text="${notice.content}" style="width:400px" ></td>
+        <td th:text="${notice.writer}" ></td>
+        <td th:text="${notice.regdate}" ></td>
+      </tr>
+  </table>
+  <div><input type="button" id="write" value="작성"></div>
+</div>
+<script>
+  const write_btn = document.getElementById('write');
+  write_btn.addEventListener('click', () => {
+    location.href = '/notice/write';
+  });
+
+</script>
+</body>
+</html>
