@@ -10,25 +10,47 @@
     <h1>Sign Up</h1>
     <p>Please fill in this form to create an account.</p>
     <hr>
-    <form th:action="@{/join}" th:object="${CreateUserForm}" method="post">
+    <form th:action="@{/join}" method="post">
         <div class="mb-3">
-            <label th:for="username" class="form-label"><b>Email address</b></label>
-            <input type="email" class="form-control" th:field="*{email}" placeholder="이메일을 입력하세요" aria-describedby="emailHelp">
-            <div id="emailHelp" class="form-text">이메일은 중복될 수 없습니다.</div>
-            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email Error</p>
+            <label th:for="email" class="form-label"><b>Email</b></label>
+            <input type="email" class="form-control" placeholder="이메일을 입력하세요" aria-describedby="emailHelp">
         </div>
         <div class="mb-3">
             <label th:for="password"><b>Password</b></label>
-            <input id="password" type="password" class="form-control" placeholder="비밀번호를 입력하세요" th:field="*{password}" required>
+            <input id="password" type="password" class="form-control" placeholder="비밀번호를 입력하세요" required>
+        </div>
+        <div class="mb-3">
+            <label th:for="name"><b>name</b></label>
+            <input id="name" type="text" class="form-control" placeholder="이름을 입력하세요" required>
         </div>
         <div class="mb-3">
             <label th:for="nickname"><b>Nickname</b></label>
-            <input id="nickname" type="text" class="form-control" placeholder="닉네임을 입력하세요" th:field="*{nickname}" required>
+            <input id="nickname" type="text" class="form-control" placeholder="닉네임을 입력하세요" required>
+        </div>
+        <div class="mb-3">
+            <label th:for="phone_number"><b>phone_number</b></label>
+            <input id="phone_number" type="text" class="form-control" placeholder="휴대폰 번호를 입력하세요" required>
+        </div>
+        <div class="mb-3">
+            <label th:for="gender"><b>gender</b></label>
+            <input id="gender" type="text" class="form-control" placeholder="성별을 입력하세요" required>
+        </div>
+        <div class="mb-3">
+            <label th:for="age"><b>age</b></label>
+            <input id="age" type="text" class="form-control" placeholder="나이를 입력하세요" required>
+        </div>
+        <div class="mb-3">
+            <label th:for="location"><b>location</b></label>
+            <input id="location" type="text" class="form-control" placeholder="주소를 입력하세요" required>
+        </div>
+        <div class="mb-3">
+            <label th:for="photo"><b>photo</b></label>
+            <input id="photo" type="text" class="form-control" placeholder="프로필 사진을 첨부하세요" required>
         </div>
 
         <div class="mb-3 form-check">
-            <input type="checkbox" th:field="*{remember}" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label"  for="exampleCheck1">아이디 기억하기</label>
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label"  for="exampleCheck1">약관에 동의하시겠습니까?</label>
         </div>
         <button type="submit" th:href="@{/join}" class="btn btn-primary">Sign Up</button>
     </form>
