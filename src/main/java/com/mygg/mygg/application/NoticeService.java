@@ -8,7 +8,7 @@ public interface NoticeService {
     Map<String,Object> getNotice(int board_id);
     int insertNotice(Map<String,String> writedValue);
     int updateNotice(Map<String,String> updatedValue);
-    int deleteNotice();
-    List<Map<String,Object>> searchNotices();
+    int deleteNotice(int board_id);
+    List<Map<String,Object>> searchNotices(Map<String,String> searchValue);
 
 }

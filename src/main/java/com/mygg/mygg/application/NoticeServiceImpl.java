@@ -33,14 +33,15 @@ public class NoticeServiceImpl implements NoticeService{
         return noticeRepository.updateNotice(updatedValue);
     }
 
-
     @Override
-    public int deleteNotice() {
-        return 0;
+    public int deleteNotice(int board_id) {
+        return noticeRepository.deleteNotice(board_id);
     }
 
     @Override
-    public List<Map<String, Object>> searchNotices() {
-        return null;
+    public List<Map<String, Object>> searchNotices(Map<String,String> searchValue) {
+        return noticeRepository.searchNotices(searchValue);
     }
+
+
 }

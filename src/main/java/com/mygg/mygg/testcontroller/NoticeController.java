@@ -50,4 +50,5 @@ public class NoticeController {
         noticeService.updateNotice(updatedValue);
         return "redirect:/notice";
     }
+
 }

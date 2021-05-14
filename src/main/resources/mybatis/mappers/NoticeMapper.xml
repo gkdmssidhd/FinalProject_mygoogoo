@@ -20,4 +20,13 @@
         UPDATE noticeBoard SET title=#{title},content=#{content} WHERE board_id= #{board_id}
     </update>
 
+    <delete id="deleteNotice" parameterType="int">
+        DELETE FROM noticeBoard WHERE board_id=#{board_id}
+    </delete>
+
+    <select id="searchNotices" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+        SELECT * FROM noticeBoard WHERE title LIKE CONCAT('%',#{value},'%')
+    </select>
+
+
 </mapper>

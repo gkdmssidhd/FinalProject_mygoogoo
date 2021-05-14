@@ -39,9 +39,18 @@
   content.innerHTML = text;
 
   const updateBtn = document.getElementById('updateBtn');
-  updateBtn.addEventListener('click',()=>{
+  updateBtn.addEventListener('click', () => {
     location.href = '/notice/update/[[${notice.board_id}]]';
-  })
+  });
+
+  const deleteBtn = document.getElementById('deleteBtn');
+  deleteBtn.addEventListener('click', () => {
+    $.post("/notice/delete/[[${notice.board_id}]]")
+            .done((data) => {
+              location.href = "/notice";
+            });
+  });
+
 </script>
 </body>
 </html>
