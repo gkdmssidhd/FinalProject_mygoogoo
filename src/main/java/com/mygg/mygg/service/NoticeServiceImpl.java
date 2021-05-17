@@ -1,6 +1,6 @@
-package com.mygg.mygg.application;
+package com.mygg.mygg.service;
 
-import com.mygg.mygg.domain.NoticeRepository;
+import com.mygg.mygg.domain.repository.NoticeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +14,8 @@ public class NoticeServiceImpl implements NoticeService{
     private NoticeRepository noticeRepository;
 
     @Override
-    public List<Map<String, Object>> getNotices() {
-        return noticeRepository.getNotices();
+    public List<Map<String, Object>> getNotices(Integer board_page) {
+        return noticeRepository.getNotices(board_page);
     }
 
     @Override
@@ -41,6 +41,11 @@ public class NoticeServiceImpl implements NoticeService{
     @Override
     public List<Map<String, Object>> searchNotices(Map<String,String> searchValue) {
         return noticeRepository.searchNotices(searchValue);
+    }
+
+    @Override
+    public Double getTotal() {
+        return noticeRepository.getTotal();
     }
 
 

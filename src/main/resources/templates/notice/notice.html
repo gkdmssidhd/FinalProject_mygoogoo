@@ -19,14 +19,19 @@ thead{
 #search{
   border:1px solid lightgray;
 }
-
+.container{
+  display: flex;
+  justify-content: center;
+}
 </style>
 <body>
+
+<div class="serchArea">
+  <input type="text" placeholder="검색어를 입력해주세요"  id="search">
+  <input type="button" value="검색" id="searchBtn">
+</div>
+
 <div class="container">
-  <div class="serchArea">
-    <input type="text" placeholder="검색어를 입력해주세요"  id="search">
-    <input type="button" value="검색" id="searchBtn">
-  </div>
   <table class="table" id="table">
 
     <thead>
@@ -46,14 +51,21 @@ thead{
         <td th:text="${#strings.substring(notice.regdate,0,10)}" ></td>
       </tr>
     </tbody>
-
   </table>
-
-  <div>
-    <input type="button" id="write" value="작성">
-  </div>
-
 </div>
+
+<div>
+  <input type="button" id="write" value="작성">
+</div>
+
+<div class="container">
+  <th:block th:each="num : ${#numbers.sequence(1,totalPage)}">
+        <span>
+          <a th:href="@{/notice/{num}(num=${num})}" th:text="${num}"></a>
+        </span>
+  </th:block>
+</div>
+
 <script>
   const write_btn = document.getElementById('write');
   write_btn.addEventListener('click', () => {

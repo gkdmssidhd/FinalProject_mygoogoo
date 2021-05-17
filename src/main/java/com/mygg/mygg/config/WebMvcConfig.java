@@ -1,4 +1,4 @@
-package com.mygg.mygg.configuration;
+package com.mygg.mygg.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

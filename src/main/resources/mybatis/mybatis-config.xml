@@ -4,6 +4,6 @@
 
 <configuration>
     <mappers>
-        <mapper resource="/mappers/*.xml"/>
+        <mapper resource="/mapper/*.xml"/>
     </mappers>
 </configuration>

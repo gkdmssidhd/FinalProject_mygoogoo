@@ -1,7 +1,5 @@
-package com.mygg.mygg.application;
+package com.mygg.mygg.service;
 
-
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;

@@ -1,6 +1,6 @@
-package com.mygg.mygg.testcontroller;
+package com.mygg.mygg.controller;
 
-import com.mygg.mygg.application.ChatService;
+import com.mygg.mygg.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +15,6 @@ public class ChatController {
     @Autowired
     private ChatService chatService;
 
-    @GetMapping("/v1/chat")
-    public List<Map<String,Object>> getChats(){
-        System.out.println(chatService.getChats()+"컨트롤러에서 겟쳇호출");
-        return chatService.getChats();
-    }
 
     @PostMapping("/test/request")
     public String request(@RequestBody Map<String,String> json){

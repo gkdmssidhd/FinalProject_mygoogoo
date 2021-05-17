@@ -1,6 +1,6 @@
-package com.mygg.mygg.testcontroller;
+package com.mygg.mygg.controller;
 
-import com.mygg.mygg.application.NoticeService;
+import com.mygg.mygg.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +14,20 @@ public class NoticeController {
     @Autowired
     NoticeService noticeService;
 
-    @GetMapping("/notice")
-    public String getNotices(Model model){
-        model.addAttribute("notices",noticeService.getNotices());
+    @GetMapping(value={"/notice/{board_page}","/notice"})
+    public String getNotices(@PathVariable(required = false) Integer board_page ,Model model){
+
+        Double total = noticeService.getTotal();
+        int totalPage = (int)Math.ceil(total/20);
+
+        if(board_page != null){
+            model.addAttribute("notices",noticeService.getNotices((board_page-1)*10*2));
+            model.addAttribute("totalPage", totalPage);
+        }else{
+           board_page = 1;
+            model.addAttribute("notices",noticeService.getNotices((board_page-1)*10*2));
+            model.addAttribute("totalPage", totalPage);
+        }
         return "/notice/notice";
     }
 

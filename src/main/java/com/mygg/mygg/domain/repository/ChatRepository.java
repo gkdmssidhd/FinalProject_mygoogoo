@@ -1,4 +1,4 @@
-package com.mygg.mygg.domain;
+package com.mygg.mygg.domain.repository;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;

@@ -1,8 +1,7 @@
-package com.mygg.mygg.application;
+package com.mygg.mygg.service;
 
-import com.mygg.mygg.domain.ChatRepository;
+import com.mygg.mygg.domain.repository.ChatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
