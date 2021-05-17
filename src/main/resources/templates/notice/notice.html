@@ -28,6 +28,7 @@ thead{
     <input type="button" value="검색" id="searchBtn">
   </div>
   <table class="table" id="table">
+
     <thead>
       <tr>
         <th>No</th>
@@ -36,6 +37,7 @@ thead{
         <th>Date</th>
       </tr>
     </thead>
+
     <tbody class="tbody" id="tbody">
       <tr th:each="notice :${notices}" class="notice">
         <td th:text="${notice.board_id}" ></td>
@@ -44,8 +46,13 @@ thead{
         <td th:text="${#strings.substring(notice.regdate,0,10)}" ></td>
       </tr>
     </tbody>
+
   </table>
-  <div><input type="button" id="write" value="작성"></div>
+
+  <div>
+    <input type="button" id="write" value="작성">
+  </div>
+
 </div>
 <script>
   const write_btn = document.getElementById('write');

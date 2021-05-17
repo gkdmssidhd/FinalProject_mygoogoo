@@ -25,7 +25,7 @@
     </delete>
 
     <select id="searchNotices" resultType="java.util.HashMap" parameterType="java.util.HashMap">
-        SELECT * FROM noticeBoard WHERE title LIKE CONCAT('%',#{value},'%')
+        SELECT * FROM noticeBoard WHERE title LIKE CONCAT('%',#{value},'%') ORDER BY board_id DESC
     </select>
 
 
