@@ -1,4 +1,4 @@
-package com.mygg.main.dao;
+package com.mygg.mygg.dao;
 
 import java.util.List;
 

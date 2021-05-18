@@ -1,4 +1,4 @@
-package com.mygg.main.vo;
+package com.mygg.mygg.vo;
 
 import java.security.Timestamp;
 

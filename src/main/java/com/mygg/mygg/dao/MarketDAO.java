@@ -1,4 +1,4 @@
-package com.mygg.main.dao;
+package com.mygg.mygg.dao;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.mygg.main.vo.MarketVO;
+import com.mygg.mygg.vo.MarketVO;
 
 @Repository("marketDAO")
 public class MarketDAO extends AbstractDAO {

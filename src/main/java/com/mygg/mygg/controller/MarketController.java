@@ -1,10 +1,10 @@
-package com.mygg.main.controller;
+package com.mygg.mygg.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.mygg.mygg.service.MarketService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -12,12 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mygg.main.service.MarketService;
-import com.mygg.main.vo.MarketVO;
+import com.mygg.mygg.service.MarketService;
+import com.mygg.mygg.vo.MarketVO;
 
 @Controller
 @RequestMapping("/market/")
@@ -27,7 +25,7 @@ public class MarketController {
 	// Service와 연결
 	// URL market/...
 	@Resource(name="marketService")
-	private MarketService marketService;	
+	private MarketService marketService;
 	
 	/**
 	 * 기능 - 서비스 목록들

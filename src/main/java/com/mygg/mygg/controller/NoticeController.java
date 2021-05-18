@@ -45,6 +45,7 @@ public class NoticeController {
 
     @PostMapping("/notice/write")
     public String writeNotice(@RequestParam Map<String,String> writedValue){
+        System.out.println("여기는 롸리트 포스트");
         noticeService.insertNotice(writedValue);
         return "redirect:/notice";
     }

@@ -1,7 +1,7 @@
-package com.mygg.main.service;
+package com.mygg.mygg.service;
 
 import java.util.List;
-import com.mygg.main.vo.MarketVO;
+import com.mygg.mygg.vo.MarketVO;
 
 public interface MarketService {
 

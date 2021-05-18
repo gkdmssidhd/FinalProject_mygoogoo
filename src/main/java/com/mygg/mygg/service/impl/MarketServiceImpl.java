@@ -1,4 +1,4 @@
-package com.mygg.main.service.impl;
+package com.mygg.mygg.service.impl;
 
 import java.util.List;
 
@@ -8,9 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.mygg.main.dao.MarketDAO;
-import com.mygg.main.service.MarketService;
-import com.mygg.main.vo.MarketVO;
+import com.mygg.mygg.dao.MarketDAO;
+import com.mygg.mygg.service.MarketService;
+import com.mygg.mygg.vo.MarketVO;
 
 @Service("marketService")
 public class MarketServiceImpl implements MarketService {
