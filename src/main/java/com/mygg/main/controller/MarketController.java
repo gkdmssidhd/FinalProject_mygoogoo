@@ -1,5 +1,6 @@
 package com.mygg.main.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -11,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mygg.main.service.MarketService;
@@ -89,6 +92,13 @@ public class MarketController {
 		 logger.info("## serviceSave {} :: " + marketVO.toString());
 		 logger.info("##################################################");
 		 
+		 // 카테고리 배열
+		 String[] categorys= new String[40];
+		 for(int i = 0; i < categorys.length; i ++) {
+			 
+			 
+		 }
+		 
 		 return marketService.serviceSave(marketVO);
 	 }
 	
@@ -161,5 +171,11 @@ public class MarketController {
 		 
 		 return "redirect:/";
 	 }
+	 
+//	 @RequestMapping(value = "", method=RequestMethod.POST)
+//	 @ResponseBody
+//	 public void Category(@RequestParam(value = "categorys[]") List<String> categorys) {
+//		 
+//	 }
 	 
 }

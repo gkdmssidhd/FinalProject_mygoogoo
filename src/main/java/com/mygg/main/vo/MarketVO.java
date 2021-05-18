@@ -23,6 +23,7 @@ public class MarketVO {
 	private int price;				// 가격
 	private int id;					// 작성자 아이디
 	private String category;		// 카테고리
+	private String[] categorys;		// 카테고리들 담는곳
 	private String rvState;			// 예약상태
 	private int chState;			// 채팅상태
 	private int svState;			// 등록자의 매물상태
