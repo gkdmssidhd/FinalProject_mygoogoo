@@ -58,5 +58,15 @@ public class NoticeServiceImpl implements NoticeService{
         return noticeRepository.insertReply(json);
     }
 
+    @Override
+    public int updateReply(Map<String, String> json) {
+        return noticeRepository.updateReply(json);
+    }
+
+    @Override
+    public int deleteReply(int reply_id) {
+        return noticeRepository.deleteReply(reply_id);
+    }
+
 
 }

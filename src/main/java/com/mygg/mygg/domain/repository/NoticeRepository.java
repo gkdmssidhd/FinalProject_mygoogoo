@@ -16,5 +16,6 @@ public interface NoticeRepository {
     Double getTotal();
     List<Map<String,Object>> getReply(int board_id);
     int insertReply(Map<String, String> json);
-
+    int updateReply(Map<String, String> json);
+    int deleteReply(int reply_id);
 }

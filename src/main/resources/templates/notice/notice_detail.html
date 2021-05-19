@@ -33,8 +33,19 @@
   #replyName{
     padding:3px 3px 3px 10px;
   }
-  .reply_date{
+  .reply_date, .reply_delete, .reply_update{
     padding-left:5px;
+  }
+  .reply_delete, .reply_update{
+    color:#E0475B;
+    cursor: pointer;
+  }
+  .reply_editor{
+    display:none;
+  }
+  .reply_item:hover{
+    transition: all 0.5s;
+    background: lightgray;
   }
 </style>
 <body>
@@ -75,6 +86,7 @@
 <script defer>
 
   getReplies();
+
 
   const content = document.getElementById('content');
   const text = content.innerText;
@@ -119,18 +131,79 @@
       for(reply of replies){
         html = html + '<div class="reply_item">' +
                 '<div id="replyName" class="reply_name">' +
+                '<span class="reply_no" style="display:hidden;">'+ reply.reply_id +'</span>' +
                 '<span class="reply_id">' + reply.nickname + '</span>' +
                 '<span class="reply_date">' + reply.regdate + '</span>' +
+                '<span class="reply_editor">' +
+                '<span class="reply_update">수정</span>' +
+                '<span class="reply_delete">삭제</span>' +
+                '</span>' +
                 '</div>' +
                 '<div id="replyContent" class="reply_content">' +
-                '<span>' + reply.content + '</span>' +
+                '<span class="reply_message">' + reply.content + '</span>' +
                 '</div>' +
                 '</div>';
       }
       const replyItems = document.getElementById('replyContents');
       replyItems.innerHTML=html;
+
+      editorEvent();
+
     });
   }
+
+  function editorEvent(){
+    let reply_item = document.querySelectorAll('.reply_item');
+    let reply_editor = document.querySelectorAll('.reply_editor');
+    let reply_update = document.querySelectorAll('.reply_update');
+    let reply_delete = document.querySelectorAll('.reply_delete');
+    let reply_message = document.querySelectorAll('.reply_message');
+    let reply_no = document.querySelectorAll('.reply_no');
+
+
+    for(let i = 0 ; i < reply_item.length ; i++){
+      reply_item[i].addEventListener('mouseover',() => {
+        reply_editor[i].style.display = 'inline';
+      });
+      reply_item[i].addEventListener('mouseout', () => {
+        reply_editor[i].style.display = 'none';
+      });
+
+      reply_update[i].addEventListener('click', () => {
+        reply_message[i].innerHTML = '<input type="text" id="reply_content" style="width:90%; height: 70px" value="' + reply_message[i].innerText + '">' +
+                '<input type="button" value="수정하기" onclick="reply_updateBtn('+reply_no[i].innerHTML+')">';
+      });
+      reply_delete[i].addEventListener('click', () => {
+        reply_deleteBtn(reply_no[i].innerHTML);
+      });
+
+    }
+  }
+
+  function reply_updateBtn(reply_id){
+    let reply_content = document.getElementById('reply_content').value;
+    let jsonObj = {reply_id: reply_id, reply_content: reply_content};
+    let jsonStr = JSON.stringify(jsonObj);
+    $.ajax({
+      type : 'POST'
+      ,url:'/notice/reply/update'
+      ,data: jsonStr
+      , contentType: 'application/json; charset=UTF-8'
+      ,success : () => getReplies()
+  });
+  }
+
+  function reply_deleteBtn(reply_id){
+    console.log(reply_id)
+    $.ajax({
+      type : 'POST'
+      , url:'/notice/reply/delete'
+      , data: reply_id
+      , contentType: 'application/json; charset=UTF-8'
+      ,success : () => getReplies()
+  });
+  }
+
 </script>
 </body>
 </html>

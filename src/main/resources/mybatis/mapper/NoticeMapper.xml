@@ -46,4 +46,12 @@
         INSERT INTO noticeReply(board_id, writer_id, content) VALUES(#{board_id},#{writer_id},#{content})
     </insert>
 
+    <update id="updateReply" parameterType="java.util.HashMap">
+        UPDATE noticeReply SET content=#{reply_content} WHERE reply_id = #{reply_id}
+    </update>
+
+    <delete id="deleteReply" parameterType="int">
+        DELETE FROM noticeReply WHERE reply_id = #{reply_id}
+    </delete>
+
 </mapper>
