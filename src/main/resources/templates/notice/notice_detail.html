@@ -2,12 +2,9 @@
 <html xmlns:th="http://thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" th:href="@{/css/content-styles.css}" type="text/css">
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-<!--  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
-<!--  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>-->
   <title>Title</title>
 </head>
 <style>
@@ -24,22 +21,61 @@
     background: white;
     padding:20px;
   }
+  .reply_items{
+    padding:20px;
+  }
+  .reply_item{
+    border-bottom:1px solid antiquewhite;
+  }
+  .reply_write, .reply_content{
+    padding:10px;
+  }
+  #replyName{
+    padding:3px 3px 3px 10px;
+  }
+  .reply_date{
+    padding-left:5px;
+  }
 </style>
 <body>
-<div class="container .ck-content ck-content">
+<div class="container">
+
   <div class="items">
+
     <div th:text="${notice.title}"></div>
-    <div th:text="${notice.writer}"></div>
+    <div>
+      <span th:text="${notice.writer}"></span>
+      <span th:text="${#strings.substring(notice.regdate,0,16)}"></span>
+    </div>
     <div id="content" th:text="${notice.content}"></div>
-    <div th:text="${#strings.substring(notice.regdate,0,16)}"></div>
+
+    <div class="reply_items">
+
+      <div class="reply_contents" id="replyContents">
+                    <!--          댓글이 들어가는 곳 입니다.          -->
+      </div>
+
+      <div class="reply_write">
+        <input type="text" id="replyText" placeholder="댓글을 입력하세요" style="width:90%; height: 70px;">
+        <input type="button" id="replyBtn" value="작성">
+      </div>
+
+    </div>
+
     <div>
       <input type="button" value="목록" onclick="location.href='/notice'">
       <input type="button" id="deleteBtn" value="삭제" >
       <input type="button" id="updateBtn" value="수정">
     </div>
+
   </div>
+
 </div>
+
 <script defer>
+
+  getReplies();
+
   const content = document.getElementById('content');
   const text = content.innerText;
   content.innerHTML = text;
@@ -57,6 +93,44 @@
             });
   });
 
+  const replyBtn = document.getElementById('replyBtn');
+  const replyText = document.getElementById('replyText');
+  replyBtn.addEventListener('click', () => {
+    let value = replyText.value;
+    let valueObj = {content: value, writer_id:'1', board_id:'[[${notice.board_id}]]'};
+    let valueStr = JSON.stringify(valueObj);
+    $.ajax(
+            {
+              type: 'POST'
+              , url: '/notice/insetReply'
+              , contentType: 'application/json; charset=UTF-8'
+              , data: valueStr
+              , success : ()=>{
+                replyText.value="";
+                replyText.focus();
+                getReplies();
+              }
+            });
+  });
+
+  function getReplies(){
+    $.post('/notice/reply/[[${notice.board_id}]]',(replies)=>{
+      let html = "";
+      for(reply of replies){
+        html = html + '<div class="reply_item">' +
+                '<div id="replyName" class="reply_name">' +
+                '<span class="reply_id">' + reply.nickname + '</span>' +
+                '<span class="reply_date">' + reply.regdate + '</span>' +
+                '</div>' +
+                '<div id="replyContent" class="reply_content">' +
+                '<span>' + reply.content + '</span>' +
+                '</div>' +
+                '</div>';
+      }
+      const replyItems = document.getElementById('replyContents');
+      replyItems.innerHTML=html;
+    });
+  }
 </script>
 </body>
 </html>

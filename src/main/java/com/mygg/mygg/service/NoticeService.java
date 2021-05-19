@@ -11,5 +11,7 @@ public interface NoticeService {
     int deleteNotice(int board_id);
     List<Map<String,Object>> searchNotices(Map<String,String> searchValue);
     Double getTotal();
+    List<Map<String,Object>> getReply(int board_id);
+    int insertReply(Map<String, String> json);
 
 }

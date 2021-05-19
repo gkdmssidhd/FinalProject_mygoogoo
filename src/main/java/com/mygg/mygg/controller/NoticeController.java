@@ -33,7 +33,6 @@ public class NoticeController {
 
     @GetMapping("/notice/detail/{board_id}")
     public String getDetail(@PathVariable("board_id") int board_id, Model model){
-
         model.addAttribute("notice", noticeService.getNotice(board_id));
         return "/notice/notice_detail";
     }
@@ -61,5 +60,6 @@ public class NoticeController {
         noticeService.updateNotice(updatedValue);
         return "redirect:/notice";
     }
+
 
 }

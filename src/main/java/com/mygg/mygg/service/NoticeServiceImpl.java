@@ -48,5 +48,15 @@ public class NoticeServiceImpl implements NoticeService{
         return noticeRepository.getTotal();
     }
 
+    @Override
+    public List<Map<String, Object>> getReply(int board_id) {
+        return noticeRepository.getReply(board_id);
+    }
+
+    @Override
+    public int insertReply(Map<String, String> json) {
+        return noticeRepository.insertReply(json);
+    }
+
 
 }
