@@ -112,17 +112,17 @@
     let valueObj = {content: value, writer_id:'1', board_id:'[[${notice.board_id}]]'};
     let valueStr = JSON.stringify(valueObj);
     $.ajax(
-            {
-              type: 'POST'
-              , url: '/notice/insetReply'
-              , contentType: 'application/json; charset=UTF-8'
-              , data: valueStr
-              , success : ()=>{
-                replyText.value="";
-                replyText.focus();
-                getReplies();
-              }
-            });
+      {
+        type: 'POST'
+        , url: '/notice/insetReply'
+        , contentType: 'application/json; charset=UTF-8'
+        , data: valueStr
+        , success : ()=>{
+          replyText.value="";
+          replyText.focus();
+          getReplies();
+        }
+      });
   });
 
   function getReplies(){
@@ -131,7 +131,7 @@
       for(reply of replies){
         html = html + '<div class="reply_item">' +
                 '<div id="replyName" class="reply_name">' +
-                '<span class="reply_no" style="display:hidden;">'+ reply.reply_id +'</span>' +
+                '<span class="reply_no" style="display:none;">'+ reply.reply_id +'</span>' +
                 '<span class="reply_id">' + reply.nickname + '</span>' +
                 '<span class="reply_date">' + reply.regdate + '</span>' +
                 '<span class="reply_editor">' +
@@ -190,7 +190,7 @@
       ,data: jsonStr
       , contentType: 'application/json; charset=UTF-8'
       ,success : () => getReplies()
-  });
+   });
   }
 
   function reply_deleteBtn(reply_id){
