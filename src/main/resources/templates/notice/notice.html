@@ -16,12 +16,26 @@ thead{
 .notice{
   border:1px solid;
 }
+.notice:hover{
+  transition: all 0.3s;
+  background:#DED369;
+}
 #search{
   border:1px solid lightgray;
 }
 .container{
   display: flex;
   justify-content: center;
+}
+.noticeCenter{
+  text-align: center;
+}
+.reply_cnt{
+  color:#E0475B;
+  margin:0;
+  padding:0;
+  font-weight: bold;
+  font-size:13px
 }
 </style>
 <body>
@@ -45,18 +59,23 @@ thead{
 
     <tbody class="tbody" id="tbody">
       <tr th:each="notice :${notices}" class="notice">
-        <td th:text="${notice.board_id}" ></td>
-        <td  ><a th:href="@{/notice/detail/{id}(id=${notice.board_id})}" th:text="${notice.title}"></a></td>
-        <td th:text="${notice.writer}" ></td>
-        <td th:text="${#strings.substring(notice.regdate,0,10)}" ></td>
+        <td th:text="${notice.board_id}" class="noticeCenter"></td>
+        <td>
+          <a th:href="@{/notice/detail/{id}(id=${notice.board_id})}" th:text="${notice.title}"></a>
+          <span class="reply_cnt">
+            [<span th:text="${notice.reply_cnt}" class="reply_cnt"></span>]
+          </span>
+        </td>
+        <td th:text="${notice.writer}" class="noticeCenter"></td>
+        <td th:text="${#strings.substring(notice.regdate,0,10)}" class="noticeCenter"></td>
       </tr>
     </tbody>
   </table>
+  <div style="text-align: right">
+    <input type="button" id="write" value="작성">
+  </div>
 </div>
 
-<div>
-  <input type="button" id="write" value="작성">
-</div>
 
 <div class="container">
   <th:block th:each="num : ${#numbers.sequence(1,totalPage)}">
