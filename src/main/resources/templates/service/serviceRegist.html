@@ -29,8 +29,10 @@
 				<textarea th:name="content" id="summernote" cols="30" rows="10"></textarea><br/>
 				 
 				<div>가격 : </div>
+				<div class="price">
 				<input type="checkbox" th:name="price" th:value="0">무료 
-				<input type="text" th:name="price"><br/>
+				<input type="text" th:name="price"><br/> 
+				</div>
 	
 				<div>카테고리 : 1개 이상 선택하세요.</div>
 				<div class="category">
@@ -47,10 +49,10 @@
 					<input type="checkbox" id="스포츠" name="category" value="스포츠">스포츠
 					<input type="checkbox" id="공부" name="category" value="공부">공부
 				</div>
-
-				 <!-- value="I" 신규등록 구분하기 위해서 -->
+				<!-- value="I" 신규등록 구분하기 위해서 -->
 				<input type="hidden" name="gubun" value="I" />
 				<input type="submit" value="저장">
+				<a th:href="@{/market/marketListPage}">마켓 리스트</a>
 			</form>		
 		</div>
 		<script>
@@ -68,6 +70,7 @@
 					}
 				}
 			});
+			
 			function uploadSummernoteImageFile(file, el) {
 				data = new FormData();
 				data.append('file', file);
@@ -83,63 +86,71 @@
 					}
 				});
 			}
-			
+			 // 폼에서 등록한 내용 저장으로 보내기
 			$(function() {
 
 				$("#serviceRegistForm").submit(function() {
 					// 유효성 검사 다 완료되서 끝날때까지 넘어가지 않게 멈추는거 
 					event.preventDefault();
-
+					
 					// id가 serviceRegistForm인 form을 불러온다.
 					var form = $('#serviceRegistForm')[0];
 					
-					//					1. 무료 체크박스를 누르면 0이 전달된다.
-					//					2. 체크박스를 누르지않고 가격을 입력하면 입력한 가격이 전달된다.
-					//					3. 체크박스 누르면 텍스트타입 비활성화
-					//					4. 텍스트타입 가격 입력하면 무료 체크박스가 비활성화
-					//					price는 int타입이라서 무료 체크박스 누르면 0이 전달되어야 함.
-					//					만약 체크박스를 누르면 숫자로 0이 전달
-					//					free = parsnInt(free);
-					//					if(form.price.value == 0) {
-
-					//					체크박스를 선택하지않고 가격을 입력하면 그 가격 그대로 넘어가게
-					//					} else {						
-					//					}
-
-					// form 안에 type 유효성 체크
-					// 					if (form.type.value == "") {
-					// 						alert("음식이름은 필수 입력 항목입니다!");
-					// 						$(form.type).focus();
-					// 						return;
-					// 					}
-
 					// form 안에 title 유효성 체크
-					// 					if (form.title.value == "") {
-					// 						alert("가게이름은 필수 입력 항목입니다!");
-					// 						$(form.title).focus();
-					// 						return;
-					// 					}
+ 					if (form.title.value == "") {
+ 						alert("제목은 필수 입력 항목입니다!");
+ 						$(form.title).focus();
+ 						return;
+ 					}
+					// form 안에 type 유효성 체크
+ 					if (form.type.value == "") {
+ 						alert("타입은 필수 입력 항목입니다!");
+ 						$(form.type).focus();
+ 						return;
+ 					}
+					 //form 안에 content 유효성 체크
+ 					if (form.content.value == "") {
+ 						alert("내용은 필수 입력 항목입니다!");
+ 						$(form.content).focus();
+ 						return;
+ 					}
+ 					// form 안에 price 유효성 체크
+ 					// 만약 체크박스를 누르면 텍스트가 비활성화 disabled
+ 					// 텍스트에 입력을 하면 체크박스가 비활성화 
+ 				
+ 					// 텍스트를 입력하니까 체크박스 비활성화
+/*   			 		if (form.price.value == "") {
+ 						alert("가격은 필수 입력 항목입니다!");
+ 						$(form.price).focus();
+ 						return;
+	 				} 
+ 					
+ 					// 체크박스가 체크되면 텍스트는 비활성화
+		 			if (!$("input:checked[Name='price']").is(":checked")){ 
+ 						alert("가격은 필수 입력 항목입니다."); 
+ 						$("#price").focus(); 
+ 						return; 
+ 					}  */
+ 					  
+ 				// 카테고리 유효성 검사		
+				const cg = document.getElementsByName('category');
+					let count = 0;
 
-					// form 안에 content 유효성 체크
-					// 					if (form.content.value == "") {
-					// 						alert("음식 종류는 필수 입력 항목입니다!");
-					// 						$(form.content).focus();
-					// 						return;
-					// 					}
+					// for문으로 카테고리 길이만큼 다 검사
+					for (let i = 0; i < cg.length; i++) {
+						if (cg[i].checked) {
+							console.log(cg[i].value);
+							count++;
+						}
+					}
+					// 다 검사했을때 0이면 한개 이상 체크 하라고 알림창 띄움
+					if (count === 0) {
+						alert('카테고리를 한 개 이상 체크해주세요');
+						return;
+					} else {
+						count = 0;
+					}
 
-					// form 안에 price 유효성 체크
-					// 					if (form.price.value == "") {
-					// 						alert("음식이름은 필수 입력 항목입니다!");
-					// 						$(form.price).focus();
-					// 						return;
-					// 					}
-
-					// form 안에 category 유효성 체크
-					// 					if (form.category.value == "") {
-					// 						alert("음식이름은 필수 입력 항목입니다!");
-					// 						$(form.category).focus();
-					// 						return;
-					// 					}
 					/**
 					 * url : 전송할 서버 주소
 					 * type : 전송방식 (get/post)
@@ -148,18 +159,7 @@
 					 * error : 전송 후, 응답이 실패일 경우 수행할 기능 작성
 					 */
 					var formData = new FormData(form);
-					 
-/* 					var categorys = [];
-					$("input[name = 'category'] : checked").each(function() {
-						categorys.push($(this).val());
-						
-					});
-					  */
-			/* 		  
-					$("input[name=category]:checked").each(function() {
-						var categorys = $(this).val();
-					}); */
-					
+
 					$.ajax({
 						url : "/market/serviceSave",
 						type : "post",
@@ -169,7 +169,7 @@
 							alert("정상적으로 저장되었습니다.");
 							// 처리가 완료되면 marketList로 이동한다.
 							location.href = "/market/marketListPage";
-							
+
 						},
 						error : function(xhr, status) {
 							alert("오류가 발생했습니다. :: " + status);

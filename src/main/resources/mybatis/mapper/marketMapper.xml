@@ -38,13 +38,7 @@
 			 )
 	]]>
 	</insert>
-	<!--  
-	<insert id="dddd" parameterType="MarketVO">
-		<selectKey keyProperty="SERVICE_NO" resultType="Int" order="AFTER">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
-	</insert>
-	-->
+
 	<select id="selectMarketList" parameterType="MarketVO" resultType="MarketVO">
 		<![CDATA[
 			SELECT SERVICE_NO
@@ -64,7 +58,7 @@
 			  FROM MARKET
 		]]>
 	</select>
-	<!-- 	 WHERE SERVICE_NO -->
+
 	<select id="selectServiceDetail" parameterType="MarketVO" resultType="MarketVO">
 		<![CDATA[
 			SELECT SERVICE_NO
@@ -107,5 +101,4 @@
 		  FROM MARKET
 		 WHERE SERVICE_NO = #{serviceNo}
 	</delete>
-	
 </mapper>

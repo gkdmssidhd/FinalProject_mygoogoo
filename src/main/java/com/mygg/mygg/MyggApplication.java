@@ -1,4 +1,4 @@
-package com.mygg.mygg;
+package com.mygg.main;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,5 +9,7 @@ public class MyggApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MyggApplication.class, args);
 	}
-
+	
+	
+	
 }
