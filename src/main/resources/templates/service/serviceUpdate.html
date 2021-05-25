@@ -3,7 +3,6 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>serviceUpdate</title>
-		<link rel="stylesheet" th:href="@{/css/content-styles.css}" type="text/css">
 		
 		<!-- include libraries(jQuery, bootstrap) -->
 		<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -36,29 +35,19 @@
 			<div>카테고리 : 1개 이상 선택하세요.</div>
 			<div class="category">
 			<!-- 체크했던 애들이 체크된상태로 넘어오게 해주기 -->
-				<input type="text" th:value="*{category}" th:field="*{category}" th:checked="${category eq '취미' ? 'checked' : ''}"><br/>
-				<input type="checkbox" name="category" value="취미" th:field="*{category}" th:checked="${category eq '취미' ? 'checked' : ''}">취미
-				<input type="checkbox" name="category" value="디지털" th:field="*{category}" th:checked="${category eq '디지털' ? 'checked' : ''}">디지털
-				<input type="checkbox" name="category" value="가전제품" th:field="*{category}">가전제품
-				<input type="checkbox" name="category" value="반려동물" th:field="*{category}">반려동물
+				<input type="checkbox" name="category" value="취미">취미
+				<input type="checkbox" name="category" value="디지털">디지털
+				<input type="checkbox" name="category" value="가전제품">가전제품
+				<input type="checkbox" name="category" value="반려동물">반려동물
 				<input type="checkbox" name="category" value="유아">유아
 				<input type="checkbox" name="category" value="여행">여행
 				<input type="checkbox" name="category" value="음식">음식
 				<input type="checkbox" name="category" value="생활용품">생활용품
-				<input type="checkbox" name="category" value="뷰티" th:field="*{category}" th:checked="${category eq '뷰티' ? 'checked' : ''}">뷰티
+				<input type="checkbox" name="category" value="뷰티">뷰티
 				<input type="checkbox" name="category" value="패션잡화">패션잡화
 				<input type="checkbox" name="category" value="스포츠">스포츠
 				<input type="checkbox" name="category" value="공부">공부
 			</div>
-			
-			<!-- 
-			<script>
-			if($('input:checkbox[name="checkbox_name"]').is("취미:checked") == true) {
-				
-			} else
-				
-			</script>
-			 -->
 		 	<!-- value="U" 수정 -->
 			<input type="hidden" name="gubun" value="U" />
 			<input type="hidden" th:value="*{serviceNo}" th:field="*{serviceNo}">
@@ -96,56 +85,54 @@
 				});
 			}
 			</script>
-			<script defer>
+			<script th:inline="javascript">
+			
  			$(function() {
+ 				// 화면 초기구성
+ 				fn_defineForm();
 				
+ 				// 수정 폼 Submit 이벤트
 				$("#serviceUpdateForm").submit(function(){
 					// 유효성 검사 다 완료되서 끝날때까지 넘어가지 않게 멈추는거 
 					event.preventDefault();
 					
-							  
-					$("input[name=category]:checked").each(function() {
-						var categorys = $(this).val();
-					});
-					
-					
 					// id가 serviceUpdateFormm인 form을 불러온다.
 					var form = $('#serviceUpdateForm')[0];
-					
-					// form 안에 type 유효성 체크
-// 					if (form.type.value == "") {
-// 						alert("음식이름은 필수 입력 항목입니다!");
-// 						$(form.type).focus();
-// 						return;
-// 					}
-					
+ 					
+ 					// form 안에 type 유효성 체크
+ 					if (form.type.value == "") {
+ 						alert("타입은 필수 입력 항목입니다!");
+ 						$(form.type).focus();
+ 						return;
+ 					}
+
 					// form 안에 title 유효성 체크
-// 					if (form.title.value == "") {
-// 						alert("가게이름은 필수 입력 항목입니다!");
-// 						$(form.title).focus();
-// 						return;
-// 					}
-					
-					// form 안에 content 유효성 체크
-// 					if (form.content.value == "") {
-// 						alert("음식 종류는 필수 입력 항목입니다!");
-// 						$(form.content).focus();
-// 						return;
-// 					}
-										
-					// form 안에 price 유효성 체크
-// 					if (form.price.value == "") {
-// 						alert("음식이름은 필수 입력 항목입니다!");
-// 						$(form.price).focus();
-// 						return;
-// 					}
-										
+ 					if (form.title.value == "") {
+ 						alert("제목은 필수 입력 항목입니다!");
+ 						$(form.title).focus();
+ 						return;
+ 					}
+
+					 //form 안에 content 유효성 체크
+ 					if (form.content.value == "") {
+ 						alert("내용은 필수 입력 항목입니다!");
+ 						$(form.content).focus();
+ 						return;
+ 					}
+
+/* 					// form 안에 price 유효성 체크
+ 					if (form.price.value == "") {
+ 						alert("가격은 필수 입력 항목입니다!");
+ 						$(form.price).focus();
+ 						return;
+ 					}
+
 					// form 안에 category 유효성 체크
-// 					if (form.category.value == "") {
-// 						alert("음식이름은 필수 입력 항목입니다!");
-// 						$(form.category).focus();
-// 						return;
-// 					}
+ 					if (form.category.value == "") {
+ 						alert("카테고리는 한개 이상 입력해야합니다!");
+ 						$(form.category).focus();
+ 						return;
+ 					}  */
 					/**
 					 * url : 전송할 서버 주소
 					 * type : 전송방식 (get/post)
@@ -179,6 +166,23 @@
 					});		 
 				});
 			});
+ 			// 화면 초기구성 함수
+ 			function fn_defineForm() {
+ 				/**
+ 				 * 카테고리 설정
+ 				 */ 
+ 				/*<![CDATA[*/ 
+ 				var category = /*[[ ${serviceInfo.category} ]]*/
+ 				/*]]*/
+
+ 				console.log("category {} :: ", category);
+ 				
+ 				var categoryArr = category.split(",");
+ 				
+				for(var i = 0; i < categoryArr.length; i++) {
+					$("input[name=category][value=" + categoryArr[i] + "]").attr("checked", true);
+				}
+ 			}
 		</script>
 	</body>
 </html>
