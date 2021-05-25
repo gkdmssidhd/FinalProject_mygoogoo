@@ -14,4 +14,7 @@ public interface MarketService {
 	// 서비스 상세보기
 	public MarketVO serviceDetail(int serviceNo) throws Exception;
 
+	// 서비스 삭제하기
+	public MarketVO serviceDelete(MarketVO marketVO) throws Exception;
+
 }

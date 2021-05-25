@@ -36,4 +36,9 @@ public class MarketDAO extends AbstractDAO {
 	public int serviceUpdateSave(MarketVO serviceNo) throws Exception {
 		return (int) update("market.serviceUpdate", serviceNo);
 	}
+
+	// 삭제
+	public int serviceDelete(MarketVO serviceNo) throws Exception {
+		return (int) delete("market.serviceDelete", serviceNo);
+	}
 }

@@ -1,6 +1,5 @@
 package com.mygg.main.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -92,13 +91,6 @@ public class MarketController {
 		 logger.info("## serviceSave {} :: " + marketVO.toString());
 		 logger.info("##################################################");
 		 
-		 // 카테고리 배열
-		 String[] categorys= new String[40];
-		 for(int i = 0; i < categorys.length; i ++) {
-			 
-			 
-		 }
-		 
 		 return marketService.serviceSave(marketVO);
 	 }
 	
@@ -118,7 +110,7 @@ public class MarketController {
 	  	- serviceNo로 찾아와서 상세보기 해야함.
 	 */
 	 @RequestMapping("serviceDetail")
-	 public String serviceDetail(@ModelAttribute("serviceNo") MarketVO marketVO, Model model) throws Exception {
+	 public String serviceDetail(@ModelAttribute("marketVO") MarketVO marketVO, Model model) throws Exception {
 		
 		 logger.info("##################################################");
 		 logger.info("## serviceDetail {} :: " + marketVO.toString());
@@ -140,7 +132,7 @@ public class MarketController {
 	 * 쿼리(DB 작업 insert, select, update, delete) 
 	 */
 	 @RequestMapping("serviceUpdate")
-	 public String serviceUpdate(@ModelAttribute("serviceNo") MarketVO marketVO, Model model) throws Exception {
+	 public String serviceUpdate(@ModelAttribute("marketVO") MarketVO marketVO, Model model) throws Exception {
 		 
 		 logger.info("##################################################");
 		 logger.info("## serviceUpdate {} :: " + marketVO.toString());
@@ -167,15 +159,10 @@ public class MarketController {
 	 */
 	 
 	 @RequestMapping("serviceDelete")
-	 public String serviceDelete(@ModelAttribute("serviceNo") MarketVO marketVO, Model model) throws Exception{
+	 @ResponseBody
+	 public MarketVO serviceDelete(MarketVO marketVO) throws Exception{
 		 
-		 return "redirect:/";
+		 return marketService.serviceDelete(marketVO);
 	 }
-	 
-//	 @RequestMapping(value = "", method=RequestMethod.POST)
-//	 @ResponseBody
-//	 public void Category(@RequestParam(value = "categorys[]") List<String> categorys) {
-//		 
-//	 }
-	 
+ 
 }
