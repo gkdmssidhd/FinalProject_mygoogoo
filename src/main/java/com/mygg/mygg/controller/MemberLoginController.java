@@ -3,13 +3,15 @@ package com.mygg.mygg.controller;
 import com.mygg.mygg.dto.LoginDTO;
 import com.mygg.mygg.service.MemberService;
 import com.mygg.mygg.vo.MemberVO;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -19,7 +21,8 @@ public class MemberLoginController {
 
     private final MemberService memberService;
 
-    @Inject
+
+    @Autowired
     public MemberLoginController(MemberService memberService) {
         this.memberService = memberService;
     }
@@ -31,16 +34,16 @@ public class MemberLoginController {
     }
 
     // login 처리
-    @RequestMapping(value = "/loginPost", method = RequestMethod.POST)
-    public void loginPOST(LoginDTO loginDTO, HttpSession httpSession, Model model) throws Exception {
-        MemberVO memberVO = memberService.login(loginDTO);
-
-        if (memberVO == null || !BCrypt.checkpw(loginDTO.getPassword(), memberVO.getPassword())) {
-            return;
-        }
-
-        model.addAttribute("member", memberVO);
-    }
+//    @RequestMapping(value = "/loginPost", method = RequestMethod.POST)
+//    public void loginPOST(LoginDTO loginDTO, HttpSession httpSession, Model model) throws Exception {
+//        MemberVO memberVO = memberService.login(loginDTO);
+//
+//        if (memberVO == null || !BCrypt.checkpw(loginDTO.getPassword(), memberVO.getPassword())) {
+//            return;
+//        }
+//
+//        model.addAttribute("member", memberVO);
+//    }
 
 
 
