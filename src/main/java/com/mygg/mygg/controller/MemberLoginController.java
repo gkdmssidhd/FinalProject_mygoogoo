@@ -6,14 +6,13 @@ import com.mygg.mygg.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/member")
@@ -31,6 +30,25 @@ public class MemberLoginController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginGET(@ModelAttribute("loginDTO")LoginDTO loginDTO) {
         return "/member/login";
+    }
+
+
+    @PostMapping("/user/login")
+    public String loginResult(LoginDTO dto, HttpServletRequest request) throws Exception {
+
+        HttpSession session = request.getSession();
+        System.out.println(dto.getEmail());
+        Map<String,String> member_inform = memberService.login(dto);
+        System.out.println(member_inform);
+        if(member_inform.get("email").equals(dto.getEmail()) && member_inform.get("password").equals(dto.getPassword())){
+        session.setAttribute("member_id",member_inform.get("id"));
+            System.out.println("세션이 들어갔습니다");
+            return "member/loginSuccess";
+        }else{
+            System.out.println("비밀번호가 틀립니다.");
+          return "redirect:./";
+        }
+
     }
 
     // login 처리
