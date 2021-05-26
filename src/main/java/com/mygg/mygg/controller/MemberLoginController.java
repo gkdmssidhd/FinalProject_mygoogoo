@@ -48,7 +48,6 @@ public class MemberLoginController {
             System.out.println("비밀번호가 틀립니다.");
           return "redirect:./";
         }
-
     }
 
     // login 처리
