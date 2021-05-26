@@ -6,14 +6,13 @@ import com.mygg.mygg.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/member")
@@ -33,17 +32,29 @@ public class MemberLoginController {
         return "/member/login";
     }
 
-    // login 처리
-//    @RequestMapping(value = "/loginPost", method = RequestMethod.POST)
-//    public void loginPOST(LoginDTO loginDTO, HttpSession httpSession, Model model) throws Exception {
-//        MemberVO memberVO = memberService.login(loginDTO);
-//
-//        if (memberVO == null || !BCrypt.checkpw(loginDTO.getPassword(), memberVO.getPassword())) {
-//            return;
-//        }
-//
-//        model.addAttribute("member", memberVO);
-//    }
+
+    @PostMapping("/user/login")
+    public String checkLogin(LoginDTO dto, HttpServletRequest request) throws Exception {
+
+
+        Map<String, String> member = memberService.login(dto);
+        System.out.println(member);
+        System.out.println(member.get("email")+"   맵에있는 이메일입니다");
+        System.out.println(member.get("password")+"   맵에있는 패스워드입니다");
+        System.out.println(dto.getEmail()+" dto에 있는 이메일입니다");
+        System.out.println(dto.getPassword()+" dto에 있는 패스워드니다");
+
+
+        if(member.get("email").equals(dto.getEmail()) && member.get("password").equals(dto.getPassword())){
+            HttpSession session = request.getSession();
+            session.setAttribute("member_id",member.get("id"));
+            System.out.println("세션부여됨");
+            return "/member/loginSuccess";
+        }else{
+            System.out.println("맞지않음");
+            return "redirect:/member/login";
+        }
+    }
 
 
 

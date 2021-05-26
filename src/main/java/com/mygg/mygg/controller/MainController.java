@@ -17,6 +17,11 @@ public class MainController {
 		return "/member/index";
 	}
 
+	@GetMapping("/message")
+	public String msg() {
+		return "index";
+	}
+
 	@RequestMapping("/main")
 	public String main() {
 		return "service/main";

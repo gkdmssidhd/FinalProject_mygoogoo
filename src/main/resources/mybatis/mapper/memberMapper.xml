@@ -40,10 +40,10 @@
                            , #{createdDate}
     </insert>
 
-    <select id="login" resultType="com.mygg.mygg.vo.MemberVO">
+    <select id="login" resultType="java.util.Map" parameterType="com.mygg.mygg.dto.LoginDTO">
         SELECT
             *
         FROM member
-        WHERE email = #{member}
+        WHERE email = #{email}
     </select>
 </mapper>
