@@ -6,44 +6,22 @@
 <mapper namespace="com.mygg.mygg.dao.MemberDAO">
 
     <insert id="register">
-        INSERT INTO member (
-                             id
-                           , email
-                           , password
-                           , name
-                           , nickname
-                           , phone_number
-                           , gender
-                           , age
-                           , location
-                           , photo
-                           , authority
-                           , join_date
-                           , role
-                           , createdDate
-                                 } VALUES {
-                                 #{id}
-                           , #{email}
-                           , #{password}
-                           , #{name}
-                           , #{nickname}
-                           , #{phone_number}
-                           , #{gender}
-                           , #{age}
-                           , #{location}
-                           , #{photo}
-                           , #{authority}
-                           , #{photo}
-                           , #{authority}
-                           , #{join_date}
-                           , #{role}
-                           , #{createdDate}
+        INSERT INTO member (id, email, password, name, nickname, phone_number, gender, age, location
+                           , photo, authority, role)
+        VALUES (#{id}, #{email}, #{password}, #{name}, #{nickname}, #{phone_number}
+               , #{gender}, #{age}, #{location}, #{photo}, #{authority}, #{role})
     </insert>
 
-    <select id="login" resultType="com.mygg.mygg.vo.MemberVO">
-        SELECT
-            *
+    <select id="login" parameterType="com.mygg.mygg.dto.MemberDTO" resultType="java.util.HashMap">
+        SELECT *
         FROM member
-        WHERE email = #{member}
+        WHERE email = #{email}
+    </select>
+
+    <select id="activity" parameterType="com.mygg.mygg.dto.MyPageDTO" resultType="map">
+        SELECT *
+        FROM memberActivity ma JOIN member m
+        ON (ma.id = m.id)
+        WHERE ma.id = #{id}
     </select>
 </mapper>

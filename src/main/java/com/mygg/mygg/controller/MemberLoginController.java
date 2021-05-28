@@ -1,26 +1,20 @@
 package com.mygg.mygg.controller;
 
-import com.mygg.mygg.dto.LoginDTO;
+import com.mygg.mygg.dto.MemberDTO;
 import com.mygg.mygg.service.MemberService;
-import com.mygg.mygg.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
-import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/member")
 public class MemberLoginController {
 
     private final MemberService memberService;
-
 
     @Autowired
     public MemberLoginController(MemberService memberService) {
@@ -29,23 +23,38 @@ public class MemberLoginController {
 
     // login page
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginGET(@ModelAttribute("loginDTO")LoginDTO loginDTO) {
+    public String loginGET(@ModelAttribute("memberDTO")MemberDTO memberDTO) {
         return "/member/login";
     }
 
-    // login 처리
-//    @RequestMapping(value = "/loginPost", method = RequestMethod.POST)
-//    public void loginPOST(LoginDTO loginDTO, HttpSession httpSession, Model model) throws Exception {
-//        MemberVO memberVO = memberService.login(loginDTO);
-//
-//        if (memberVO == null || !BCrypt.checkpw(loginDTO.getPassword(), memberVO.getPassword())) {
-//            return;
-//        }
-//
-//        model.addAttribute("member", memberVO);
-//    }
 
+    // login session
+    @PostMapping("/user/login")
+    public String loginPOST(MemberDTO memberDTO, HttpServletRequest request) throws Exception {
 
+        HttpSession session = request.getSession();
+        // System.out.println(dto.getEmail());
+        Map<String,String> memberInform = memberService.login(memberDTO);
+        // System.out.println(memberInform);
+        if(memberInform.get("email").equals(memberDTO.getEmail()) && memberInform.get("password").equals(memberDTO.getPassword())){
+            session.setAttribute("memberId", memberInform.get("id"));
+            session.setAttribute("photo", memberInform.get("photo"));
+            session.setAttribute("nickname", memberInform.get("nickname"));
+            session.setAttribute("location", memberInform.get("location"));
+
+            // System.out.println("세션 생성");
+            return "/member/loginSuccess";
+        }else{
+            // System.out.println("비밀번호가 틀립니다.");
+            return "redirect:./";
+        }
+    }
+
+    // logout
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(HttpSession session) throws Exception {
+        session.invalidate();
+        return "/member/logout";
+    }
 
 }
-

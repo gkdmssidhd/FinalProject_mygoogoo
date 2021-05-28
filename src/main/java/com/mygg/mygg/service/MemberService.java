@@ -1,12 +1,19 @@
 package com.mygg.mygg.service;
 
-import com.mygg.mygg.dto.LoginDTO;
-import com.mygg.mygg.vo.MemberVO;
-import org.springframework.stereotype.Service;
+import com.mygg.mygg.dto.MemberDTO;
+import com.mygg.mygg.dto.MyPageDTO;
+
+import java.util.Map;
 
 public interface MemberService {
 
-    void register(MemberVO memberVO) throws Exception;
+    // join
+    public void register(MemberDTO memberDTO);
 
-    MemberVO login(LoginDTO loginDTO) throws Exception;
+    // login
+    Map<String, String> login(MemberDTO memberDTO) throws Exception;
+
+    // Activity
+    Map<String, String> activity(MyPageDTO myPageDTO) throws Exception;
+
 }
