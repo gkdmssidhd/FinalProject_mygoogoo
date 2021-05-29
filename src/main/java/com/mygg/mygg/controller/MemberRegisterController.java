@@ -1,30 +1,30 @@
 package com.mygg.mygg.controller;
 
+import com.mygg.mygg.dto.MemberDTO;
 import com.mygg.mygg.service.MemberService;
-import com.mygg.mygg.vo.MemberVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.inject.Inject;
 
 @Controller
 @RequestMapping("/member")
 public class MemberRegisterController {
 
-    private final MemberService memberService;
+    @Autowired
+    private MemberService memberService;
 
-    @Inject
-    public MemberRegisterController(MemberService memberService) {
-        this.memberService = memberService;
-    }
-
-    // 회원 가입
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String registerGET() throws Exception {
+    // Join page
+    @GetMapping("/signup")
+    public String registerGET() {
         return "/member/signup";
     }
 
-
+    // Join 처리
+    @PostMapping("/signup")
+    public String registerPOST(MemberDTO memberDTO) {
+        memberService.register(memberDTO);
+        return "redirect:/member/login";
+    }
 }
