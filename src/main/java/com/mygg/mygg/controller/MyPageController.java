@@ -1,6 +1,5 @@
 package com.mygg.mygg.controller;
 
-import com.mygg.mygg.dto.MemberDTO;
 import com.mygg.mygg.dto.MyPageDTO;
 import com.mygg.mygg.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
