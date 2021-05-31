@@ -41,6 +41,7 @@ public class MemberLoginController {
             session.setAttribute("photo", memberInform.get("photo"));
             session.setAttribute("nickname", memberInform.get("nickname"));
             session.setAttribute("location", memberInform.get("location"));
+            session.setAttribute("role", memberInform.get("role"));
 
             // System.out.println("세션 생성");
             return "/member/loginSuccess";
@@ -53,8 +54,12 @@ public class MemberLoginController {
     // logout
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpSession session) throws Exception {
-        session.invalidate();
-        return "/member/logout";
+        if (session.getAttribute("id") != null) {
+            session.invalidate();
+            return "/member/logout";
+        } else {
+            return "/member/denied";
+        }
     }
 
 }
