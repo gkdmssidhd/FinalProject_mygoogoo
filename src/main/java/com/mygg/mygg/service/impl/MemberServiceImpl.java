@@ -1,12 +1,13 @@
 package com.mygg.mygg.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.mygg.mygg.dao.MemberDAO;
 import com.mygg.mygg.dto.LoginDTO;
 import com.mygg.mygg.dto.MemberDTO;
 import com.mygg.mygg.service.MemberService;
 import com.mygg.mygg.vo.MemberVO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.util.Map;

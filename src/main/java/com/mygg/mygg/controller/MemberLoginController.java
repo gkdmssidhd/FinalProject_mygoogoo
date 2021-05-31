@@ -1,12 +1,13 @@
 package com.mygg.mygg.controller;
 
-import com.mygg.mygg.dto.LoginDTO;
-import com.mygg.mygg.service.MemberService;
-import com.mygg.mygg.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import com.mygg.mygg.dto.LoginDTO;
+import com.mygg.mygg.service.MemberService;
+import com.mygg.mygg.vo.MemberVO;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;

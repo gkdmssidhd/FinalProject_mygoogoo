@@ -1,7 +1,9 @@
 package com.mygg.mygg.domain.repository;
 
-import com.mygg.mygg.domain.entity.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.mygg.mygg.domain.entity.MemberEntity;
+
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {

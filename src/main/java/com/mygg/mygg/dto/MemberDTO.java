@@ -1,6 +1,7 @@
 package com.mygg.mygg.dto;
 
 import com.mygg.mygg.domain.entity.MemberEntity;
+
 import lombok.*;
 
 @Getter

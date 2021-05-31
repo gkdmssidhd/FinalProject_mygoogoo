@@ -1,8 +1,9 @@
 package com.mygg.mygg.dao;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.mygg.mygg.dto.LoginDTO;
 import com.mygg.mygg.dto.MemberDTO;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Map;
 
