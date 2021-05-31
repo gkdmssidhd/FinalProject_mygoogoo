@@ -1,7 +1,6 @@
 package com.mygg.mygg.dto;
 
 import com.mygg.mygg.domain.entity.MemberEntity;
-
 import lombok.*;
 
 @Getter
@@ -9,7 +8,6 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 public class MemberDTO {
-	
     private Long id;
     private String email;
     private String password;

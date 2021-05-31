@@ -12,10 +12,16 @@
                , #{gender}, #{age}, #{location}, #{photo}, #{authority}, #{role})
     </insert>
 
-    <select id="login" parameterType="com.mygg.mygg.dto.LoginDTO" resultType="java.util.HashMap">
-        SELECT
-            *
+    <select id="login" parameterType="com.mygg.mygg.dto.MemberDTO" resultType="java.util.HashMap">
+        SELECT *
         FROM member
         WHERE email = #{email}
+    </select>
+
+    <select id="activity" parameterType="com.mygg.mygg.dto.MyPageDTO" resultType="java.util.HashMap">
+        SELECT *
+        FROM memberActivity ma JOIN member m
+        ON (ma.id = m.id)
+        WHERE ma.id = #{id}
     </select>
 </mapper>

@@ -19,11 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mygg.mygg.dto.LoginDTO;
 import com.mygg.mygg.service.MarketService;
 import com.mygg.mygg.service.MemberService;
 import com.mygg.mygg.vo.MarketVO;
-import com.mygg.mygg.vo.MemberVO;
 
 @Controller
 @RequestMapping("/market/")
@@ -55,7 +53,7 @@ public class MarketController {
 	 - SELECT 컬럼들 FROM MARKET;
 	 */
 	@RequestMapping("marketListPage")
-	public String marketListPage(Model model, LoginDTO dto, HttpServletRequest request) throws Exception {
+	public String marketListPage(Model model, HttpServletRequest request) throws Exception {
 
 		List<MarketVO> marketList = marketService.marketList();
 		
@@ -109,7 +107,7 @@ public class MarketController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="serviceSave")
-	public MarketVO serviceSave(MarketVO marketVO, LoginDTO dto, HttpServletRequest request) throws Exception {
+	public MarketVO serviceSave(MarketVO marketVO, HttpServletRequest request) throws Exception {
 
 		logger.info("##################################################");
 		logger.info("## serviceSave {} :: " + marketVO.toString());

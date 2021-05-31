@@ -1,9 +1,8 @@
 package com.mygg.mygg.dao;
 
-import org.apache.ibatis.annotations.Mapper;
-
-import com.mygg.mygg.dto.LoginDTO;
 import com.mygg.mygg.dto.MemberDTO;
+import com.mygg.mygg.dto.MyPageDTO;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Map;
 
@@ -11,5 +10,6 @@ import java.util.Map;
 public interface MemberDAO {
 
     void register(MemberDTO memberDTO) ;
-    Map<String,String> login(LoginDTO loginDTO) ;
+    Map<String, String> login(MemberDTO memberDTO) ;
+    Map<String, String> activity(MyPageDTO myPageDTO);
 }
