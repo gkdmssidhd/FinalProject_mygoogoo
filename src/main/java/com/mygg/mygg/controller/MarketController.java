@@ -19,11 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mygg.mygg.dto.LoginDTO;
 import com.mygg.mygg.service.MarketService;
 import com.mygg.mygg.service.MemberService;
 import com.mygg.mygg.vo.MarketVO;
-import com.mygg.mygg.vo.MemberVO;
 
 @Controller
 @RequestMapping("/market/")
