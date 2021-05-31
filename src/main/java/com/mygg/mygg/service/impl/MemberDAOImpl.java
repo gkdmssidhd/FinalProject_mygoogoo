@@ -29,4 +29,6 @@ public class MemberDAOImpl implements MemberDAO {
     public Map<String, String> activity(MyPageDTO myPageDTO) {
         return null;
     }
+
+
 }

@@ -1,13 +1,12 @@
 package com.mygg.mygg.service.impl;
 
 import com.mygg.mygg.dao.MemberDAO;
-import com.mygg.mygg.dto.LoginDTO;
+import com.mygg.mygg.dto.MemberDTO;
+import com.mygg.mygg.dto.MyPageDTO;
 import com.mygg.mygg.service.MemberService;
-import com.mygg.mygg.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.util.Map;
 
 @Service
@@ -21,12 +20,17 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void register(MemberVO memberVO) throws Exception {
-        memberDAO.register(memberVO);
+    public void register(MemberDTO memberDTO) {
+        memberDAO.register(memberDTO);
     }
 
     @Override
-    public Map<String,String> login(LoginDTO loginDTO) throws Exception {
-        return memberDAO.login(loginDTO);
+    public Map<String, String> login(MemberDTO memberDTO) throws Exception {
+        return memberDAO.login(memberDTO);
+    }
+
+    @Override
+    public Map<String, String> activity(MyPageDTO myPageDTO) throws Exception {
+        return memberDAO.activity(myPageDTO);
     }
 }

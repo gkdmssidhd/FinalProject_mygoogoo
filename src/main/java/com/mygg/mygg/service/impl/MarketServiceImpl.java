@@ -15,7 +15,7 @@ import com.mygg.mygg.vo.MarketVO;
 
 @Service("marketService")
 public class MarketServiceImpl implements MarketService {
-	private static final Logger logger = LoggerFactory.getLogger(MarketDAO.class);
+//	private static final Logger logger = LoggerFactory.getLogger(MarketDAO.class);
 
 	// Dao와 연결
 	@Resource(name="marketDAO")
