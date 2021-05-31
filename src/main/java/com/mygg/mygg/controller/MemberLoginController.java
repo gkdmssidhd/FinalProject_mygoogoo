@@ -20,7 +20,6 @@ public class MemberLoginController {
 
     private final MemberService memberService;
 
-
     @Autowired
     public MemberLoginController(MemberService memberService) {
         this.memberService = memberService;
@@ -38,23 +37,31 @@ public class MemberLoginController {
 
         HttpSession session = request.getSession();
         System.out.println(dto.getEmail());
+        
         Map<String,String> memberInform = memberService.login(dto);
         System.out.println(memberInform);
-        if(memberInform.get("email").equals(dto.getEmail()) && memberInform.get("password").equals(dto.getPassword())){
-            session.setAttribute("memberId",memberInform.get("id"));
-            System.out.println("세션 생성");
-            return "/member/loginSuccess";
-        }else{
-            System.out.println("비밀번호가 틀립니다.");
-            return "redirect:./";
-        }
+        
+	        if(memberInform.get("email").equals(dto.getEmail()) && memberInform.get("password").equals(dto.getPassword())){
+	            session.setAttribute("memberId", memberInform.get("id"));
+	            System.out.println("세션 생성");
+	            
+	            return "/member/loginSuccess";
+	        }else{
+	            System.out.println("비밀번호가 틀립니다.");
+	            
+	            return "redirect:./";
+	        }
     }
 
-    // logout
+ // logout
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpSession session) throws Exception {
-        session.invalidate();
-        return "/member/logout";
+        if (session.getAttribute("id") != null) {
+            session.invalidate();
+            return "/member/logout";
+        } else {
+            return "/member/denied";
+        }
     }
 
 }

@@ -29,8 +29,8 @@
 			<textarea th:name="content" id="summernote" th:value="*{content}" th:field="*{content}" cols="30" rows="10"></textarea><br/>
 			
 			<div>가격 : </div>
-			<input type="checkbox" th:value="0" th:field="*{price}">무료
-			<input type="text" th:value="*{price}" th:field="*{price}"><br/>
+			<input type="checkbox" id="chkPrice" name="chkPrice">무료
+			<input type="text" id="price" name="price" th:value="*{price}" th:field="*{price}"><br/>
 				  
 			<div>카테고리 : 1개 이상 선택하세요.</div>
 			<div class="category">
@@ -52,9 +52,15 @@
 			<input type="hidden" name="gubun" value="U" />
 			<input type="hidden" th:value="*{serviceNo}" th:field="*{serviceNo}">
 			<input type="submit" value="수정완료">
+			<input type="button" id="listBtn" value="마켓리스트" />
 		</form>
 		</div>
 		<script>
+		$('#listBtn').on('click', function() {
+			location.href = "/market/marketListPage";
+			alert("수정이 완료 되지 않았습니다.");
+		});
+		
 			$('#summernote').summernote({
 				height : 300, // 에디터 높이
 				minHeight : null, // 최소 높이
@@ -81,6 +87,7 @@
 					processData : false,
 					success : function(data) {
 						$(el).summernote('editor.insertImage', data.url);
+						console.log("data.url이 이미지 파일 주소" + data.url);
 					}
 				});
 			}
@@ -90,6 +97,18 @@
  			$(function() {
  				// 화면 초기구성
  				fn_defineForm();
+ 				check_freeForm(); 
+ 				
+				// 가격 이벤트 처리
+		 		// ES6 이전
+		 		$("#chkPrice").on("change", function(){
+		 			if ($("#chkPrice")[0].checked) {
+		 				$("#price").val(0);
+		 				$("#price").attr('readonly', true);
+		 			} else {
+		 				$("#price").attr('readonly', false);
+		 			}
+		 		});
 				
  				// 수정 폼 Submit 이벤트
 				$("#serviceUpdateForm").submit(function(){
@@ -105,34 +124,42 @@
  						$(form.type).focus();
  						return;
  					}
-
 					// form 안에 title 유효성 체크
  					if (form.title.value == "") {
  						alert("제목은 필수 입력 항목입니다!");
  						$(form.title).focus();
  						return;
  					}
-
 					 //form 안에 content 유효성 체크
  					if (form.content.value == "") {
  						alert("내용은 필수 입력 항목입니다!");
  						$(form.content).focus();
  						return;
  					}
+ 				const cg = document.getElementsByName('chkPrice');
+ 					let count = 0;
 
-/* 					// form 안에 price 유효성 체크
- 					if (form.price.value == "") {
+ 					// for문으로 카테고리 길이만큼 다 검사
+ 					for (let i = 0; i < cg.length; i++) {
+ 						if (cg[i].checked) {
+ 							console.log(cg[i].value);
+ 							count++;
+ 						}
+ 					}
+ 					if (count === "") {
+ 						alert('가격을 체크해주세요.');
+ 						return;
+ 					} else {
+ 						count = 0;
+ 					}
+ 					
+ 					//form 안에 price 유효성 체크
+					/* if (form.price.value === "") {
  						alert("가격은 필수 입력 항목입니다!");
  						$(form.price).focus();
  						return;
- 					}
-
-					// form 안에 category 유효성 체크
- 					if (form.category.value == "") {
- 						alert("카테고리는 한개 이상 입력해야합니다!");
- 						$(form.category).focus();
- 						return;
  					}  */
+
 					/**
 					 * url : 전송할 서버 주소
 					 * type : 전송방식 (get/post)
@@ -168,9 +195,7 @@
 			});
  			// 화면 초기구성 함수
  			function fn_defineForm() {
- 				/**
- 				 * 카테고리 설정
- 				 */ 
+ 			// 카테고리 설정
  				/*<![CDATA[*/ 
  				var category = /*[[ ${serviceInfo.category} ]]*/
  				/*]]*/
@@ -183,6 +208,23 @@
 					$("input[name=category][value=" + categoryArr[i] + "]").attr("checked", true);
 				}
  			}
-		</script>
+ 			
+ 		  	function check_freeForm() {
+ 		  	// 무료 체크박스 설정
+ 				/*<![CDATA[*/ 
+ 				var price = /*[[ ${serviceInfo.price} ]]*/
+ 				/*]]*/
+ 				
+				console.log("price {} :: ", price);
+ 		  	
+				if(price == 0) {
+					$("input:checkbox[id='chkPrice']").prop("checked", true);
+			 		$("#price").attr('readonly', true);
+			 	} else {
+			 		$("#price").attr('readonly', false);
+			 	}
+			}
+			
+			</script>
 	</body>
 </html>

@@ -11,7 +11,6 @@
 			  , TITLE
 			  , CONTENT
 			  , REG_DATE
-			  , UPDATE_DATE
 			  , LOCATION
 			  , JM_STATE
 			  , PRICE
@@ -26,7 +25,6 @@
 			  , #{title}
 			  , #{content}
 			  , NOW()
-			  , NOW()
 			  , #{location}
 			  , #{jmState}
 			  , #{price}
@@ -38,11 +36,39 @@
 			 )
 	]]>
 	</insert>
+	
+	<insert id="insertJm" parameterType="MarketVO">
+		<![CDATA[
+			INSERT 
+			  INTO JMSTATE
+				   (
+				    JM_ID
+				  , JM_SERVICE
+				 )
+			VALUES (
+				    #{jmId}
+				  , #{jmService}
+				 )
+		]]>
+	</insert>
+	
+	<select id="selectJm" parameterType="MarketVO">
+		<![CDATA[
+			SELECT JM_ID
+				 , JM_SERVICE
+			  FROM JMSTATE
+		 	 WHERE JM_ID = #{jmId}
+		]]>
+	
+	</select>
 
 	<select id="selectMarketList" parameterType="MarketVO" resultType="MarketVO">
 		<![CDATA[
 			SELECT SERVICE_NO
-				 , TYPE
+				 , CASE TYPE
+			  	   WHEN 0 THEN '구매'
+			  	   WHEN 1 THEN '판매'
+			  	   END AS TYPE_NM
 			 	 , TITLE
 			 	 , CONTENT
 				 , REG_DATE
@@ -62,7 +88,10 @@
 	<select id="selectServiceDetail" parameterType="MarketVO" resultType="MarketVO">
 		<![CDATA[
 			SELECT SERVICE_NO
-				 , TYPE
+				 , CASE TYPE
+			  	   WHEN 0 THEN '구매'
+			  	   WHEN 1 THEN '판매'
+			  	   END AS TYPE_NM
 				 , TITLE
 				 , CONTENT
 				 , REG_DATE
@@ -100,5 +129,13 @@
 		DELETE 
 		  FROM MARKET
 		 WHERE SERVICE_NO = #{serviceNo}
+	</delete>
+	
+	<delete id="deleteJm" parameterType="MarketVO">
+		<![CDATA[
+			DELETE 
+			  FROM JMSTATE
+			 WHERE JM_ID = #{jmId}
+		]]>
 	</delete>
 </mapper>

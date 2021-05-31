@@ -41,4 +41,8 @@ public class MarketDAO extends AbstractDAO {
 	public int serviceDelete(MarketVO serviceNo) throws Exception {
 		return (int) delete("market.serviceDelete", serviceNo);
 	}
+
+	public MarketVO serviceJm(MarketVO marketVO) throws Exception {
+		return (MarketVO) insert("market.serviceJm", marketVO);
+	}
 }

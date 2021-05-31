@@ -74,4 +74,12 @@ public class MarketServiceImpl implements MarketService {
 
 		return marketVO;
 	}
+
+	// 찜하기
+	@Override
+	public MarketVO serviceJm(MarketVO marketVO) throws Exception {
+
+		
+		return marketDAO.serviceJm(marketVO);
+	}
 }

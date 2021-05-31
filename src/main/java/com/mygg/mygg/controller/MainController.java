@@ -17,8 +17,4 @@ public class MainController {
 		return "/member/index";
 	}
 
-	@RequestMapping("/main")
-	public String main() {
-		return "service/main";
-	}
 }
