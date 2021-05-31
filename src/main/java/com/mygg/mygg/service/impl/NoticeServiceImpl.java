@@ -1,9 +1,10 @@
 package com.mygg.mygg.service.impl;
 
-import com.mygg.mygg.domain.repository.NoticeRepository;
-import com.mygg.mygg.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.mygg.mygg.domain.repository.NoticeRepository;
+import com.mygg.mygg.service.NoticeService;
 
 import java.util.List;
 import java.util.Map;

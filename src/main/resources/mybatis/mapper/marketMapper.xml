@@ -37,7 +37,7 @@
 	]]>
 	</insert>
 	
-	<insert id="insertJm" parameterType="MarketVO">
+<!-- 	<insert id="insertJm" parameterType="MarketVO">
 		<![CDATA[
 			INSERT 
 			  INTO JMSTATE
@@ -60,7 +60,7 @@
 		 	 WHERE JM_ID = #{jmId}
 		]]>
 	
-	</select>
+	</select> -->
 
 	<select id="selectMarketList" parameterType="MarketVO" resultType="MarketVO">
 		<![CDATA[
@@ -131,11 +131,11 @@
 		 WHERE SERVICE_NO = #{serviceNo}
 	</delete>
 	
-	<delete id="deleteJm" parameterType="MarketVO">
+	<!-- <delete id="deleteJm" parameterType="MarketVO">
 		<![CDATA[
 			DELETE 
 			  FROM JMSTATE
 			 WHERE JM_ID = #{jmId}
 		]]>
-	</delete>
+	</delete> -->
 </mapper>
