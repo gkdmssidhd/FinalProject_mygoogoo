@@ -13,5 +13,7 @@
 		<a sec:authorize="hasRole('ROLE_MEMBER')" th:href="@{/member/info}">내정보</a>
 		<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">어드민</a>
 		<a th:href="@{/market/marketListPage}">마켓 리스트</a>
+		<a th:href="@{/notice}">공지사항</a>
+
 	</body>
 </html>

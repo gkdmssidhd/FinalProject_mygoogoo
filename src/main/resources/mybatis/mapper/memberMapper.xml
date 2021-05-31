@@ -5,9 +5,9 @@
 
     <insert id="register">
         INSERT INTO member (id, email, password, name, nickname, phone_number, gender, age, location
-                           , photo, authority, role)
+                           , photo, authority)
         VALUES (#{id}, #{email}, #{password}, #{name}, #{nickname}, #{phone_number}
-               , #{gender}, #{age}, #{location}, #{photo}, #{authority}, #{role})
+               , #{gender}, #{age}, #{location}, #{photo}, #{authority})
     </insert>
 
     <select id="login" parameterType="com.mygg.mygg.dto.MemberDTO" resultType="java.util.HashMap">

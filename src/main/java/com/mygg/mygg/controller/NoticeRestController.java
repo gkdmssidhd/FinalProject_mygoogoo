@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,7 +43,6 @@ public class NoticeRestController {
 
     @PostMapping("/notice/insetReply")
     public int insertReply(@RequestBody Map<String,String> json){
-        System.out.println(json);
         return noticeService.insertReply(json);
     }
 

@@ -66,8 +66,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<input type="hidden" th:value="*{serviceNo}" th:field="*{serviceNo}">
-		<input type="button" id="registBtn" value="서비스등록" th:if="${session.memberId != null}"/>
+		<input type="button" id="registBtn" value="서비스등록" th:if="${session.id != null}"/>
 		<input type="button" id="mainBtn" value="메인"/>
 	</body>
 	<script>

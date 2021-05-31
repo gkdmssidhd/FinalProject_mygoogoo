@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.mygg.mygg.service.NoticeService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
@@ -34,12 +36,18 @@ public class NoticeController {
 
     @GetMapping("/notice/detail/{board_id}")
     public String getDetail(@PathVariable("board_id") int board_id, Model model){
+
         model.addAttribute("notice", noticeService.getNotice(board_id));
         return "/notice/notice_detail";
     }
 
     @GetMapping("/notice/write")
-    public String write(){
+    public String write(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        if(!session.getAttribute("role").equals("admin")) {
+            String referer = request.getHeader("Referer");
+            return "redirect:"+referer;
+        }
         return "/notice/write";
     }
 
