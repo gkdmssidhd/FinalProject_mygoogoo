@@ -1,4 +1,4 @@
-package com.mygg.mygg.dao;
+package com.mygg.main.dao;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.mygg.mygg.vo.MarketVO;
+import com.mygg.main.vo.MarketVO;
 
 @Repository("marketDAO")
 public class MarketDAO extends AbstractDAO {
@@ -18,7 +18,7 @@ public class MarketDAO extends AbstractDAO {
 
 		@SuppressWarnings("unchecked")
 		List<MarketVO> marketList = (List<MarketVO>) selectList("market.selectMarketList");
-
+		
 		return marketList;
 	}
 
@@ -26,12 +26,12 @@ public class MarketDAO extends AbstractDAO {
 	public MarketVO serviceDetail(int serviceNo) throws Exception {
 		return (MarketVO) select("market.selectServiceDetail", serviceNo);
 	}
-
+	
 	// 등록
 	public int serviceSave(MarketVO marketVO) throws Exception {
 		return (int) insert("market.insertService", marketVO);
 	}
-
+	
 	// 수정
 	public int serviceUpdateSave(MarketVO serviceNo) throws Exception {
 		return (int) update("market.serviceUpdate", serviceNo);
@@ -40,9 +40,5 @@ public class MarketDAO extends AbstractDAO {
 	// 삭제
 	public int serviceDelete(MarketVO serviceNo) throws Exception {
 		return (int) delete("market.serviceDelete", serviceNo);
-	}
-
-	public MarketVO serviceJm(MarketVO marketVO) throws Exception {
-		return (MarketVO) insert("market.serviceJm", marketVO);
 	}
 }

@@ -20,11 +20,13 @@
 			<colgroup>
 				<col width="3%" />
 				<col width="3%" />
-				<col width="30%" />
+				<col width="20%" />
 				<col width="*" />
+				<col width="15%" />
+				<col width="5%" />
+				<col width="5%" />
 				<col width="10%" />
 				<col width="15%" />
-				<col width="30%" />
 			</colgroup>
 			<!-- 헤더 제목 부분 -->
 			<thead align="center">
@@ -33,6 +35,10 @@
 					<td><input type="checkbox" id="allChk" name="chk" /></td>
 					<td>제목</td>
 					<td>내용</td>
+					<td>날짜</td>
+					<td>
+						<input type="button" id="jmBtn" value="찜하기" />
+					</td>
 					<td>타입</td>
 					<td>가격</td>
 					<td>카테고리</td>
@@ -52,18 +58,31 @@
 					</a>
 					</td>
 					<td th:utext="${market.content}"></td>
-					<td th:text="${market.type}"></td>
-					<!-- <td th:text="${market.price}" align="right"></td> -->
+					<td th:text="${#strings.substring(market.regDate,0,16)}"></td>
+					<td th:text="${market.jmState}"></td>
+					<td th:text="${market.typeNm}"></td>
 					<td th:text="*{#numbers.formatDecimal(market.price, 0, 'COMMA', 0, 'POINT')}" align="right"></td>
 					<td th:text="${market.category}"></td>
 				</tr>
 			</tbody>
 		</table>
-		<input type="button" id="registBtn" value="서비스등록" />
+		<input type="hidden" th:value="*{serviceNo}" th:field="*{serviceNo}">
+		<input type="button" id="registBtn" value="서비스등록" th:if="${session.memberId != null}"/>
+		<input type="button" id="mainBtn" value="메인"/>
 	</body>
 	<script>
 		$('#registBtn').on('click', function() {
-			location.href = "/market/serviceRegistPage";
+			/* if(memberId != null && memberId.equals(memberInform.getid())) {
+			} */
+				location.href = "/market/serviceRegistPage";
+		});
+		$('#mainBtn').on('click', function() {
+			location.href = "/";
+		});
+	
+		$('#jmBtn').on('click', function() {
+			location.href = "/market/serviceJm";
+			// 한번 더 누르면 찜이 취소되는 기능
 		});
 	
 		// 전체 선택, 전체 선택 해제
@@ -77,7 +96,7 @@
 	            $("input[name=chk]").prop("checked", false);
 	        }
 		});
-		
+
 		$('#summernote').summernote({
 			height : 300, // 에디터 높이
 			minHeight : null, // 최소 높이

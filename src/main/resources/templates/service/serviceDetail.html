@@ -17,6 +17,8 @@
 					<col width="20%" />
 					<col width="*" />
 					<col width="10%" />
+					<col width="5%" />
+					<col width="5%" />
 					<col width="10%" />
 					<col width="30%" />
 				</colgroup>
@@ -24,6 +26,10 @@
 					<tr>
 						<td>제목</td>
 						<td>내용</td>
+						<td>날짜</td>
+						<td>
+							<input type="button" id="jmBtn" value="찜하기" />
+						</td>
 						<td>타입</td>
 						<td>가격</td>
 						<td>카테고리</td>
@@ -34,7 +40,9 @@
 					<tr>
 						<td th:text="*{title}"></td>
 						<td th:utext="*{content}"></td>
-						<td th:text="*{type}"></td>
+						<td th:text="*{#strings.substring(regDate,0,16)}"></td>
+						<td th:text="*{jmState}"></td>
+						<td th:text="*{typeNm}"></td>
 						<td th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')}" align="right"></td>
 						<td th:text="*{category}" th:filed="*{category}"></td>
 					</tr>
@@ -42,18 +50,20 @@
 			</table>
 			<input type="hidden" th:value="*{serviceNo}" th:field="*{serviceNo}">
 	 	</form> 
-			
-		<!-- <input type="button" id="updateBtn" value="수정" class="serviceUpdate"><br/> -->
-		<!--  th:value="${serviceInfo.serviceNo}" -->
-		<input type="button" id="updateBtn" value="수정" />
-		<input type="button" id="deleteBtn" value="삭제" />
+
+		<input type="button" id="updateBtn" value="수정" th:if="${session.memberId != null}"/>
+		<input type="button" id="deleteBtn" value="삭제" th:if="${session.memberId != null}"/>
 		<input type="button" id="mainBtn" value="메인" />
 		<input type="button" id="listBtn" value="마켓 리스트" />
 
-		<script>
+		<script th:inline="javascript">
+		
 			$('#updateBtn').on('click', function() {
-				var form = $('#serviceUpdateForm')[0];
-				form.submit();
+				// memberId가 존재하고, 그 작성자 아이디가 작성한 글의 번호랑 동일할때
+			/* 	if(memberId != null && memberId.equals(serviceInfo.getserviceNo())){ */
+					var form = $('#serviceUpdateForm')[0];
+					form.submit();
+				alert(/*[[${session.memberId}]]*/);
 			});
 		
 			$('#mainBtn').on('click', function() {
@@ -98,7 +108,7 @@
 					contentType : false,
 					processData : false
 				});
-			})
+			});
 		</script>
 	</body>
 </html>
