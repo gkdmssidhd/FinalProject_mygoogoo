@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mygg.mygg.dao.MemberDAO">
+
+
+<mapper namespace="com.mygg.mygg.domain.repository.MemberRepository">
 
     <insert id="register">
         INSERT INTO member (id, email, password, name, nickname, phone_number, gender, age, location
-                           , photo, authority)
+                           , photo, authority, role)
         VALUES (#{id}, #{email}, #{password}, #{name}, #{nickname}, #{phone_number}
-               , #{gender}, #{age}, #{location}, #{photo}, #{authority})
+               , #{gender}, #{age}, #{location}, #{photo}, #{authority}, #{role})
     </insert>
 
     <select id="login" parameterType="com.mygg.mygg.dto.MemberDTO" resultType="java.util.HashMap">
@@ -19,7 +21,7 @@
     <select id="activity" parameterType="com.mygg.mygg.dto.MyPageDTO" resultType="java.util.HashMap">
         SELECT *
         FROM memberActivity ma JOIN member m
-                                    ON (ma.id = m.id)
+        ON (ma.id = m.id)
         WHERE ma.id = #{id}
     </select>
 </mapper>
