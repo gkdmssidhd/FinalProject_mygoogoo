@@ -1,4 +1,3 @@
-package com.mygg.mygg.service.impl;
 
 import com.mygg.mygg.domain.repository.MemberRepository;
 import com.mygg.mygg.dto.MemberDTO;
@@ -30,8 +29,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Map<String, String> activity(int id_value) throws Exception {
-        System.out.println(id_value+"서비스임플입니다ㅏㅏㅏㅏㅏㅏㅏㅏ");
-        return memberRepository.activity(id_value);
+    public Map<String, String> activity(int id) throws Exception {
+        return memberRepository.activity(id);
     }
 }

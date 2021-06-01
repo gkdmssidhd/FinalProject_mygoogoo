@@ -1,4 +1,3 @@
-
 package com.mygg.mygg.service;
 
 import com.mygg.mygg.dto.MemberDTO;
@@ -15,6 +14,6 @@ public interface MemberService {
     Map<String, String> login(MemberDTO memberDTO) throws Exception;
 
     // Activity
-    Map<String, String> activity(int id_value) throws Exception;
+    Map<String, String> activity(int id) throws Exception;
 
 }
