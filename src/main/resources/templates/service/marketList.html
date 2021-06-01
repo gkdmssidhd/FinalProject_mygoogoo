@@ -20,9 +20,10 @@
 			<colgroup>
 				<col width="3%" />
 				<col width="3%" />
-				<col width="20%" />
+				<col width="15%" />
 				<col width="*" />
 				<col width="15%" />
+				<col width="5%" />
 				<col width="5%" />
 				<col width="5%" />
 				<col width="10%" />
@@ -36,9 +37,7 @@
 					<td>제목</td>
 					<td>내용</td>
 					<td>날짜</td>
-					<td>
-						<input type="button" id="jmBtn" value="찜하기" />
-					</td>
+					<td colspan="2">찜하기</td>
 					<td>타입</td>
 					<td>가격</td>
 					<td>카테고리</td>
@@ -60,12 +59,21 @@
 					<td th:utext="${market.content}"></td>
 					<td th:text="${#strings.substring(market.regDate,0,16)}"></td>
 					<td th:text="${market.jmState}"></td>
+					<td>
+						<input th:if="${market.jmId == 0}" type="button" id="jmAddBtn" value="찜하기" th:onclick="jmAdd([[ ${session.id} ]], [[ ${market.serviceNo} ]])"/>
+						<input th:if="${market.jmId != 0}" type="button" id="jmDelBtn" value="찜취소" th:onclick="jmDel([[ ${session.id} ]], [[ ${market.serviceNo} ]])"/>
+					</td>
 					<td th:text="${market.typeNm}"></td>
 					<td th:text="*{#numbers.formatDecimal(market.price, 0, 'COMMA', 0, 'POINT')}" align="right"></td>
 					<td th:text="${market.category}"></td>
 				</tr>
 			</tbody>
 		</table>
+		<form id="jmForm">
+			<input type="hidden" id="jmId" name="jmId" />
+			<input type="hidden" id="jmService" name="jmService" />
+			<input type="hidden" id="gubun" name="gubun" />
+		</form>
 		<input type="button" id="registBtn" value="서비스등록" th:if="${session.id != null}"/>
 		<input type="button" id="mainBtn" value="메인"/>
 	</body>

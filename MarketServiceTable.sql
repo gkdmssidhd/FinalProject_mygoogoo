@@ -53,5 +53,24 @@ writer varchar(50) not null,
 regdate timestamp default current_timestamp
 );  
 
+truncate MARKET;
+
 insert into member(email,password,name,nickname,phone_number,gender,age,location,authority,join_date)
 values(123,123,123,'하은쓰',123,'남성',20,'종로구',1,current_timestamp());
+
+
+CREATE TABLE `mygugu`.`member` (
+  `id` INT NOT NULL auto_increment,
+  `email` VARCHAR(100) NOT NULL,
+  `password` VARCHAR(100) NOT NULL,
+  `name` VARCHAR(100) NOT NULL,
+  `nickname` VARCHAR(100) NOT NULL,
+  `phone_number` VARCHAR(100) NOT NULL,
+  `gender` VARCHAR(10) NOT NULL, 
+  `age` INT NOT NULL,
+  `location` VARCHAR(100) NOT NULL,
+  `photo` VARCHAR(100) NULL,
+  `authority` INT NOT NULL, 
+  `join_date` TIMESTAMP default current_timestamp,
+  `role` VARCHAR(255),
+  PRIMARY KEY (`id`));
