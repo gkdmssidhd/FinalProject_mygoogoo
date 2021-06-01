@@ -22,6 +22,6 @@
         SELECT *
         FROM memberActivity ma JOIN member m
         ON (ma.id = m.id)
-        WHERE ma.id = #{id_value}
+        WHERE ma.id = #{id}
     </select>
 </mapper>
