@@ -1,4 +1,4 @@
-package com.mygg.mygg.dao;
+package com.mygg.mygg.domain.repository;
 
 import com.mygg.mygg.dto.MemberDTO;
 import com.mygg.mygg.dto.MyPageDTO;
@@ -11,6 +11,6 @@ public interface MemberRepository {
 
     void register(MemberDTO memberDTO) ;
     Map<String, String> login(MemberDTO memberDTO) ;
-    Map<String, String> activity(MyPageDTO myPageDTO);
+    Map<String, String> activity(int id_value);
 
 }

@@ -18,10 +18,10 @@
         WHERE email = #{email}
     </select>
 
-    <select id="activity" parameterType="com.mygg.mygg.dto.MyPageDTO" resultType="java.util.HashMap">
+    <select id="activity" parameterType="Integer" resultType="java.util.HashMap">
         SELECT *
         FROM memberActivity ma JOIN member m
         ON (ma.id = m.id)
-        WHERE ma.id = #{id}
+        WHERE ma.id = #{id_value}
     </select>
 </mapper>

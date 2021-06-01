@@ -1,6 +1,5 @@
 package com.mygg.mygg.controller;
 
-import com.mygg.mygg.dto.MyPageDTO;
 import com.mygg.mygg.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,18 +14,18 @@ import java.util.Map;
 @RequestMapping("/member")
 public class MyPageController {
 
-    private final MemberService memberService;
-
     @Autowired
-    public MyPageController(MemberService memberService) {
-        this.memberService = memberService;
-    }
+    private MemberService memberService;
+
+
 
     @GetMapping("/info")
-    public String myPage(MyPageDTO myPageDTO, HttpSession httpSession) throws Exception {
+    public String myPage(HttpSession httpSession) throws Exception {
+        Integer id = (int)httpSession.getAttribute("id");
+        Map<String, String> memberActivity = memberService.activity(id);
 
-        Map<String, String> memberActivity = memberService.activity(myPageDTO);
-
+        System.out.println(memberActivity+"멤버액티비티내용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
+        
         if(memberActivity.get("id") != null) {
             httpSession.setAttribute("level", memberActivity.get("level"));
             httpSession.setAttribute("wish", memberActivity.get("wish"));

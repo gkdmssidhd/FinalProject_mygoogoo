@@ -44,6 +44,7 @@ public class NoticeController {
     @GetMapping("/notice/write")
     public String write(HttpServletRequest request){
         HttpSession session = request.getSession();
+
         if(!session.getAttribute("role").equals("admin")) {
             String referer = request.getHeader("Referer");
             return "redirect:"+referer;
