@@ -45,4 +45,15 @@ public class MarketDAO extends AbstractDAO {
 	public MarketVO serviceJm(MarketVO marketVO) throws Exception {
 		return (MarketVO) insert("market.serviceJm", marketVO);
 	}
+
+	public int insertJm(MarketVO marketVO) throws Exception {
+		return (int) insert("market.insertJm", marketVO);
+	}
+
+	public int deleteJm(MarketVO marketVO) throws Exception {
+		return (int) delete("market.deleteJm", marketVO);
+	}
+	public int updateJmState(MarketVO marketVO) {
+		return (int) update("market.updateJmState", marketVO);
+	}
 }

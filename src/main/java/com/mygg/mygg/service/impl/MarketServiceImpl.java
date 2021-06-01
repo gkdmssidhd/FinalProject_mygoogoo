@@ -82,4 +82,21 @@ public class MarketServiceImpl implements MarketService {
 		
 		return marketDAO.serviceJm(marketVO);
 	}
+
+	@Override
+	@Transactional
+	public int jmSave(MarketVO marketVO) throws Exception {
+		
+		int resultCnt = 0;
+		
+		if ("I".equals(marketVO.getGubun())) {
+			resultCnt = marketDAO.insertJm(marketVO);
+		}
+		else if ("D".equals(marketVO.getGubun())) {
+			resultCnt = marketDAO.deleteJm(marketVO);
+		}
+
+		resultCnt += marketDAO.updateJmState(marketVO);
+		return resultCnt;
+	}
 }

@@ -113,13 +113,6 @@ public class MarketController {
 		logger.info("## serviceSave {} :: " + marketVO.toString());
 		logger.info("##################################################");
 		
-		/*
-		 * HttpSession session = request.getSession();
-		 * 
-		 * Map<String,String> memberInform = memberService.login(dto);
-		 * 
-		 * session.setAttribute("memberId", memberInform.get("id"));
-		 */
 		
 		return marketService.serviceSave(marketVO);
 	}
@@ -214,14 +207,9 @@ public class MarketController {
 		- DELETE FROM JMSTATE WHERE JM_ID = #{jmId}
 	 */
 	
-/*	@RequestMapping("serviceJm")
+	@RequestMapping("jmSave")
 	@ResponseBody
-	public MarketVO serviceJm(MarketVO marketVO, MemberVO memberVO, HttpSession session) throws Exception{
-		// 
-		MarketVO jmService = marketService.serviceJm(marketVO.getServiceNo());
-		
-		MemberVO jmID = memberService.serviceJm(memberVO.getId());
-		
-		return ;
-	}*/
+	public int jmSave(MarketVO marketVO) throws Exception{
+		return marketService.jmSave(marketVO);
+	}
 }

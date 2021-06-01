@@ -20,9 +20,10 @@
 			<colgroup>
 				<col width="3%" />
 				<col width="3%" />
-				<col width="20%" />
+				<col width="15%" />
 				<col width="*" />
 				<col width="15%" />
+				<col width="5%" />
 				<col width="5%" />
 				<col width="5%" />
 				<col width="10%" />
@@ -36,9 +37,7 @@
 					<td>제목</td>
 					<td>내용</td>
 					<td>날짜</td>
-					<td>
-						<input type="button" id="jmBtn" value="찜하기" />
-					</td>
+					<td colspan="2">찜하기</td>
 					<td>타입</td>
 					<td>가격</td>
 					<td>카테고리</td>
@@ -60,14 +59,22 @@
 					<td th:utext="${market.content}"></td>
 					<td th:text="${#strings.substring(market.regDate,0,16)}"></td>
 					<td th:text="${market.jmState}"></td>
+					<td>
+						<input th:if="${market.jmId == 0}" type="button" id="jmAddBtn" value="찜하기" th:onclick="jmAdd([[ ${session.id} ]], [[ ${market.serviceNo} ]])"/>
+						<input th:if="${market.jmId != 0}" type="button" id="jmDelBtn" value="찜취소" th:onclick="jmDel([[ ${session.id} ]], [[ ${market.serviceNo} ]])"/>
+					</td>
 					<td th:text="${market.typeNm}"></td>
 					<td th:text="*{#numbers.formatDecimal(market.price, 0, 'COMMA', 0, 'POINT')}" align="right"></td>
 					<td th:text="${market.category}"></td>
 				</tr>
 			</tbody>
 		</table>
-		<input type="hidden" th:value="*{serviceNo}" th:field="*{serviceNo}">
-		<input type="button" id="registBtn" value="서비스등록" th:if="${session.memberId != null}"/>
+		<form id="jmForm">
+			<input type="hidden" id="jmId" name="jmId" />
+			<input type="hidden" id="jmService" name="jmService" />
+			<input type="hidden" id="gubun" name="gubun" />
+		</form>
+		<input type="button" id="registBtn" value="서비스등록" th:if="${session.id != null}"/>
 		<input type="button" id="mainBtn" value="메인"/>
 	</body>
 	<script>
@@ -80,10 +87,10 @@
 			location.href = "/";
 		});
 	
-		$('#jmBtn').on('click', function() {
-			location.href = "/market/serviceJm";
-			// 한번 더 누르면 찜이 취소되는 기능
-		});
+// 		$('#jmBtn').on('click', function() {
+// 			location.href = "/market/serviceJm";
+// 			// 한번 더 누르면 찜이 취소되는 기능
+// 		});
 	
 		// 전체 선택, 전체 선택 해제
 		$("#allChk").on("click", function() {
@@ -125,6 +132,66 @@
 				success : function(data) {
 					$(el).summernote('editor.insertImage', data.url);
 				}
+			});
+		}
+		
+		function jmAdd(id, serviceNo) {
+			$("#jmId").val(id);
+			$("#jmService").val(serviceNo);
+			$("#gubun").val("I");
+			
+			var form = $('#jmForm')[0];
+			var formData = new FormData(form);
+
+			$.ajax({
+				url : "/market/jmSave",
+				type : "post",
+				data : formData,
+				success : function(data) {
+					if (data == 2) {
+						alert("정상적으로 저장되었습니다.");
+						// 처리가 완료되면 marketList로 이동한다.
+						location.href = "/market/marketListPage";
+					} else {
+						console.log("error");
+					}
+				},
+				error : function(xhr, status) {
+					alert("오류가 발생했습니다. :: " + status);
+				},
+				cache : false,
+				contentType : false,
+				processData : false
+			});
+		}
+		
+		function jmDel(id, serviceNo) {
+			$("#jmId").val(id);
+			$("#jmService").val(serviceNo);
+			$("#gubun").val("D");
+			
+			var form = $('#jmForm')[0];
+			var formData = new FormData(form);
+			
+			$.ajax({
+				url : "/market/jmSave",
+				type : "post",
+				data : formData,
+				success : function(data) {
+					if (data == 2) {
+						alert("정상적으로 저장되었습니다.");
+						// 처리가 완료되면 marketList로 이동한다.
+						location.href = "/market/marketListPage";
+					} else {
+						console.log("error");
+					}
+				},
+				error : function(xhr, status) {
+					alert("오류가 발생했습니다. :: " + status);
+				},
+				cache : false,
+				contentType : false,
+				processData : false
 			});
 		}
 	</script>
