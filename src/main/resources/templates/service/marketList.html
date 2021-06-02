@@ -26,8 +26,8 @@
 				<col width="5%" />
 				<col width="5%" />
 				<col width="5%" />
+				<col width="8%" />
 				<col width="10%" />
-				<col width="15%" />
 			</colgroup>
 			<!-- 헤더 제목 부분 -->
 			<thead align="center">
@@ -52,7 +52,7 @@
 					<td><input type="checkbox" th:id="${market.serviceNo}" name="chk" /></td>
 					<td>
 					<!-- 제목누르면 상세보기로 넘어가기 serviceNo를 넘겨주면서 -->
-					<a th:href="@{/market/serviceDetail(serviceNo=${market.serviceNo})}"
+					<a th:href="@{/market/serviceDetail(serviceNo=${market.serviceNo}, id=${session.id})}"
 					   th:text="${market.title}" th:field="*{market.title}">
 					</a>
 					</td>
@@ -69,6 +69,7 @@
 				</tr>
 			</tbody>
 		</table>
+		<!-- 찜하기 폼 작성자, 글번호, 구분은 I나 D로 -->
 		<form id="jmForm">
 			<input type="hidden" id="jmId" name="jmId" />
 			<input type="hidden" id="jmService" name="jmService" />
@@ -79,18 +80,11 @@
 	</body>
 	<script>
 		$('#registBtn').on('click', function() {
-			/* if(memberId != null && memberId.equals(memberInform.getid())) {
-			} */
-				location.href = "/market/serviceRegistPage";
+			location.href = "/market/serviceRegistPage";
 		});
 		$('#mainBtn').on('click', function() {
 			location.href = "/";
 		});
-	
-// 		$('#jmBtn').on('click', function() {
-// 			location.href = "/market/serviceJm";
-// 			// 한번 더 누르면 찜이 취소되는 기능
-// 		});
 	
 		// 전체 선택, 전체 선택 해제
 		$("#allChk").on("click", function() {
@@ -134,9 +128,12 @@
 				}
 			});
 		}
-		
+		// 찜하기
 		function jmAdd(id, serviceNo) {
+			// session id를 jmId에 담고
 			$("#jmId").val(id);
+			
+			// serviceNo를 jmService에 담고
 			$("#jmService").val(serviceNo);
 			$("#gubun").val("I");
 			
@@ -145,11 +142,12 @@
 
 			$.ajax({
 				url : "/market/jmSave",
-				type : "post",
+				type : "POST",
 				data : formData,
 				success : function(data) {
+					// 두개의 데이터가 정삭적으로 온다면
 					if (data == 2) {
-						alert("정상적으로 저장되었습니다.");
+						alert("찜하기 완료");
 						// 처리가 완료되면 marketList로 이동한다.
 						location.href = "/market/marketListPage";
 					} else {
@@ -165,8 +163,12 @@
 			});
 		}
 		
+		// 찜 취소
 		function jmDel(id, serviceNo) {
+			// session id를 jmId에 담고
 			$("#jmId").val(id);
+			
+			// serviceNo를 jmService에 담고
 			$("#jmService").val(serviceNo);
 			$("#gubun").val("D");
 			
@@ -175,11 +177,12 @@
 			
 			$.ajax({
 				url : "/market/jmSave",
-				type : "post",
+				type : "POST",
 				data : formData,
 				success : function(data) {
+					// 2개 데이터가 정상적으로 삭제되어지면
 					if (data == 2) {
-						alert("정상적으로 저장되었습니다.");
+						alert("찜하기 취소");
 						// 처리가 완료되면 marketList로 이동한다.
 						location.href = "/market/marketListPage";
 					} else {
