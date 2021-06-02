@@ -1,3 +1,4 @@
+package com.mygg.mygg.service.impl;
 
 import com.mygg.mygg.domain.repository.MemberRepository;
 import com.mygg.mygg.dto.MemberDTO;
