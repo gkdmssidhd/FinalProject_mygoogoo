@@ -9,6 +9,7 @@
             var options = 'width = 500, height = 500, top = 100, location = no';
             window.open(url, name, options);
         }
+
     </script>
 
 </head>
@@ -41,14 +42,19 @@
 <hr>
 
 <h3> 나의 작성글 </h3>
+타입 : <span th:text="${session.type}"></span> <br>
+제목 : <span th:text="${session.title}"></span> <br>
+가격 : <span th:text="${session.price}"></span> <br>
+상태 : <span th:text="${session.rvState}"></span> <br>
 
 <hr>
 
 <h3> 진행중인 서비스 </h3>
-
+<!--서비스 개발 완료되면 확인하기! 꼭! 잊지말자!-->
 <hr>
 
 <h3> 나의 찜 </h3>
+찜 글번호 : <span th:text="${session.wish}"></span>
 
 </body>
 </html>
