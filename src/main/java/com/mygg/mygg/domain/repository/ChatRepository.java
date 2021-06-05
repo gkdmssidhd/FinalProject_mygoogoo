@@ -8,7 +8,6 @@ import java.util.Map;
 
 @Mapper
 public interface ChatRepository {
-    List<Map<String,Object>> getChats();
+    List<Map<String,Object>> getChats(String nickName);
 
-    void updateStatus(Map<String, String> json);
 }
