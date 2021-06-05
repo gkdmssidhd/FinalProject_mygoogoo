@@ -5,10 +5,7 @@ import com.mygg.mygg.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -112,11 +109,27 @@ public class ChatController {
             System.out.println(params.get("roomName")+"룸네임ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ");
             mv.addObject("roomName", params.get("roomName"));
             mv.addObject("roomNumber", params.get("roomNumber"));
-            System.out.println(params.get("roomNumber")+"룸넘버~~~~~~~~~~~~~~~~~~~");
+            mv.addObject("lists", chatService.getChat(Integer.parseInt((String)params.get("roomNumber"))));
             mv.setViewName("/chat/chat");
         }else {
             mv.setViewName("/chat/chatRoom");
         }
         return mv;
+    }
+
+    @PostMapping("/insertChat")
+    @ResponseBody
+    public int insertChat(@RequestBody HashMap<String,Object> form_value){
+
+        System.out.println(form_value+"폼벨류입니다@@@@@@@@@@@@@@@@@@@@@@@");
+
+        int room_id=Integer.parseInt((String) form_value.get("room_id"));
+        String chat_writer=(String) form_value.get("chat_writer");
+        String chat_content=(String) form_value.get("chat_content");
+
+        System.out.printf("룸아이디 : %d 글쓴이 : %s 내용 : %s",room_id,chat_writer,chat_content);
+
+        return chatService.insertChat(form_value);
+
     }
 }

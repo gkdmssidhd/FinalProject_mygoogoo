@@ -51,6 +51,10 @@
   <input type="hidden" id="roomNumber" th:value="${roomNumber}">
 
   <div id="chating" class="chating">
+    <block th:each="list : ${lists}">
+      <p class='me' th:if="${list.chat_writer == session.nickname}" th:text="'나 :'+${list.chat_content}"></p>
+      <p class='others' th:if="${list.chat_writer != session.nickname}" th:text="${list.chat_writer}+' : '+${list.chat_content}"></p>
+    </block>
   </div>
 
   <div id="yourName">
@@ -137,7 +141,26 @@
       msg : $("#chatting").val()
     }
     ws.send(JSON.stringify(option))
+
+    let json = {
+      room_id: [[${roomNumber}]],
+      chat_writer: $("#userName").val(),
+      chat_content: $("#chatting").val()
+    };
+
+    $.ajax({
+      url:'/insertChat',
+      type: 'POST',
+      data: JSON.stringify(json),
+      contentType: "application/json; charset=UTF-8",
+      success:(result)=>{
+        console.log(result);
+      }
+    });
+
+
     $('#chatting').val("");
+
   }
 </script>
 </body>
