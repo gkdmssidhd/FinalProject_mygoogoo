@@ -1,6 +1,8 @@
 package com.mygg.mygg.controller;
 
+
 import com.mygg.mygg.dto.RoomDto;
+import com.mygg.mygg.dto.RoomInfoDto;
 import com.mygg.mygg.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -98,36 +100,38 @@ public class ChatController {
      * 채팅방
      * @return
      */
-    @RequestMapping("/moveChating")
-    public ModelAndView chating(@RequestParam HashMap<Object, Object> params) {
+    @GetMapping("/moveChating")
+    @ResponseBody
+    public RoomInfoDto chating(@RequestParam HashMap<Object, Object> params) {
 
-        ModelAndView mv = new ModelAndView();
+        RoomInfoDto dto = new RoomInfoDto();
         int roomNumber = Integer.parseInt((String) params.get("roomNumber"));
 
-        List<RoomDto> new_list = roomList.stream().filter(o->o.getRoomNumber()==roomNumber).collect(Collectors.toList());
-        if(new_list != null && new_list.size() > 0) {
-            System.out.println(params.get("roomName")+"룸네임ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ");
-            mv.addObject("roomName", params.get("roomName"));
-            mv.addObject("roomNumber", params.get("roomNumber"));
-            mv.addObject("lists", chatService.getChat(Integer.parseInt((String)params.get("roomNumber"))));
-            mv.setViewName("/chat/chat");
-        }else {
-            mv.setViewName("/chat/chatRoom");
+        List<RoomDto> new_list = roomList.stream().filter(o -> o.getRoomNumber() == roomNumber).collect(Collectors.toList());
+        if (new_list != null && new_list.size() > 0) {
+
+            dto.setRoomName((String) params.get("roomName"));
+            dto.setRoomNumber(roomNumber);
+            dto.setLists(chatService.getChat(Integer.parseInt((String) params.get("roomNumber"))));
+            System.out.println(dto.toString()+"여긴 챝팅컨트롤러~~");
+            return dto;
+        }else{
+
+            return dto;
         }
-        return mv;
     }
+
 
     @PostMapping("/insertChat")
     @ResponseBody
     public int insertChat(@RequestBody HashMap<String,Object> form_value){
 
-        System.out.println(form_value+"폼벨류입니다@@@@@@@@@@@@@@@@@@@@@@@");
+
 
         int room_id=Integer.parseInt((String) form_value.get("room_id"));
         String chat_writer=(String) form_value.get("chat_writer");
         String chat_content=(String) form_value.get("chat_content");
 
-        System.out.printf("룸아이디 : %d 글쓴이 : %s 내용 : %s",room_id,chat_writer,chat_content);
 
         return chatService.insertChat(form_value);
 
