@@ -6,11 +6,48 @@
   <title>Room</title>
   <style>
     *{
-      margin:0;
       padding:0;
+      margin:0;
+      text-decoration: none;
     }
+    *:link, *:visited{
+      color:black;
+    }
+
+    header{
+      background: rgb(237, 229, 153);
+      height: 70px;
+      padding-left: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0px 4px 10px 0px #cccccc;
+    }
+    .title_zone, .login_zone{
+      display: flex;
+      align-items: center;
+    }
+    .icon{
+      width: 50px;
+      margin-right: 10px;
+    }
+    .project_title{
+      color:rgb(90, 129, 0);
+      font-size: 20px;
+      font-weight: bold;
+      margin-right: 40px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .menus{
+      font-size: 20px;
+      font-weight: 550;
+    }
+    .login_control{
+      margin-right: 30px;
+    }
+    /*여기부터 본문*/
     .container{
-      height: 100vh;
+      height: 92vh;
     }
     .totalContainer{
       height: 100%;
@@ -136,6 +173,7 @@
 
 
 <body>
+<div th:replace="/fixed/header :: header"></div>
 <div class="container">
   <div class="totalContainer">
     <div id="roomContainer" class="roomContainer">
@@ -309,9 +347,15 @@
       }
     }
 
-    document.addEventListener("keypress", function(e){
+    document.addEventListener("keydown", function(e){
+      const chat = document.getElementById('chatting');
       if(e.keyCode == 13){ //enter press
-        send();
+        console.log("엔터키눌렷다!");
+        if(chat.value!==""){
+          send();
+        }else{
+          console.log("공백?");
+        }
       }
     });
   }
