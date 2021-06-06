@@ -1,3 +1,4 @@
+package com.mygg.mygg.controller;
 
 import com.mygg.mygg.dto.MemberDTO;
 import com.mygg.mygg.service.MemberService;
