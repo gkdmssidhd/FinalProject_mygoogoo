@@ -1,0 +1,27 @@
+<header>
+    <div class="title_zone">
+        <img src="/icon/title.png" alt="" class="icon">
+        <span>
+            <a href="/" class="project_title">MyGuGu</a>
+        </span>
+        <span class="menus">
+            <a href="/">Service</a> |
+            <a href="/market/marketListPage">Market</a>  |
+            <a href="/notice">Notice</a>
+        </span>
+    </div>
+    <div class="login_zone">
+        <span class="login_control">
+            <span class="menus">
+                <block th:if="${session.nickname == null}">
+                    <a href="/member/login" >로그인</a> |
+                    <a href="/member/signup"> 회원가입</a>
+                </block>
+                <block th:unless="${session.nickname == null}">
+                    <a th:href="@{/member/info}" >내정보</a> |
+                    <a th:href="@{/member/logout}" >로그아웃</a>
+                </block>
+            </span>
+        </span>
+    </div>
+</header>

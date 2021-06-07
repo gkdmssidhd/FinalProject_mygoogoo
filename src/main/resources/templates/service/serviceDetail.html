@@ -5,10 +5,12 @@
 	<title>ServiceDetail</title>
 
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+	<link rel="stylesheet" type="text/css" href="/css/header.css">
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 </head>
 	<body>
+	<div th:replace="/fixed/header :: header"></div>
 	<!-- serviceUpdate에서 입력한 값들이 여기서 보이는것. -->
 	<h2>ServiceDetail</h2>
 	<form id="serviceUpdateForm" th:action="@{/market/serviceUpdate}" th:object="${serviceInfo}">
