@@ -1,12 +1,20 @@
 HttpServletRequest request, Model model, HttpServletResponse response, HttpSession session
 RedirectAttributes redirectAttributes
 
+server.port=8086
+
 값이 잘 넘어오는지 콘솔에서 찍어볼때
 logger.info("##################################################");
 logger.info("## serviceSave {} :: " + marketVO.toString());
 logger.info("##################################################");
 		 
 		 
+response.setContentType("text/html; charset=utf-8");
+PrintWriter script = response.getWriter();
+script.println("<script>");
+script.println("alert('로그인이 필요합니다')");
+script.println("</script>");
+		
 @ResponseBody // Ajax 통신을 위한 태그
 
 
@@ -50,111 +58,4 @@ logger.info("##################################################");
 		VALUES (
 			   #{}	   		   
 	]]>
-	
-수정부분
-	
-	<form id="serviceUpdateForm" th:action="@{/market/serviceUpdate}" th:object="${serviceId}">
-		<table>
-			
-			<input type="hidden" th:value="*{title}" th:field="*{title}">
-			<input type="hidden" th:value="*{content}" th:field="*{content}">
-			<input type="hidden" th:value="*{type}" th:field="*{type}">
-			<input type="hidden" th:value="*{price}" th:field="*{price}">
-			<input type="hidden" th:value="*{category}" th:field="*{category}">
-			
-			<!-- 객체를 지정해주면 앞에 market.으로 접근하지 않아도 된다. -->
-			<tr>
-				<td th:text="*{title}">제목</td>
-				<td th:text="*{content}">내용</td>
-				<td th:text="*{type}">타입</td>
-				<td th:text="*{price}">가격</td>
-				<td th:text="*{category}">카테고리</td>
-			</tr>
-		</table>
-		<input type="submit" value="수정">
-		</form>
-		<a th:href="@{/}">메인</a>
-		<a th:href="@{/market/marketListPage}">마켓 리스트</a>
-	</body>
-	
-	
-	
-Ajax
-	
-	<script defer>
- 			$(function() {
-				
-				$("#serviceUpdateForm").submit(function(){
-					// 유효성 검사 다 완료되서 끝날때까지 넘어가지 않게 멈추는거 
-					event.preventDefault();
-					
-					// id가 serviceUpdateFormm인 form을 불러온다.
-					var form = $('#serviceUpdateForm')[0];
-					
-					// form 안에 type 유효성 체크
-// 					if (form.type.value == "") {
-// 						alert("음식이름은 필수 입력 항목입니다!");
-// 						$(form.type).focus();
-// 						return;
-// 					}
-					
-					// form 안에 title 유효성 체크
-// 					if (form.title.value == "") {
-// 						alert("가게이름은 필수 입력 항목입니다!");
-// 						$(form.title).focus();
-// 						return;
-// 					}
-					
-					// form 안에 content 유효성 체크
-// 					if (form.content.value == "") {
-// 						alert("음식 종류는 필수 입력 항목입니다!");
-// 						$(form.content).focus();
-// 						return;
-// 					}
-										
-					// form 안에 price 유효성 체크
-// 					if (form.price.value == "") {
-// 						alert("음식이름은 필수 입력 항목입니다!");
-// 						$(form.price).focus();
-// 						return;
-// 					}
-										
-					// form 안에 category 유효성 체크
-// 					if (form.category.value == "") {
-// 						alert("음식이름은 필수 입력 항목입니다!");
-// 						$(form.category).focus();
-// 						return;
-// 					}
-					/**
-					 * url : 전송할 서버 주소
-					 * type : 전송방식 (get/post)
-					 * data : 전송할 데이터 ※ form.serialize() ? >> form 안에 데이터를 json 형태로 변환
-					 * success : 전송 후, 응답이 성공일 경우 수행할 기능 작성 
-					 * error : 전송 후, 응답이 실패일 경우 수행할 기능 작성
-				     */
-					var formData = new FormData(form);
-					
-					$.ajax({
-						url : "/market/serviceSave"
-					  , type : "post"
-					  , data : formData
-					  , success : function(data) {
-						  	// data에 데이터 담겨있는데 이거를 location.href = "/market/serviceDetail"; 여기로 보내는 부분이 없다.
-						  	
-							alert("정상적으로 수정이되었습니다.");
-						  	
-							// 처리가 완료되면 serviceDetail로 이동한다.
-							location.href = "/market/serviceDetail";
-					  }
-				      , error : function(xhr, status) {
-				    	  alert("오류가 발생했습니다. :: " + status);
-				      }
-				      , cache: false
-				      , contentType: false
-				      , processData: false
-					});		 
-				});
-			});
-		</script>
-	
 	
