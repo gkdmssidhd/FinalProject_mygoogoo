@@ -29,7 +29,7 @@ public class MarketVO {
 	private String nickname;		// 작성자 닉네임(상세보기에서 마이페이지로이동)
 	private String category;		// 카테고리
 	private String[] categorys;		// 카테고리들 담는곳
-	private String rvState;			// 예약상태
+	private int rvState;			// 예약상태
 	private int chState;			// 채팅상태
 	private int svState;			// 등록자의 매물상태
 	

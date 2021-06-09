@@ -41,9 +41,9 @@
 			<!-- 객체를 지정해주면 앞에 market.으로 접근하지 않아도 된다. -->
 			<tbody align="center">
 			<tr>
-				<td th:text="*{title}"></td>
+				<td th:text="*{title}" id="title"></td>
 				<td>
-					<a th:href="@{/member/info}" th:text="*{nickname}"></a>
+					<a th:href="@{/member/info}" th:text="*{nickname}" id="nickname"></a>
 				</td>
 				<td th:utext="*{content}"></td>
 				<td th:text="*{location}"></td>
@@ -54,7 +54,7 @@
 			</tr>
 			</tbody>
 		</table>
-		<input type="hidden" th:value="*{serviceNo}" th:field="*{serviceNo}">
+		<input type="hidden" th:value="*{serviceNo}" th:field="*{serviceNo}" id="serviceNo">
 		<input type="hidden" th:value="*{id}" th:field="*{id}">
 		<!-- 찜하기 폼 작성자, 글번호, 구분은 I나 D로 -->
 		<input type="hidden" id="jmId" name="jmId" th:value="${session.id}" />
@@ -64,6 +64,7 @@
 		   
 	<input type="button" id="updateBtn" value="수정" th:if="${session.id != null} and ${session.id == serviceInfo.id}"/>
 	<input type="button" id="deleteBtn" value="삭제" th:if="${session.id != null} and ${session.id == serviceInfo.id}"/>
+	<input type="button" id="chatBtn" value="채팅" th:if="${session.id != null} and ${session.id != serviceInfo.id}" onclick="goChat()"/>
 	<input type="button" id="mainBtn" value="메인" />
 	<input type="button" id="listBtn" value="마켓 리스트" />
 	
@@ -183,6 +184,23 @@
 					processData : false
 				});
 			});
+
+			 function goChat(){
+				 const serviceNo = document.getElementById('serviceNo');
+				 const title = document.getElementById('title');
+				 const nickname = document.getElementById('nickname');
+				 const json = {service_no: serviceNo.value,nickname:nickname.innerText,title:title.innerText}
+				 $.ajax({
+					 url:'/matchChatting',
+					 type: 'POST',
+					 data: JSON.stringify(json),
+					 contentType: "application/json; charset=UTF-8",
+					 success:(result)=>{
+						 alert(result);
+						 location.href = "/room";
+					 }
+				 });
+			 }
 		</script>
 	</body>
 </html>

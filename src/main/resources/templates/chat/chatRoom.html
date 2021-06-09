@@ -2,53 +2,13 @@
 <html xmlns:th="http://thymeleaf.org">
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
   <link rel="stylesheet" type="text/css" href="/css/header.css">
   <meta charset="UTF-8">
   <title>Room</title>
   <style>
-    /**{*/
-    /*  padding:0;*/
-    /*  margin:0;*/
-    /*  text-decoration: none;*/
-    /*}*/
-    /**:link, *:visited{*/
-    /*  color:black;*/
-    /*}*/
-
-    /*header{*/
-    /*  background: rgb(237, 229, 153);*/
-    /*  height: 70px;*/
-    /*  padding-left: 20px;*/
-    /*  display: flex;*/
-    /*  align-items: center;*/
-    /*  justify-content: space-between;*/
-    /*  box-shadow: 0px 4px 10px 0px #cccccc;*/
-    /*}*/
-    /*.title_zone, .login_zone{*/
-    /*  display: flex;*/
-    /*  align-items: center;*/
-    /*}*/
-    /*.icon{*/
-    /*  width: 50px;*/
-    /*  margin-right: 10px;*/
-    /*}*/
-    /*.project_title{*/
-    /*  color:rgb(90, 129, 0);*/
-    /*  font-size: 20px;*/
-    /*  font-weight: bold;*/
-    /*  margin-right: 40px;*/
-    /*  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;*/
-    /*}*/
-    /*.menus{*/
-    /*  font-size: 20px;*/
-    /*  font-weight: 550;*/
-    /*}*/
-    /*.login_control{*/
-    /*  margin-right: 30px;*/
-    /*}*/
-    /*여기부터 본문*/
     .container{
-      height: 92vh;
+      height: 82vh;
     }
     .totalContainer{
       height: 100%;
@@ -57,15 +17,18 @@
 
     }
     .chatRoomContainer{
-      border-left: 1px solid;
-      border-right: 1px solid;
+      border-left: 1px rgb(235, 235, 235);
+      border-right: 1px rgb(235, 235, 235);
       height: 100%;
-      flex-basis:300%;
+      width:55%;
+      flex-shrink: 0;
 
     }
     .itemInfo{
       flex-grow: 1;
-      flex-basis:100%;
+      flex-basis:16%;
+      flex-shrink: 0;
+      border-left: 1px solid rgb(235, 235, 235);
     }
     .roomContainer{
       overflow: auto;
@@ -73,14 +36,14 @@
       flex-grow: 1;
       flex-basis:15%;
       flex-shrink: 0;
+      border-right: 1px solid rgb(235, 235, 235);
     }
     .roomList{
       border: none;
       width: 100%;
-
     }
-    .roomList th{
-      border: 1px solid #FFBB00;
+    .roomList th {
+      border: 1px solid rgb(235, 235, 235);
       background-color: #fff;
       color: #FFBB00;
     }
@@ -89,7 +52,7 @@
       text-align: left;
     }
     .roomList tr.chat_tr td{
-      border-bottom: 1px solid darkgray;
+      border-bottom: 1px solid rgb(235, 235, 235);
     }
     .roomList td:hover{
       cursor: pointer;
@@ -107,17 +70,13 @@
       background-color: #FFBB00;
       font-size: 14px;
       color: #000;
-      border: 1px solid #000;
+      border: 1px solid rgb(235, 235, 235);
       border-radius: 5px;
       padding: 3px;
       margin: 3px;
     }
-    .inputTable th{
-      padding: 5px;
-    }
-    .inputTable input{
-      width: 330px;
-      height: 25px;
+    input:focus{
+      outline:none;
     }
     .chating{
       width: 100%;
@@ -130,18 +89,15 @@
     .chating .others{
       text-align: left;
     }
-    input{
-      width: 330px;
-      height: 25px;
-    }
     #yourMsg{
       display: none;
+      padding: 0 200px;
     }
     #yourName{
       display: none;
     }
     .chat_total{
-      padding:10px 300px;
+      padding:20px 140px;
       display: flex;
     }
     .chat_head{
@@ -169,13 +125,55 @@
     .chat_content{
       padding-left:5px;
     }
+    .inform_bar{
+      height:70px ;
+      border-bottom: 1px solid rgb(235, 235, 235);
+      display: flex;
+    }
+    .inform_room{
+      flex-basis:15%;
+      border-right: 1px solid rgb(235, 235, 235);
+      flex-grow:1;
+      flex-shrink: 0;
+      line-height: 70px;
+      font-weight: bold;
+    }
+    .inform_chat{
+      line-height: 70px;
+      width:55%;
+      flex-shrink: 0;
+      border-right: 1px solid rgb(235, 235, 235);
+      display:flex;
+      justify-content: space-between;
+    }
+    .inform_board{
+      line-height: 70px;
+      flex-grow: 1;
+      flex-basis:16%;
+      flex-shrink: 0;
+      font-weight: bold;
+    }
+    #orderZone{
+      margin-right: 30px;
+    }
   </style>
+
 </head>
 
 
 <body>
 <div th:replace="/fixed/header :: header"></div>
 <div class="container">
+  <div class="inform_bar">
+    <div class="inform_room"><span style="margin-left: 30px;">메세지</span></div>
+    <div class="inform_chat"><div style="margin-left: 50px; font-weight: bold" id="hostnick">채팅 내용</div>
+    <div id="orderZone">
+                <!-- 결제승인버튼이 나오는 곳입니다 -->
+    </div>
+    </div>
+    <div class="inform_board"><span style="margin-left: 30px">세부 내용</span></div>
+  </div>
+
   <div class="totalContainer">
     <div id="roomContainer" class="roomContainer">
       <table id="roomList" class="roomList">
@@ -195,7 +193,30 @@
     </div>
 
     <div class="itemInfo">
-      <span>여기에 머라도써야하나?</span>
+      <div style="padding: 0 10px; height: 80%">
+        <div style="border-bottom: 1px solid rgb(235, 235, 235); margin-top: 60px; padding-bottom: 30px;">
+          <p style=" font-size: 30px; font-weight: bold;" id="marketUserName">123님의 게시글</p>
+          <p style="font-size: 13px" id="marketRegDate">2021-06-09</p>
+        </div>
+        <div>
+          <div style="display:flex; align-items: center; justify-content: center; padding:20px 0;">
+            <div style="width: 80%; height: 150px; background: lightgrey"></div>
+          </div>
+          <div style="border-bottom: 1px solid rgb(235, 235, 235); padding-bottom: 30px; margin-bottom: 30px;">
+            <span style="font-weight:bold; font-size:20px; margin: 10px 0;" id="marketTitle">다이어트같이하실분구해요 랄ㄹ라랄라</span>
+          </div>
+          <div>
+            <p style="height: 250px; overflow: auto" id="marketContent">
+              같이 다이어트하실분? 같이하셈 ㅎㅎㅎ
+            </p>
+            <div style="height: 100%">
+              <div style="border-top:1px solid rgb(235, 235, 235)">
+                <div style="height: 30px; background: rgb(254, 221, 137);font-size: 20px; text-align: center; border-radius: 10px;" id="marketPrice">가격 : 5,000\</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -273,19 +294,20 @@
               '<div id="chating" class="chating">'
 
       for (list of dto.lists) {
+        let newDate = getFormatDate(list.chat_date);
         if (list.chat_writer === [[${session.nickname}]]) {
           html += "<div class='chat_total'>" +
-                    "<div class='img_me'>나</div>" +
-                    "<div class='chat_content'>" +
-                      "<p class='chat_head'>" + list.chat_writer + "</p>" +
-                      "<p class='chat_bottom'>" + list.chat_content + "</p>" +
-                    "</div>" +
+                  "<div class='img_me'>나</div>" +
+                  "<div class='chat_content'>" +
+                  "<p class='chat_head'><span>" + list.chat_writer + "</span><span style='font-size: 8px; margin-left: 5px; color: gray;'>" + newDate + "</span></p>" +
+                  "<p class='chat_bottom'>" + list.chat_content + "</p>" +
+                  "</div>" +
                   "</div>";
         } else {
           html += "<div class='chat_total'>" +
                     "<div class='img_you'>Y</div>" +
                     "<div class='chat_content'>" +
-                      "<p class='chat_head'>" + list.chat_writer + "</p>" +
+                      "<p class='chat_head'><span>" + list.chat_writer + "</span><span style='font-size: 8px; margin-left: 5px; color: gray;'>" + newDate + "</span></p>" +
                       "<p class='chat_bottom'>" + list.chat_content + "</p>" +
                     "</div>" +
                   "</div>";
@@ -293,23 +315,25 @@
       }
       html += '</div>' +
               '      <div id="yourMsg">' +
-              '        <table class="inputTable">' +
-              '          <tr>' +
-              '            <th>메시지</th>' +
-              '            <th><input id="chatting" placeholder="보내실 메시지를 입력하세요."></th>' +
-              '            <th><button onclick="send()" id="sendBtn">보내기</button></th>' +
-              '          </tr>' +
-              '        </table>' +
+              '        <div class="inputTable" style="height: 30px; width:450px; text-align: center; border:1px solid rgb(235,235,235); border-radius: 20px;">' +
+              '            <input id="chatting" style="width:400px; border: none; background: none;  padding:10px;" placeholder="보내실 메시지를 입력하세요.">' +
+              '        </div>' +
               '      </div>' +
               '<input id="roomNum" type="hidden" value="'+dto.roomNumber+'">';
 
       chatRoomContainer.innerHTML = html;
+      getBtn(dto);
       $('#yourMsg').show();
+      $('#yourMsg').css('display', 'flex');
+      $('#yourMsg').css('justify-content', 'center');
       $("#chating").scrollTop($("#chating")[0].scrollHeight);
+      boardInform(dto);
     }
 
     wsk.onmessage = function(data) {
       //메시지를 받으면 동작
+      let date = new Date();
+      let dates = getFormatDate2(date);
       let msg = data.data;
       if(msg != null && msg.trim() != ''){
         let d = JSON.parse(msg);
@@ -325,7 +349,7 @@
             "<div class='chat_total'>" +
             "<div class='img_me'>나</div>" +
             "<div class='chat_content'>" +
-            "<p class='chat_head'>" + d.userName + "</p>" +
+            "<p class='chat_head'><span>" + d.userName + "</span><span style='font-size: 8px; margin-left: 5px; color: gray;'>" + dates + "</span></p>" +
             "<p class='chat_bottom'>" + d.msg + "</p>" +
             "</div>" +
             "</div>"
@@ -335,7 +359,7 @@
                     "<div class='chat_total'>" +
                     "<div class='img_you'>Y</div>" +
                     "<div class='chat_content'>" +
-                    "<p class='chat_head'>" + d.userName + "</p>" +
+                    "<p class='chat_head'><span>" + d.userName + "</span><span style='font-size: 8px; margin-left: 5px; color: gray;'>" + dates + "</span></p>" +
                     "<p class='chat_bottom'>" + d.msg + "</p>" +
                     "</div>" +
                     "</div>"
@@ -390,7 +414,173 @@
 
 
     $('#chatting').val("");
+  }
 
+  function accept(dto){
+    console.log('어셉트눌립');
+    let upStatus = dto.roomStatus.room_status+1;
+    console.log(upStatus);
+    $.ajax({
+      url: '/accept',
+      data: JSON.stringify({room_id: dto.roomNumber, room_status: upStatus}),
+      type: 'POST',
+      contentType: "application/json; charset=UTF-8",
+      success: () => {
+        dto.roomStatus.room_status += 1;
+        getBtn(dto);
+      }
+    });
+  }
+
+  function refuse(dto){
+    console.log('어셉트눌립');
+    let upStatus = dto.roomStatus.room_status-1;
+    console.log(upStatus);
+    $.ajax({
+      url: '/accept',
+      data: JSON.stringify({room_id: dto.roomNumber, room_status: upStatus}),
+      type: 'POST',
+      contentType: "application/json; charset=UTF-8",
+      success: () => {
+        dto.roomStatus.room_status -= 1;
+        getBtn(dto);
+      }
+    });
+  }
+
+  function getBtn(dto) {
+
+    const orderZone = document.getElementById('orderZone');
+    console.log(dto);
+    console.log('버튼눌림');
+    if (dto.roomStatus.room_status === 0) {
+      if (dto.roomStatus.room_host !== [[${session.nickname}]]) {
+        orderZone.innerHTML = "<input type='button' id='Btn' value='구매요청'>";
+        document.getElementById('Btn').addEventListener('click', () => {
+          accept(dto);
+        });
+      }else{
+        orderZone.innerHTML = "";
+      }
+    } else if (dto.roomStatus.room_status === 1) {
+      if (dto.roomStatus.room_host === [[${session.nickname}]]) {
+        orderZone.innerHTML = "<input type='button' id='Btn' value='요청수락'><input type='button' id='refuseBtn' value='거절'>";
+        document.getElementById('Btn').addEventListener('click', () => {
+          accept(dto);
+        });
+        document.getElementById('refuseBtn').addEventListener('click', () => {
+          refuse(dto);
+        });
+      } else {
+        orderZone.innerHTML = '<input type="button" value="요청대기" disabled>';
+      }
+
+    } else if (dto.roomStatus.room_status === 2) {
+      if (dto.roomStatus.room_host === [[${session.nickname}]]) {
+        orderZone.innerHTML = '<input type="button" value="결제대기" disabled>';
+      } else {
+        orderZone.innerHTML = '<input type="button" id="pay" value="결제하기">';
+        document.getElementById('pay').addEventListener('click', () => {
+          pay(dto);
+        });
+      }
+
+    } else if (dto.roomStatus.room_status === 3) {
+      if (dto.roomStatus.room_host === [[${session.nickname}]]) {
+        orderZone.innerHTML = '<input type="button" value="후기남기기" disabled>';
+      } else {
+        orderZone.innerHTML = '<input type="button" value="후기남기기">';
+      }
+
+    } else if (dto.roomStatus.room_status === 4) {
+      if (dto.roomStatus.room_host === [[${session.nickname}]]) {
+        orderZone.innerHTML = '<input type="button" value="거래완료" disabled>';
+      } else {
+        orderZone.innerHTML = '<input type="button" value="거래완료">';
+      }
+    }
+  }
+
+  function boardInform(dto){
+    let title = dto.boardStatus.title;
+    let host = dto.roomStatus.room_host;
+    let regDate = dto.boardStatus.reg_date;
+    let image = dto.boardStatus.image;
+    let content = dto.boardStatus.content
+    let price = numberWithCommas(dto.boardStatus.price);
+    const marketUserName = document.getElementById('marketUserName');
+    const marketRegDate = document.getElementById('marketRegDate');
+    const marketTitle = document.getElementById('marketTitle');
+    const marketContent = document.getElementById('marketContent');
+    const marketPrice = document.getElementById('marketPrice');
+
+    marketUserName.innerText = host+'님의 게시글';
+    marketRegDate.innerText = regDate;
+    marketTitle.innerText = title;
+    marketContent.innerHTML = content;
+    marketPrice.innerText = '가격 : ' + price + '￦';
+  }
+
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  function getFormatDate(inputDate){
+    console.log(typeof inputDate);
+    console.log(inputDate);
+    let monthAndDay = inputDate.substr(0, 5);
+    let timeAndMinute = inputDate.substr(13, 5);
+    let amPm = inputDate.substr(20, 2);
+    console.log(inputDate.substr(13, 1));
+    if(inputDate.substr(13,1) !== '0'){
+      timeAndMinute = inputDate.substr(13, 4);
+      amPm = inputDate.substr(21, 2);
+    }
+
+    return monthAndDay + ', ' + timeAndMinute + ', ' + amPm;
+  }
+
+  function pay(dto){
+    let IMP = window.IMP;
+    IMP.init('imp98956250')
+    if(document.getElementById('pay')){
+      const pay = document.getElementById('pay');
+      pay.addEventListener('click',()=>{
+        const title = document.getElementById('marketTitle');
+        const price = dto.boardStatus.price;
+        const user = [[${session.nickname}]];
+
+        IMP.request_pay({
+          pg : 'kakao', // version 1.1.0부터 지원.
+          pay_method : 'card',
+          merchant_uid : 'merchant_' + new Date().getTime(),
+          name : title,
+          amount : price,
+          buyer_name : user,
+        }, function(rsp) {
+          if ( rsp.success ) {
+            let msg = '결제가 완료되었습니다.';
+            msg += '고유ID : ' + rsp.imp_uid;
+            msg += '상점 거래ID : ' + rsp.merchant_uid;
+            msg += '결제 금액 : ' + rsp.paid_amount;
+            msg += '카드 승인번호 : ' + rsp.apply_num;
+            accept(dto);
+
+          } else {
+            var msg = '결제에 실패하였습니다.';
+            msg += '에러내용 : ' + rsp.error_msg;
+          }
+          alert(msg);
+        });
+
+      });
+    }
+  }
+
+  function getFormatDate2(date){
+    let time = date.getHours();
+    let minute = date.getMinutes();
+    return  `${time}:${minute}`;
   }
 </script>
 </body>

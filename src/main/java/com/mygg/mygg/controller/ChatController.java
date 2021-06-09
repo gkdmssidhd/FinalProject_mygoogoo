@@ -44,10 +44,10 @@ public class ChatController {
     public String room(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         if (session.getAttribute("nickname") != null) {
-            List<Map<String,Object>> list = chatService.getChats(session.getAttribute("nickname").toString());
+            List<Map<String, Object>> list = chatService.getChats(session.getAttribute("nickname").toString());
             model.addAttribute("lists", list);
             return "/chat/chatRoom";
-        }else{
+        } else {
             return "redirect:/";
         }
 
@@ -55,24 +55,26 @@ public class ChatController {
 
     /**
      * 방 생성하기
+     *
      * @param params
      * @return
      */
     @RequestMapping("/createRoom")
-    public @ResponseBody List<RoomDto> createRoom(@RequestParam HashMap<Object, Object> params){
+    public @ResponseBody
+    List<RoomDto> createRoom(@RequestParam HashMap<Object, Object> params) {
 
         String roomName = (String) params.get("roomName");
-        int roomNo = Integer.parseInt((String)params.get("roomNumber"));
+        int roomNo = Integer.parseInt((String) params.get("roomNumber"));
 
-        if(roomName != null && !roomName.trim().equals("")) {
-            if(roomList==null){
+        if (roomName != null && !roomName.trim().equals("")) {
+            if (roomList == null) {
                 RoomDto room = new RoomDto();
                 room.setRoomNumber(roomNo);
                 room.setRoomname(roomName);
                 roomList.add(room);
-            }else {
-                for(int i = 0; i <roomList.size() ; i++){
-                    if(roomList.get(i).getRoomNumber()==roomNo){
+            } else {
+                for (int i = 0; i < roomList.size(); i++) {
+                    if (roomList.get(i).getRoomNumber() == roomNo) {
                         return roomList;
                     }
                 }
@@ -88,16 +90,19 @@ public class ChatController {
 
     /**
      * 방 정보가져오기
+     *
      * @param params
      * @return
      */
     @RequestMapping("/getRoom")
-    public @ResponseBody List<RoomDto> getRoom(@RequestParam HashMap<Object, Object> params){
+    public @ResponseBody
+    List<RoomDto> getRoom(@RequestParam HashMap<Object, Object> params) {
         return roomList;
     }
 
     /**
      * 채팅방
+     *
      * @return
      */
     @GetMapping("/moveChating")
@@ -113,9 +118,11 @@ public class ChatController {
             dto.setRoomName((String) params.get("roomName"));
             dto.setRoomNumber(roomNumber);
             dto.setLists(chatService.getChat(Integer.parseInt((String) params.get("roomNumber"))));
-            System.out.println(dto.toString()+"여긴 챝팅컨트롤러~~");
+            dto.setRoomStatus(chatService.getRoomStatus(Integer.parseInt((String) params.get("roomNumber"))));
+            dto.setBoardStatus(chatService.getMarket(Integer.parseInt((String) params.get("roomNumber"))));
+            System.out.println("룸 상태는~~~~~~~~~~~~~~~~"+dto.getRoomStatus());
             return dto;
-        }else{
+        } else {
 
             return dto;
         }
@@ -124,16 +131,45 @@ public class ChatController {
 
     @PostMapping("/insertChat")
     @ResponseBody
-    public int insertChat(@RequestBody HashMap<String,Object> form_value){
+    public int insertChat(@RequestBody HashMap<String, Object> form_value) {
 
 
-
-        int room_id=Integer.parseInt((String) form_value.get("room_id"));
-        String chat_writer=(String) form_value.get("chat_writer");
-        String chat_content=(String) form_value.get("chat_content");
+        int room_id = Integer.parseInt((String) form_value.get("room_id"));
+        String chat_writer = (String) form_value.get("chat_writer");
+        String chat_content = (String) form_value.get("chat_content");
 
 
         return chatService.insertChat(form_value);
 
     }
+
+    @PostMapping("/matchChatting")
+    @ResponseBody
+    public String matchChatting(@RequestBody HashMap<String,Object> value, HttpServletRequest request){
+        HttpSession session  = request.getSession();
+        value.put("mynick",session.getAttribute("nickname"));
+
+        List<Map<String, Object>> chats = chatService.getChats(session.getAttribute("nickname").toString());
+
+        for(Map<String,Object> chat : chats){
+
+            if ((int)chat.get("service_no") == Integer.parseInt((String)value.get("service_no"))) {
+                System.out.println("중복된 방");
+                return "already";
+            }
+        }
+
+        System.out.println(value);
+        chatService.insertChatRoom(value);
+        return "good";
+
+    }
+
+    @PostMapping("/accept")
+    @ResponseBody
+    public int acceptOrder(@RequestBody HashMap<String,Object> acceptValue){
+        return chatService.accept(acceptValue);
+    }
+
+
 }

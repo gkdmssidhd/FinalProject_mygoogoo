@@ -10,4 +10,6 @@ public class RoomInfoDto {
     private int roomNumber;
     private String roomName;
     private List<Map<String, Object>> lists;
+    private Map<String,Object> roomStatus;
+    private Map<String,Object> boardStatus;
 }
