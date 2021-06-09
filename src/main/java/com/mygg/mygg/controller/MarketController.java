@@ -1,14 +1,19 @@
 package com.mygg.mygg.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +21,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.JsonObject;
 import com.mygg.mygg.dto.MemberDTO;
 import com.mygg.mygg.service.MarketService;
 import com.mygg.mygg.service.MemberService;
@@ -83,15 +91,47 @@ public class MarketController {
 		// 세션이 없는채로 url찍고들어오면 로그인하라고 페이지 이동
         HttpSession session = request.getSession();
         
+        // id만 담음
         Object member = session.getAttribute("id");
 		
         if(member == null) {
-        	
         	return "redirect:/member/login";
 		} else {
 			return "service/serviceRegist";
 		}
 	}
+	// 써머노트 이미지 저장
+//	@PostMapping("serviceImage")
+//    public JsonObject uploadSummernoteImageFile(@RequestParam("file")MultipartFile multipartFile){
+//
+//        JsonObject jsonObject = new JsonObject();
+//
+//        String fileRoot = "C:\\summernote_image\\"; //저장될 경로
+//        String originalFileName = multipartFile.getOriginalFilename();
+//        String extension = originalFileName.substring(originalFileName.lastIndexOf('.'));
+//
+//        // 랜덤 UUID+ 확장자로 저장될 파일이름
+//        String savedFileName = UUID.randomUUID() + extension;
+//
+//        File targetFile = new File(fileRoot + savedFileName);
+//
+//        try {
+//
+//            InputStream fileStream = multipartFile.getInputStream();
+//            FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
+//            jsonObject.addProperty("url","/summernoteImage/"+savedFileName);
+//            jsonObject.addProperty("responseCode","success");
+//
+//        }catch (IOException e){
+//
+//            FileUtils.deleteQuietly(targetFile);	// 실패시 저장된 파일 삭제
+//            jsonObject.addProperty("responseCode", "error");
+//            e.printStackTrace();
+//
+//        }
+//
+//        return jsonObject;
+//    }
 
 	/**
 	 * 기능 - 실제 입력된 서비스의 내용들을 받아서 디비에 저장하는 곳 I

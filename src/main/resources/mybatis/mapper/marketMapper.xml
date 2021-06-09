@@ -90,8 +90,6 @@
 				ON S.id = M.id
 			 WHERE S.service_no = #{serviceNo}
 		]]>
-<!-- 		INNER JOIN jmstate J
-				= J.ID  -->
 	</select>
 	  
 	<update id="serviceUpdate" parameterType="MarketVO">
@@ -99,7 +97,6 @@
 		   SET type = #{type}
 			 , title = #{title}
 			 , content = #{content}
-			 , jm_state = #{jmState}
 			 , price = #{price}
 			 , category = #{category}
 			 , rv_state = #{rvState}

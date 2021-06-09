@@ -6,13 +6,12 @@
 
 	<!-- include libraries(jQuery, bootstrap) -->
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-	
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 	<!-- include summernote css/js -->
-	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="/css/header.css">
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 </head>
 
@@ -36,7 +35,6 @@
 			<thead align="center">
 			<tr>
 				<td>번호</td>
-				<td><input type="checkbox" id="allChk" name="chk" /></td>
 				<td>제목</td>
 				<td>내용</td>
 				<td>날짜</td>
@@ -52,7 +50,6 @@
 				<tr th:each="market : ${marketList}">
 					<!-- 번호 1씩 늘어나는거 -->
 					<td th:text="${marketStat.index + 1}"></td>
-					<td><input type="checkbox" th:id="${market.serviceNo}" name="chk" /></td>
 					<td>
 						<!-- 제목누르면 상세보기로 넘어가기 service_no를 넘겨주면서 -->
 						<a th:if="${session.id != null}" th:href="@{/market/serviceDetail(serviceNo=${market.serviceNo}, id=${session.id})}"
@@ -80,18 +77,6 @@
 		
 		$('#mainBtn').on('click', function() {
 			location.href = "/";
-		});
-		
-		// 전체 선택, 전체 선택 해제
-		$("#allChk").on("click", function() {
-			// 클릭되었으면
-			if ($("#allChk").prop("checked")) {
-				$("input[name=chk]").prop("checked", true);
-			}
-			// 클릭이 안되있으면
-			else {
-				$("input[name=chk]").prop("checked", false);
-			}
 		});
 	
 		$('#summernote').summernote({

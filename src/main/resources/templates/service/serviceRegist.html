@@ -19,7 +19,7 @@
 <h2>글 등록</h2>
 <div>
 	<!-- 다 입력을 한 후에 /market/serviceSave URL로 값들을 다 보낸다. -->
-	<form id="serviceRegistForm" th:action="@{/market/serviceSave}" th:method="post">
+	<form id="serviceRegistForm" th:action="@{/market/serviceSave}" th:method="POST">
 		<div>제목 : </div>
 		<input type="text" th:name="title"> <br/>
 
@@ -27,7 +27,7 @@
 		<input type="radio" th:name="type" th:value="0">구매
 		<input type="radio" th:name="type" th:value="1">판매<br/>
 
-		<div class="textarea">내용 : </div>
+		<div class="content">내용 : </div>
 		<textarea th:name="content" id="summernote" cols="30" rows="10"></textarea><br/>
 
 		<div>가격 : </div>
@@ -62,7 +62,7 @@
 <script>
 	$('#listBtn').on('click', function() {
 		location.href = "/market/marketListPage";
-		alert("작성이 완료 되지 않았습니다.");
+		alert("저장하지 않으시겠습니까?");
 	});
 
 	$('#summernote').summernote({
@@ -71,6 +71,8 @@
 		maxHeight : null,	// 최대 높이
 		focus : true, 		// 에디터 로딩후 포커스를 맞출지 여부
 		lang : "ko-KR", 	// 한글 설정
+		maximumImageFileSize: 524288,
+		placeholder : "내용을 작성해 주세요",	
 		callbacks : {
 			onImageUpload : function(files, editor, welEditable) {
 				for (let i = files.length - 1; i >= 0; i--) {
@@ -82,6 +84,7 @@
 
 	// 서머노트 이미지 파일 업로드
 	function uploadSummernoteImageFile(file, el) {
+	
 		data = new FormData();
 		data.append('file', file);
 		$.ajax({
@@ -110,16 +113,16 @@
 			}
 		});
 		// ES6 이후
-		/* 			 	const chkPrice = document.getElementById('chkPrice');
-                         const price = document.getElementById('price');
-                         chkPrice.addEventListener('click',()=> {
-                             if (chkPrice.checked) {
-                                 price.value = 0;
-                                 price.readOnly = true;
-                             } else {
-                                 price.readOnly = false;
-                             }
-                         }); */
+		/* 	const chkPrice = document.getElementById('chkPrice');
+            const price = document.getElementById('price');
+            chkPrice.addEventListener('click',()=> {
+                if (chkPrice.checked) {
+                    price.value = 0;
+                    price.readOnly = true;
+                } else {
+                    price.readOnly = false;
+                }
+            }); */
 
 		$("#serviceRegistForm").submit(function() {
 			// 유효성 검사 다 완료되서 끝날때까지 넘어가지 않게 멈추는거
@@ -128,25 +131,21 @@
 			// id가 serviceRegistForm인 form을 불러온다.
 			var form = $('#serviceRegistForm')[0];
 
-			// form 안에 title 유효성 체크
 			if (form.title.value == "") {
 				alert("제목은 필수 입력 항목입니다!");
 				$(form.title).focus();
 				return;
 			}
-			// form 안에 type 유효성 체크
 			if (form.type.value == "") {
 				alert("타입은 필수 입력 항목입니다!");
 				$(form.type).focus();
 				return;
 			}
-			//form 안에 content 유효성 체크
 			if (form.content.value == "") {
 				alert("내용은 필수 입력 항목입니다!");
 				$(form.content).focus();
 				return;
 			}
-			//form 안에 price 유효성 체크
 			if (form.price.value == "") {
 				alert("가격은 필수 입력 항목입니다!");
 				$(form.price).focus();
@@ -172,13 +171,13 @@
 				count = 0;
 			}
 
-			/**
-			 * url : 전송할 서버 주소
-			 * type : 전송방식 (get/post)
-			 * data : 전송할 데이터 ※ form.serialize() ? >> form 안에 데이터를 json 형태로 변환
-			 * success : 전송 후, 응답이 성공일 경우 수행할 기능 작성
-			 * error : 전송 후, 응답이 실패일 경우 수행할 기능 작성
-			 */
+		/**
+		 * url : 전송할 서버 주소
+		 * type : 전송방식 (get/post)
+		 * data : 전송할 데이터 ※ form.serialize() ? >> form 안에 데이터를 json 형태로 변환
+		 * success : 전송 후, 응답이 성공일 경우 수행할 기능 작성
+		 * error : 전송 후, 응답이 실패일 경우 수행할 기능 작성
+		 */
 			var formData = new FormData(form);
 
 			$.ajax({
