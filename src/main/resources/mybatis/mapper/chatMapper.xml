@@ -5,7 +5,16 @@
 <mapper namespace="com.mygg.mygg.domain.repository.ChatRepository">
 
     <select id="getChats" resultType="java.util.HashMap" parameterType="String">
-        SELECT * FROM chatroom WHERE room_host = #{nickName} or room_user = #{nickName};
+        SELECT *
+                , (select C.chat_content
+                   FROM chat C JOIN chatRoom CR ON C.room_id= CR.room_id
+                   WHERE Room.room_id = C.room_id ORDER BY C.chat_date DESC limit 1)
+               content
+               , (select C.chat_date
+               FROM chat C JOIN chatRoom CR ON C.room_id= CR.room_id
+               WHERE Room.room_id = C.room_id ORDER BY C.chat_date DESC limit 1)
+               regdate
+        FROM chatRoom Room WHERE room_host = #{nickName} OR room_user = #{nickName}
     </select>
 
     <select id="getChat" resultType="java.util.HashMap" parameterType="int">
@@ -42,5 +51,6 @@
         WHERE m.SERVICE_NO = c.service_no) v
         WHERE room_id=#{room_id}
     </select>
+
 
 </mapper>

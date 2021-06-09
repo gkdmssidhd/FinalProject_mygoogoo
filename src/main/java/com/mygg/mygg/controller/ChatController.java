@@ -171,5 +171,11 @@ public class ChatController {
         return chatService.accept(acceptValue);
     }
 
+    @PostMapping("/getNowChat")
+    @ResponseBody
+    public List<Map<String,Object>> getNowChat(@RequestBody HashMap<String,Object> room_id){
+        return chatService.getChat((int)room_id.get("room_id"));
+    }
+
 
 }

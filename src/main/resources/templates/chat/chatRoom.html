@@ -59,9 +59,6 @@
       background: #eeeeee;
 
     }
-    .roomList .room{
-      width: 100%;
-    }
     .roomList .go{
       width: 71px;
       text-align: center;
@@ -165,7 +162,7 @@
 <div th:replace="/fixed/header :: header"></div>
 <div class="container">
   <div class="inform_bar">
-    <div class="inform_room"><span style="margin-left: 30px;">메세지</span></div>
+    <div class="inform_room"><span style="margin-left: 30px;">메시지</span></div>
     <div class="inform_chat"><div style="margin-left: 50px; font-weight: bold" id="hostnick">채팅 내용</div>
     <div id="orderZone">
                 <!-- 결제승인버튼이 나오는 곳입니다 -->
@@ -179,7 +176,19 @@
       <table id="roomList" class="roomList">
         <tbody class="chatRooms">
         <tr th:each="list : ${lists}" class="chat_tr">
-          <td class='room' th:text="${list.room_title}" th:onclick="goRoom([[${list.room_id}]],[[${list.room_title}]])"></td>
+          <td class='room' th:onclick="goRoom([[${list.room_id}]],[[${list.room_title}]])" style="display: flex;">
+            <div style="display: flex; align-items: center; margin-right: 10px;">
+              <p style="background: gray; width:30px; height: 30px; text-align: center; color: white; font-weight: bold; border-radius: 50%; line-height: 30px; " th:text="${#strings.substring(list.room_host,1,2)}"></p>
+            </div>
+            <div>
+              <p style="font-size: 18px; width:200px;" th:text="${list.room_title}"></p>
+              <p th:text="${#strings.substring(list.content,0,11)}" th:if="${#strings.length(list.content)>11}"></p>
+              <div style="display: flex; justify-content: space-between">
+                <p th:text="${list.content}" th:if="${#strings.length(list.content)<12}"></p>
+                <p th:text="${#strings.substring(list.regdate,5,16)}" style="margin-right: 5px; font-size: 8px;color: gray"></p>
+              </div>
+            </div>
+          </td>
         </tr>
         </tbody>
       </table>
@@ -211,7 +220,7 @@
             </p>
             <div style="height: 100%">
               <div style="border-top:1px solid rgb(235, 235, 235)">
-                <div style="height: 30px; background: rgb(254, 221, 137);font-size: 20px; text-align: center; border-radius: 10px;" id="marketPrice">가격 : 5,000\</div>
+                <div style="height: 30px; background: rgb(254, 221, 137);font-size: 20px; margin:10px 30px 0 30px; text-align: center; border-radius: 10px;" id="marketPrice">가격 : 5,000\</div>
               </div>
             </div>
           </div>
@@ -225,6 +234,19 @@
 <script th:inline="javascript" defer>
   let wsk= new WebSocket("ws://localhost");
 
+  function getNowChat(number){
+    $.ajax({
+      type: 'POST',
+      url: '/getNowChat',
+      data:JSON.stringify({room_id: number}),
+      success:(datas)=>{
+        console.log(datas[datas.length-1].chat_content);
+        console.log(datas[datas.length-1].chat_date);
+      }
+    });
+
+
+  }
 
   window.onload = function(){
     createRoom();
@@ -518,7 +540,7 @@
     marketRegDate.innerText = regDate;
     marketTitle.innerText = title;
     marketContent.innerHTML = content;
-    marketPrice.innerText = '가격 : ' + price + '￦';
+    marketPrice.innerText = '가격 : ' + price + ' ￦';
   }
 
   function numberWithCommas(x) {
@@ -546,7 +568,7 @@
     if(document.getElementById('pay')){
       const pay = document.getElementById('pay');
       pay.addEventListener('click',()=>{
-        const title = document.getElementById('marketTitle');
+        const title = document.getElementById('marketTitle').innerText;
         const price = dto.boardStatus.price;
         const user = [[${session.nickname}]];
 
