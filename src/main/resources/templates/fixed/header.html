@@ -1,16 +1,16 @@
-<header>
-    <div class="title_zone">
-        <img src="/icon/title.png" alt="" class="icon">
-        <span>
+<header class="header">
+<div class="title_zone">
+    <img src="/icon/title.png" alt="" class="icon">
+    <span>
             <a href="/" class="project_title">MyGuGu</a>
         </span>
-        <span class="menus">
+    <span class="menus">
             <a href="/">Service</a> |
             <a href="/market/marketListPage">Market</a>  |
             <a href="/notice">Notice</a>
         </span>
-    </div>
-    <div class="login_zone">
+</div>
+<div class="login_zone">
         <span class="login_control">
             <span class="menus">
                 <block th:if="${session.nickname == null}">
@@ -23,5 +23,5 @@
                 </block>
             </span>
         </span>
-    </div>
+</div>
 </header>
