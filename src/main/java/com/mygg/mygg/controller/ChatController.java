@@ -177,5 +177,26 @@ public class ChatController {
         return chatService.getChat((int)room_id.get("room_id"));
     }
 
+    @GetMapping("goReview/{roomId}/{userNick}")
+    public String goReview(@PathVariable int roomId, @PathVariable String userNick,Model model){
+        model.addAttribute("roomId", roomId);
+        model.addAttribute("userNick", userNick);
+        return "/chat/review";
+    }
+
+    @PostMapping("/review")
+    public String successReview(@RequestParam HashMap<String,Object> formData){
+        System.out.println(formData);
+
+        double kindInput = Double.parseDouble((String)formData.get("kindInput"));
+        double wellInput = Double.parseDouble((String)formData.get("wellInput"));
+        double inTimeInput = Double.parseDouble((String)formData.get("inTimeInput"));
+        int average = (int)Math.ceil((kindInput + wellInput + inTimeInput) / 3);
+
+
+
+        return "redirect:/";
+    }
+
 
 }

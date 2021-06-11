@@ -51,6 +51,10 @@ public class ChatServiceImpl implements ChatService {
         return chatRepository.getMarket(room_id);
     }
 
+    @Override
+    public int upDateReview(HashMap<String, Object> formData) {
+        return chatRepository.upDateReview(formData);
+    }
 
 
 }
