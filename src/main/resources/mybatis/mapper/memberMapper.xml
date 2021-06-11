@@ -12,6 +12,21 @@
         VALUES (#{id}, #{email}, #{password}, #{name}, #{nickname}, #{phone_number}, #{gender}, #{age}, #{location}, #{photo}, #{authority},
                 #{level}, #{wish}, #{batch}, #{mileage}, #{introduction})
     </insert>
+    <select id="emailCheck" parameterType="com.mygg.mygg.dto.MemberDTO" resultType="int">
+        SELECT COUNT(*)
+        FROM member
+        WHERE email = #{email}
+    </select>
+    <select id="nickCheck" parameterType="com.mygg.mygg.dto.MemberDTO" resultType="int">
+        SELECT COUNT(*)
+        FROM member
+        WHERE nickname = #{nickname}
+    </select>
+    <select id="phoneCheck" parameterType="com.mygg.mygg.dto.MemberDTO" resultType="int">
+        SELECT COUNT(*)
+        FROM member
+        WHERE phone_number = #{phone_number}
+    </select>
 
     <!--    Login-->
     <select id="login" parameterType="com.mygg.mygg.dto.MemberDTO" resultType="java.util.HashMap">
@@ -21,7 +36,7 @@
     </select>
 
     <!--    MyPage-->
-    <update id="introduction">
+    <update id="introduction" parameterType="java.util.HashMap">
         UPDATE member
         SET introduction = #{introduction}
         WHERE id = #{id}
@@ -38,5 +53,24 @@
                            ON (m.id = j.jm_id)
         WHERE m.id = #{id}
     </select>
+
+    <!--    Admin-->
+    <select id="memberList" parameterType="Integer" resultType="java.util.HashMap" >
+        SELECT *
+        FROM member
+        ORDER BY id DESC
+            LIMIT 20 OFFSET #{member_page}
+    </select>
+
+    <select id="getTotal" resultType="Double">
+        SELECT count(*) AS total
+        FROM member
+    </select>
+
+    <update id="disableMember" parameterType="java.util.HashMap">
+        UPDATE member
+        SET authority = 3
+        WHERE authority = 1
+    </update>
 
 </mapper>
