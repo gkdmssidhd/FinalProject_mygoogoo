@@ -13,6 +13,7 @@
 			  , reg_date
 			  , price
 			  , id
+			  , jm_state
 			  , category
 			  , rv_state
 			  , ch_state
@@ -25,6 +26,7 @@
 			  , NOW()
 			  , #{price}
 			  , #{id}
+			  , #{jmState}
 			  , #{category}
 			  , #{rvState}
 			  , #{chState}
@@ -48,6 +50,7 @@
 				 , S.price
 				 , S.id
 				 , J.jm_id
+				 , J.jm_service
 				 , S.category
 				 , S.rv_state
 				 , S.ch_state
@@ -58,7 +61,34 @@
 			   AND S.service_no = J.jm_service
 	]]>
 	</select>
+	
 	<!-- WHERE 공개번호 = 1;-->
+	
+<!-- 	<select id="selectcategoryList" parameterType="MarketVO" resultType="MarketVO">
+	<![CDATA[
+			SELECT S.service_no
+				 , CASE S.type
+			  	   WHEN 0 THEN '구매'
+			  	   WHEN 1 THEN '판매'
+			  	   END AS type_nm
+			 	 , S.title
+			 	 , S.content
+				 , S.reg_date
+				 , S.update_date
+				 , S.jm_state
+				 , S.price
+				 , S.id
+				 , J.jm_id
+				 , S.category
+				 , S.rv_state
+				 , S.ch_state
+				 , S.sv_state
+			  FROM category C
+   LEFT OUTER JOIN jmstate J
+				ON S.id = J.jm_id
+			   AND S.service_no = J.jm_service
+	]]>
+	</select> -->
 
 	<!-- member의 장소와 닉네임, market의 글 내용, jmState의 찜하기 찜취소 -->
 	<select id="selectServiceDetail" parameterType="MarketVO" resultType="MarketVO">
@@ -90,8 +120,6 @@
 				ON S.id = M.id
 			 WHERE S.service_no = #{serviceNo}
 		]]>
-<!-- 		INNER JOIN jmstate J
-				= J.ID  -->
 	</select>
 	  
 	<update id="serviceUpdate" parameterType="MarketVO">
@@ -99,7 +127,6 @@
 		   SET type = #{type}
 			 , title = #{title}
 			 , content = #{content}
-			 , jm_state = #{jmState}
 			 , price = #{price}
 			 , category = #{category}
 			 , rv_state = #{rvState}
@@ -124,7 +151,7 @@
 		  	  , jm_service
 		  	   )
 		VALUES (
-		  	   	#{jmId}
+		  	    #{jmId}
 		  	  , #{jmService}
 		       )
 	]]> 

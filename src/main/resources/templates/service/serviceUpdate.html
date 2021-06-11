@@ -34,21 +34,17 @@
 		<input type="checkbox" id="chkPrice" name="chkPrice">무료
 		<input type="text" id="price" name="price" th:value="*{price}" th:field="*{price}"><br/>
 
-		<div>카테고리 : 1개 이상 선택하세요.</div>
+		<div>카테고리</div>
 		<div class="category">
-			<!-- 체크했던 애들이 체크된상태로 넘어오게 해주기 -->
-			<input type="checkbox" name="category" value="취미">취미
-			<input type="checkbox" name="category" value="디지털">디지털
-			<input type="checkbox" name="category" value="가전제품">가전제품
-			<input type="checkbox" name="category" value="반려동물">반려동물
-			<input type="checkbox" name="category" value="유아">유아
-			<input type="checkbox" name="category" value="여행">여행
-			<input type="checkbox" name="category" value="음식">음식
-			<input type="checkbox" name="category" value="생활용품">생활용품
-			<input type="checkbox" name="category" value="뷰티">뷰티
-			<input type="checkbox" name="category" value="패션잡화">패션잡화
-			<input type="checkbox" name="category" value="스포츠">스포츠
-			<input type="checkbox" name="category" value="공부">공부
+			<select id=category name="category" th:field="*{category}" th:value="*{category}">
+				<option value="없음">===선택===</option>
+		        <option value="돌봄">돌봄</option>
+		        <option value="디지털">디지털</option>
+		        <option value="뷰티">뷰티</option>
+		        <option value="교육">교육</option>
+		        <option value="취미">취미</option>
+		        <option value="기타">기타</option>
+			</select>
 		</div>
 		<!-- value="U" 수정 -->
 		<input type="hidden" name="gubun" value="U" />
@@ -57,174 +53,156 @@
 		<input type="button" id="listBtn" value="마켓리스트" />
 	</form>
 </div>
-<script>
-	$('#listBtn').on('click', function() {
-		location.href = "/market/marketListPage";
-		alert("수정이 완료 되지 않았습니다.");
-	});
-
-	$('#summernote').summernote({
-		height : 300, // 에디터 높이
-		minHeight : null, // 최소 높이
-		maxHeight : null, // 최대 높이
-		focus : true, // 에디터 로딩후 포커스를 맞출지 여부
-		lang : "ko-KR", // 한글 설정
-		callbacks : {
-			onImageUpload : function(files, editor, welEditable) {
-				for (let i = files.length - 1; i >= 0; i--) {
-					uploadSummernoteImageFile(files[i], this);
+	<script>
+		$('#listBtn').on('click', function() {
+			location.href = "/market/marketListPage";
+			alert("수정이 완료 되지 않았습니다.");
+		});
+	
+		$('#summernote').summernote({
+			height : 300, // 에디터 높이
+			minHeight : null, // 최소 높이
+			maxHeight : null, // 최대 높이
+			focus : true, // 에디터 로딩후 포커스를 맞출지 여부
+			lang : "ko-KR", // 한글 설정
+			callbacks : {
+				onImageUpload : function(files, editor, welEditable) {
+					for (let i = files.length - 1; i >= 0; i--) {
+						uploadSummernoteImageFile(files[i], this);
+					}
 				}
 			}
-		}
-	});
-	function uploadSummernoteImageFile(file, el) {
-		data = new FormData();
-		data.append('file', file);
-		$.ajax({
-			data : data,
-			type : 'POST',
-			url : '/uploadImage',
-			contentType : false,
-			enctype : 'multipart/form-data',
-			processData : false,
-			success : function(data) {
-				$(el).summernote('editor.insertImage', data.url);
-				console.log("data.url이 이미지 파일 주소" + data.url);
-			}
 		});
-	}
-</script>
-<script th:inline="javascript">
-
-	$(function() {
-		// 화면 초기구성
-		fn_defineForm();
-		check_freeForm();
-
-		// 가격 이벤트 처리
-		// ES6 이전
-		$("#chkPrice").on("change", function(){
-			if ($("#chkPrice")[0].checked) {
-				$("#price").val(0);
+		function uploadSummernoteImageFile(file, el) {
+			data = new FormData();
+			data.append('file', file);
+			$.ajax({
+				data : data,
+				type : 'POST',
+				url : '/uploadImage',
+				contentType : false,
+				enctype : 'multipart/form-data',
+				processData : false,
+				success : function(data) {
+					$(el).summernote('editor.insertImage', data.url);
+					console.log("data.url이 이미지 파일 주소" + data.url);
+				}
+			});
+		}
+	</script>
+	<script th:inline="javascript">
+		$(function() {
+			// 화면 초기구성
+			check_freeForm();
+			
+			// 가격 이벤트 처리 ES6 이전
+			$("#chkPrice").on("change", function(){
+				if ($("#chkPrice")[0].checked) {
+					$("#price").val(0);
+					$("#price").attr('readonly', true);
+				} else {
+					$("#price").attr('readonly', false);
+				}
+			});
+	
+			// 수정 폼 Submit 이벤트
+			$("#serviceUpdateForm").submit(function(){
+				event.preventDefault();
+	
+				// id가 serviceUpdateFormm인 form을 불러온다.
+				var form = $('#serviceUpdateForm')[0];
+	
+				if (form.title.value == "") {
+					alert("제목은 필수 입력 항목입니다!");
+					$(form.title).focus();
+					return;
+				}
+				if (form.type.value == "") {
+					alert("타입은 필수 입력 항목입니다!");
+					$(form.type).focus();
+					return;
+				}
+				if (form.content.value == "") {
+					alert("내용은 필수 입력 항목입니다!");
+					$(form.content).focus();
+					return;
+				}
+	 			if (form.price.value == "") {
+					alert("가격은 필수 입력 항목입니다!");
+					$(form.price).focus();
+					return;
+				} 
+	 			if (form.category.value == "없음") {
+					alert("카테고리는 필수 입력 항목입니다!");
+					$(form.category).focus();
+					return;
+				} 
+				
+				// 가격 유효성 검사
+				const cg = document.getElementsByName('chkPrice');
+				let count = 0;
+	
+				// for문으로 카테고리 길이만큼 다 검사
+				for (let i = 0; i < cg.length; i++) {
+					if (cg[i].checked) {
+						console.log(cg[i].value);
+						count++;
+					}
+				}
+				if (count === "") {
+					alert('가격을 체크해주세요.');
+					return;
+				} else {
+					count = 0;
+				}
+	
+				/**
+				 * url : 전송할 서버 주소
+				 * type : 전송방식 (get/post)
+				 * data : 전송할 데이터 ※ form.serialize() ? >> form 안에 데이터를 json 형태로 변환
+				 * success : 전송 후, 응답이 성공일 경우 수행할 기능 작성
+				 * error : 전송 후, 응답이 실패일 경우 수행할 기능 작성
+				 */
+				var formData = new FormData(form);
+	
+				$.ajax({
+					url : "/market/serviceSave"
+					, type : "post"
+					, data : formData
+					, success : function(data) {
+						// 결과처리 건수가 0이상이면 정상
+						if (data.returnCnt > 0) {
+							alert("정상적으로 수정되었습니다.");
+							// 처리가 완료되면 serviceDetail로 이동한다. serviceNo도 같이 보내면서
+							location.href = "/market/serviceDetail?serviceNo=" + data.serviceNo;
+						} else {
+							// 0 일때 오류
+							alert("오류가 발생했습니다. 다시 시도해주시기 바랍니다.");
+						}
+					}
+					, error : function(xhr, status) {
+						alert("오류가 발생했습니다. :: " + status);
+					}
+					, cache: false
+					, contentType: false
+					, processData: false
+				});
+			});
+		});
+		function check_freeForm() {
+			// 무료 체크박스 설정
+			/*<![CDATA[*/
+			var price = /*[[ ${serviceInfo.price} ]]*/
+					/*]]*/
+					console.log("price {} :: ", price);
+			if(price == 0) {
+				$("input:checkbox[id='chkPrice']").prop("checked", true);
 				$("#price").attr('readonly', true);
 			} else {
 				$("#price").attr('readonly', false);
 			}
-		});
-
-		// 수정 폼 Submit 이벤트
-		$("#serviceUpdateForm").submit(function(){
-			// 유효성 검사 다 완료되서 끝날때까지 넘어가지 않게 멈추는거
-			event.preventDefault();
-
-			// id가 serviceUpdateFormm인 form을 불러온다.
-			var form = $('#serviceUpdateForm')[0];
-
-			// form 안에 type 유효성 체크
-			if (form.type.value == "") {
-				alert("타입은 필수 입력 항목입니다!");
-				$(form.type).focus();
-				return;
-			}
-			// form 안에 title 유효성 체크
-			if (form.title.value == "") {
-				alert("제목은 필수 입력 항목입니다!");
-				$(form.title).focus();
-				return;
-			}
-			//form 안에 content 유효성 체크
-			if (form.content.value == "") {
-				alert("내용은 필수 입력 항목입니다!");
-				$(form.content).focus();
-				return;
-			}
-			const cg = document.getElementsByName('chkPrice');
-			let count = 0;
-
-			// for문으로 카테고리 길이만큼 다 검사
-			for (let i = 0; i < cg.length; i++) {
-				if (cg[i].checked) {
-					console.log(cg[i].value);
-					count++;
-				}
-			}
-			if (count === "") {
-				alert('가격을 체크해주세요.');
-				return;
-			} else {
-				count = 0;
-			}
-
-			//form 안에 price 유효성 체크
-			/* if (form.price.value === "") {
-                 alert("가격은 필수 입력 항목입니다!");
-                 $(form.price).focus();
-                 return;
-             }  */
-
-			/**
-			 * url : 전송할 서버 주소
-			 * type : 전송방식 (get/post)
-			 * data : 전송할 데이터 ※ form.serialize() ? >> form 안에 데이터를 json 형태로 변환
-			 * success : 전송 후, 응답이 성공일 경우 수행할 기능 작성
-			 * error : 전송 후, 응답이 실패일 경우 수행할 기능 작성
-			 */
-			var formData = new FormData(form);
-
-			$.ajax({
-				url : "/market/serviceSave"
-				, type : "post"
-				, data : formData
-				, success : function(data) {
-					// 결과처리 건수가 0이상이면 정상
-					if (data.returnCnt > 0) {
-						alert("정상적으로 수정되었습니다.");
-						// 처리가 완료되면 serviceDetail로 이동한다. serviceNo도 같이 보내면서
-						location.href = "/market/serviceDetail?serviceNo=" + data.serviceNo;
-					} else {
-						// 0 일때 오류
-						alert("오류가 발생했습니다. 다시 시도해주시기 바랍니다.");
-					}
-				}
-				, error : function(xhr, status) {
-					alert("오류가 발생했습니다. :: " + status);
-				}
-				, cache: false
-				, contentType: false
-				, processData: false
-			});
-		});
-	});
-	// 화면 초기구성 함수
-	function fn_defineForm() {
-		// 카테고리 설정
-		/*<![CDATA[*/
-		var category = /*[[ ${serviceInfo.category} ]]*/
-				/*]]*/
-
-				console.log("category {} :: ", category);
-
-		var categoryArr = category.split(",");
-
-		for(var i = 0; i < categoryArr.length; i++) {
-			$("input[name=category][value=" + categoryArr[i] + "]").attr("checked", true);
 		}
-	}
-
-	function check_freeForm() {
-		// 무료 체크박스 설정
-		/*<![CDATA[*/
-		var price = /*[[ ${serviceInfo.price} ]]*/
-				/*]]*/
-				console.log("price {} :: ", price);
-		if(price == 0) {
-			$("input:checkbox[id='chkPrice']").prop("checked", true);
-			$("#price").attr('readonly', true);
-		} else {
-			$("#price").attr('readonly', false);
-		}
-	}
-
-</script>
+	
+	</script>
 </body>
 </html>
