@@ -65,12 +65,22 @@ public class MarketAdminController {
 	 - SELECT 컬럼들 FROM MARKET;
 	 */
 	@RequestMapping("adminMarketListPage")
-	public String marketListPage(Model model, HttpServletRequest request) throws Exception {
+	public String marketListPage(HttpServletResponse response, MemberDTO memberDTO, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) throws Exception {
 
-		List<MarketVO> marketList = marketService.marketList();
+		HttpSession session = request.getSession();
 		
-		model.addAttribute("marketList", marketList);
+		Object admin = session.getAttribute("id");
+		
+		if(admin != null) {
+			
+			List<MarketVO> marketList = marketService.marketList();
+			
+			model.addAttribute("marketList", marketList);
+			
+			return "service/adminMarketList";
+		} else {
+			return "redirect:/member/login";
+		}
 
-		return "service/adminMarketList";
 	}
 }

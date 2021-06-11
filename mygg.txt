@@ -8,6 +8,81 @@ logger.info("##################################################");
 logger.info("## serviceSave {} :: " + marketVO.toString());
 logger.info("##################################################");
 		 
+<!-- <div>카테고리 : 1개 이상 선택하세요.</div>
+		<div class="category">
+		카테고리 12개
+			<input type="checkbox" id="취미" name="category" value="취미">취미
+			<input type="checkbox" id="디지털" name="category" value="디지털">디지털
+			<input type="checkbox" id="반려동물" name="category" value="반려동물">반려동물
+			<input type="checkbox" id="유아" name="category" value="유아">유아
+			<input type="checkbox" id="여행" name="category" value="여행">여행
+			<input type="checkbox" id="식품" name="category" value="식품">식품
+			<input type="checkbox" id="생활용품" name="category" value="생활용품">생활용품
+			<input type="checkbox" id="홈인테리어" name="category" value="홈인테리어">홈인테리어
+			<input type="checkbox" id="뷰티" name="category" value="뷰티">뷰티
+			<input type="checkbox" id="패션잡화" name="category" value="패션잡화">패션잡화
+			<input type="checkbox" id="스포츠" name="category" value="스포츠">스포츠
+			<input type="checkbox" id="교육" name="category" value="교육">교육
+		</div> -->
+		
+		
+		수정
+		
+		<!-- <div class="category">
+			체크했던 애들이 체크된상태로 넘어오게 해주기
+			<input type="checkbox" name="category" value="취미">취미
+			<input type="checkbox" name="category" value="디지털">디지털
+			<input type="checkbox" name="category" value="가전제품">가전제품
+			<input type="checkbox" name="category" value="반려동물">반려동물
+			<input type="checkbox" name="category" value="유아">유아
+			<input type="checkbox" name="category" value="여행">여행
+			<input type="checkbox" name="category" value="음식">음식
+			<input type="checkbox" name="category" value="생활용품">생활용품
+			<input type="checkbox" name="category" value="뷰티">뷰티
+			<input type="checkbox" name="category" value="패션잡화">패션잡화
+			<input type="checkbox" name="category" value="스포츠">스포츠
+			<input type="checkbox" name="category" value="공부">공부
+		</div> -->
+		
+		// 카테고리 유효성 검사
+			const cg = document.getElementsByName('category');
+			let count = 0;
+
+			// for문으로 카테고리 길이만큼 다 검사
+			for (let i = 0; i < cg.length; i++) {
+				if (cg[i].checked) {
+					console.log(cg[i].value);
+					count++;
+				}
+			}
+			// 카테고리 유효성 검사
+			if (count === 0) {
+				alert('카테고리를 한 개 이상 체크해주세요');
+				return;
+			} if (count >= 4) {
+				alert('카테고리는 최대 3개 까지만 가능합니다.');
+				return;
+			} else {
+				count = 0;
+			}
+			
+			fn_defineForm();
+			
+			// 화면 초기구성 함수
+	function fn_defineForm() {
+		// 수정페이지 올때 카테고리 체크되어있는 채로오기 
+		/*<![CDATA[*/
+		var category = /*[[ ${serviceInfo.category} ]]*/
+				/*]]*/
+
+				console.log("category {} :: ", category);
+
+		var categoryArr = category.split(",");
+
+		for(var i = 0; i < categoryArr.length; i++) {
+			$("input[name=category][value=" + categoryArr[i] + "]").attr("checked", true);
+		}
+	}
 		 
 response.setContentType("text/html; charset=utf-8");
 PrintWriter script = response.getWriter();

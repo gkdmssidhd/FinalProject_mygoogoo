@@ -51,6 +51,8 @@ public class MarketController {
 	        this.memberService = memberService;
 	    }
 
+	 
+	 
 	/**
 	 * 기능 - 서비스 목록들
 	 글 등록을 하고 저장까지 완료가 되면 바로 이 화면으로 넘어온다.
@@ -65,11 +67,15 @@ public class MarketController {
 	 - SELECT 컬럼들 FROM MARKET;
 	 */
 	@RequestMapping("marketListPage")
-	public String marketListPage(Model model, HttpServletRequest request) throws Exception {
+	public String marketListPage(Model model, HttpServletRequest request, MarketVO marketVO) throws Exception {
 
 		List<MarketVO> marketList = marketService.marketList();
 		
+		// List<MarketVO> categoryList = marketService.categoryList();
+		
 		model.addAttribute("marketList", marketList);
+		
+		// model.addAttribute("categoryList", categoryList);
 
 		return "service/marketList";
 	}
@@ -191,7 +197,6 @@ public class MarketController {
 			return "redirect:/member/login";
 			
 		} else {
-			// serviceInfo는 serviceNo(글 번호)를 대표로 해당 번호의 글내용들을 다 가져와서 담겨진다.
 			MarketVO serviceInfo = marketService.serviceDetail(marketVO);
 
 			model.addAttribute("serviceInfo", serviceInfo);
@@ -224,7 +229,6 @@ public class MarketController {
 			logger.info("## serviceUpdate {} :: " + marketVO.toString());
 			logger.info("##################################################");
 
-			// pk serviceNo로 전체값을 다 가져와서 serviceInf에 담는다.
 			MarketVO serviceInfo = marketService.serviceDetail(marketVO);
 
 			model.addAttribute("serviceInfo", serviceInfo);

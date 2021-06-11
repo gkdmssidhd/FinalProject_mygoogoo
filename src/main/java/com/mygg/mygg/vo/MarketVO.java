@@ -32,6 +32,7 @@ public class MarketVO {
 	private int jmState;			// 찜하기(인기정도)
 	private int jmId;				// 사용자 ID 찜
 	private int jmService;			// 서비스 번호 찜
+	private String jmTitle;			// 서비스 제목이랑 조인
 	private int price;				// 가격
 	
 	private String gubun;			// 저장&수정 작업을 구분하기 위한 변수
