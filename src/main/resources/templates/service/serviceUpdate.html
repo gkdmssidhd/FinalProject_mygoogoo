@@ -38,10 +38,10 @@
 		<div class="category">
 			<select id=category name="category" th:field="*{category}" th:value="*{category}">
 				<option value="없음">===선택===</option>
+		        <option value="교육">교육</option>
 		        <option value="돌봄">돌봄</option>
 		        <option value="디지털">디지털</option>
 		        <option value="뷰티">뷰티</option>
-		        <option value="교육">교육</option>
 		        <option value="취미">취미</option>
 		        <option value="기타">기타</option>
 			</select>
@@ -108,7 +108,14 @@
 			// 수정 폼 Submit 이벤트
 			$("#serviceUpdateForm").submit(function(){
 				event.preventDefault();
+/* 	
+				$(cate).val()
+				
+				var a = {
 	
+				};
+				a.category = 
+				 */
 				// id가 serviceUpdateFormm인 form을 불러온다.
 				var form = $('#serviceUpdateForm')[0];
 	

@@ -12,6 +12,7 @@
 			  , content
 			  , reg_date
 			  , price
+			  , location
 			  , id
 			  , jm_state
 			  , category
@@ -25,6 +26,7 @@
 			  , #{content}
 			  , NOW()
 			  , #{price}
+			  , #{location}
 			  , #{id}
 			  , #{jmState}
 			  , #{category}
@@ -55,6 +57,14 @@
 				 , S.rv_state
 				 , S.ch_state
 				 , S.sv_state
+				 , ( SELECT M.nickname
+				 	   FROM member M
+				 	  WHERE S.id = M.id
+				 	)  	 AS nickname
+				 , ( SELECT M.location
+				 	   FROM member M
+				 	  WHERE S.id = M.id
+				 	)  	 AS location
 			  FROM market S
    LEFT OUTER JOIN jmstate J
 				ON S.id = J.jm_id
@@ -66,23 +76,11 @@
 	
 <!-- 	<select id="selectcategoryList" parameterType="MarketVO" resultType="MarketVO">
 	<![CDATA[
+	select 카테고리 from 마켓에서 where조건은 접속한 회원의 location이랑 서비스를 등록한 회원의 location이랑 같아야함.
+								and 카테고리 항목누를때 category도 같아야함.  
 			SELECT S.service_no
-				 , CASE S.type
-			  	   WHEN 0 THEN '구매'
-			  	   WHEN 1 THEN '판매'
-			  	   END AS type_nm
-			 	 , S.title
-			 	 , S.content
-				 , S.reg_date
-				 , S.update_date
-				 , S.jm_state
-				 , S.price
-				 , S.id
-				 , J.jm_id
 				 , S.category
-				 , S.rv_state
-				 , S.ch_state
-				 , S.sv_state
+		
 			  FROM category C
    LEFT OUTER JOIN jmstate J
 				ON S.id = J.jm_id
