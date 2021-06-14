@@ -39,41 +39,42 @@
 	
 	<select id="selectMarketList" parameterType="MarketVO" resultType="MarketVO">
 	<![CDATA[
-			SELECT S.service_no
-				 , CASE S.type
-			  	   WHEN 0 THEN '구매'
-			  	   WHEN 1 THEN '판매'
-			  	   END AS type_nm
-			 	 , S.title
-			 	 , S.content
-				 , S.reg_date
-				 , S.update_date
-				 , S.jm_state
-				 , S.price
-				 , S.id
-				 , J.jm_id
-				 , J.jm_service
-				 , S.category
-				 , S.rv_state
-				 , S.ch_state
-				 , S.sv_state
-				 , ( SELECT M.nickname
-				 	   FROM member M
-				 	  WHERE S.id = M.id
-				 	)  	 AS nickname
-				 , ( SELECT M.location
-				 	   FROM member M
-				 	  WHERE S.id = M.id
-				 	)  	 AS location
-			  FROM market S
-   LEFT OUTER JOIN jmstate J
-				ON S.id = J.jm_id
-			   AND S.service_no = J.jm_service
+		SELECT S.service_no
+			 , CASE S.type
+		  	   WHEN 0 THEN '구매'
+		  	   WHEN 1 THEN '판매'
+		  	   END AS type_nm
+		 	 , S.title
+		 	 , S.content
+			 , S.reg_date
+			 , S.update_date
+			 , S.jm_state
+			 , S.price
+			 , S.id
+			 , J.jm_id
+			 , J.jm_service
+			 , S.category
+			 , S.rv_state
+			 , S.ch_state
+			 , S.sv_state
+			 , M.nickname
+			 , M.location
+		  FROM market S
+    INNER JOIN member M
+            ON S.id = M.id
+     LEFT JOIN jmstate J
+		    ON S.id = J.jm_id
+	       AND S.service_no = J.jm_service
+	     WHERE 1 = 1
 	]]>
+	
+	<if test='category != null and category != "" and location != null and location != ""'>
+	       AND S.category = #{category}
+	       AND M.location = #{location}
+	</if>
+	
 	</select>
-	
-	<!-- WHERE 공개번호 = 1;-->
-	
+
 <!-- 	<select id="selectcategoryList" parameterType="MarketVO" resultType="MarketVO">
 	<![CDATA[
 	select 카테고리 from 마켓에서 where조건은 접속한 회원의 location이랑 서비스를 등록한 회원의 location이랑 같아야함.

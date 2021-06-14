@@ -25,21 +25,9 @@ public class MarketServiceImpl implements MarketService {
 
 	// 리스트
 	@Override
-	public List<MarketVO> marketList() throws Exception {
-
-		List<MarketVO> marketList = marketDAO.marketList();
-
-		return marketList;
+	public List<MarketVO> marketList(MarketVO marketVO) throws Exception {
+		return marketDAO.marketList(marketVO);
 	}
-	
-	// 카테고리 리스트
-//	@Override
-//	public List<MarketVO> categoryList() throws Exception {
-//
-//		List<MarketVO> categoryList = marketDAO.categoryList();
-//		
-//		return categoryList;
-//	}
 
 	// 서비스 글 올리기
 	@Transactional
