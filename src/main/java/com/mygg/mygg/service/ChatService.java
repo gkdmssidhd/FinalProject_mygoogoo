@@ -13,5 +13,6 @@ public interface ChatService {
     int accept(HashMap<String, Object> acceptValue);
     Map<String, Object> getMarket(int room_id);
     int upDateReview(HashMap<String,Object> formData);
+    int lastRoomIndex();
 
 }

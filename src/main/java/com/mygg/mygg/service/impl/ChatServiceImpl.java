@@ -56,5 +56,10 @@ public class ChatServiceImpl implements ChatService {
         return chatRepository.upDateReview(formData);
     }
 
+    @Override
+    public int lastRoomIndex() {
+        return chatRepository.lastRoomIndex();
+    }
+
 
 }

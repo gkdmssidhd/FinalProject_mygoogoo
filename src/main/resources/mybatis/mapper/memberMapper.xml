@@ -73,4 +73,8 @@
         WHERE authority = 1
     </update>
 
+    <update id="updateLevelPoint" parameterType="java.util.HashMap">
+        UPDATE member set level = level + #{point} WHERE nickname = #{userNick}
+    </update>
+
 </mapper>

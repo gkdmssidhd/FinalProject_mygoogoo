@@ -509,9 +509,9 @@
 
     } else if (dto.roomStatus.room_status === 3) {
       if (dto.roomStatus.room_host === [[${session.nickname}]]) {
-        orderZone.innerHTML = '<input type="button" value="후기남기기" disabled>';
+        orderZone.innerHTML = '<input type="button" value="후기남기기" onclick="goReview(' + dto.roomNumber + ',' + dto.roomStatus.room_user + ')">';
       } else {
-        orderZone.innerHTML = '<input type="button" value="후기남기기">';
+        orderZone.innerHTML = '<input type="button" value="후기남기기" onclick="goReview(' + dto.roomNumber + ',' + dto.roomStatus.room_host + ')">';
       }
 
     } else if (dto.roomStatus.room_status === 4) {
@@ -603,6 +603,10 @@
     let time = date.getHours();
     let minute = date.getMinutes();
     return  `${time}:${minute}`;
+  }
+
+  function goReview(room_id,user_nick){
+    location.href = '/goReview/' + room_id + '/' + user_nick;
   }
 </script>
 </body>

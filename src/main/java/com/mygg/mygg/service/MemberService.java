@@ -2,6 +2,7 @@ package com.mygg.mygg.service;
 
 import com.mygg.mygg.dto.MemberDTO;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,4 +27,7 @@ public interface MemberService {
     Double getTotal();
     int disableMember(Map<String, String> disable);
 
+
+    // upDateLevel
+    int updateLevelPoint(HashMap<String,Object> formData);
 }

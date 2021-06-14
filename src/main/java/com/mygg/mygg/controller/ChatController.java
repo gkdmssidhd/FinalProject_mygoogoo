@@ -4,6 +4,7 @@ package com.mygg.mygg.controller;
 import com.mygg.mygg.dto.RoomDto;
 import com.mygg.mygg.dto.RoomInfoDto;
 import com.mygg.mygg.service.ChatService;
+import com.mygg.mygg.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,9 @@ public class ChatController {
 
     @Autowired
     ChatService chatService;
+
+    @Autowired
+    MemberService memberService;
 
     List<RoomDto> roomList = new ArrayList<RoomDto>();
 
@@ -147,20 +151,32 @@ public class ChatController {
     @ResponseBody
     public String matchChatting(@RequestBody HashMap<String,Object> value, HttpServletRequest request){
         HttpSession session  = request.getSession();
-        value.put("mynick",session.getAttribute("nickname"));
 
+        value.put("mynick",session.getAttribute("nickname"));
         List<Map<String, Object>> chats = chatService.getChats(session.getAttribute("nickname").toString());
 
         for(Map<String,Object> chat : chats){
-
             if ((int)chat.get("service_no") == Integer.parseInt((String)value.get("service_no"))) {
                 System.out.println("중복된 방");
                 return "already";
             }
         }
 
-        System.out.println(value);
+        HashMap<String, Object> wellComeChat = new HashMap<String,Object>();
+
         chatService.insertChatRoom(value);
+
+        int newRoomId = chatService.lastRoomIndex();
+        wellComeChat.put("room_id",newRoomId);
+        wellComeChat.put("chat_writer", session.getAttribute("nickname"));
+        wellComeChat.put("chat_content", "반가운 인사는 기분좋은 거래의 첫걸음 입니다 ^^");
+
+        System.out.println(newRoomId+"뉴룸아이디ㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣ");
+        System.out.println(wellComeChat+"웰컴챗~~~~~~~~~~~~~~~~~~~~~~~");
+        chatService.insertChat(wellComeChat);
+
+
+
         return "good";
 
     }
@@ -192,8 +208,22 @@ public class ChatController {
         double wellInput = Double.parseDouble((String)formData.get("wellInput"));
         double inTimeInput = Double.parseDouble((String)formData.get("inTimeInput"));
         int average = (int)Math.ceil((kindInput + wellInput + inTimeInput) / 3);
-
-
+        int point = 0;
+        switch (average){
+            case 1: point = -3;
+                break;
+            case 2: point = -1;
+                break;
+            case 3: point = 0;
+                break;
+            case 4 : point = 3;
+                break;
+            case 5 : point = 5;
+                break;
+        }
+        formData.put("point", point);
+        chatService.upDateReview(formData);
+        memberService.updateLevelPoint(formData);
 
         return "redirect:/";
     }

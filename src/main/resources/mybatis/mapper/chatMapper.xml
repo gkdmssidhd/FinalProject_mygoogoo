@@ -30,7 +30,7 @@
     </insert>
 
     <insert id="insertChatRoom" parameterType="java.util.HashMap">
-        INSERT INTO chatRoom(service_no,room_title,room_host,room_user) VALUE(#{service_no},#{title},#{nickname},#{mynick});
+        INSERT INTO chatRoom(service_no,room_title,room_host,room_user) VALUE(#{service_no},#{title},#{nickname},#{mynick})
     </insert>
 
     <update id="accept" parameterType="java.util.HashMap">
@@ -52,5 +52,17 @@
         WHERE room_id=#{room_id}
     </select>
 
+    <insert id="upDateReview" parameterType="java.util.HashMap">
+        INSERT INTO review(room_id,user_name,img,content) VALUES(
+                                                         #{roomId}
+                                                         ,#{userNick}
+                                                         ,#{reviewImage}
+                                                         ,#{content}
+                                                         )
+    </insert>
+
+    <select id="lastRoomIndex" resultType="int">
+        SELECT room_id FROM (SELECT room_id FROM chatRoom ORDER BY room_id desc) a LIMIT 1;
+    </select>
 
 </mapper>

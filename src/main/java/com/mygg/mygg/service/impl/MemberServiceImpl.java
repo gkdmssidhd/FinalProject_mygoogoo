@@ -6,6 +6,7 @@ import com.mygg.mygg.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -80,6 +81,11 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public int disableMember(Map<String, String> disable) {
         return memberRepository.disableMember(disable);
+    }
+
+    @Override
+    public int updateLevelPoint(HashMap<String,Object> formData) {
+        return memberRepository.updateLevelPoint(formData);
     }
 
 

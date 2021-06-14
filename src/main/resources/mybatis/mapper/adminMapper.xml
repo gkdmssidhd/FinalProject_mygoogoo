@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mygg.mygg.domain.repository.AdminRepository">
+
+    <select id="getAcceptLists" resultType="java.util.HashMap">
+        SELECT roomId,A.service_no,room_title,room_status,room_host,room_user,review_id,user_name,A.reg_date,img,price,rv_state,A.content FROM
+            (SELECT  c.room_id AS roomId, c.service_no, c.room_title, c.room_status, c.room_host, c.room_user, r.review_id, r.user_name, r.reg_date, r.img, r.content
+             FROM chatroom c, review r WHERE c.room_id=r.room_id) A, market m
+        WHERE m.service_no = A.service_no AND room_status=#{rv_state} ORDER BY roomId DESC limit 20 OFFSET #{page};;
+    </select>
+
+    <update id="finishReserve" parameterType="int">
+        UPDATE market SET rv_state = 4 WHERE service_no = #{service_no}
+    </update>
+
+</mapper>

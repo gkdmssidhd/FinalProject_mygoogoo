@@ -69,7 +69,6 @@
 	<input type="button" id="chatBtn" value="채팅" th:if="${session.id != null} and ${session.id != serviceInfo.id}" onclick="goChat()"/>
 	<input type="button" id="mainBtn" value="메인" />
 	<input type="button" id="listBtn" value="마켓 리스트" />
-	<input type="button" id="chBtn" value="채팅" />
 	
 	<!-- 만약 찜회원아이디가 0일때 찜하기 버튼을 누를때 세션id와 글번호-->
 	<input th:if="${serviceInfo.jmGubun == null} and ${session.id != serviceInfo.id}" type="button" id="jmAddBtn" value="찜하기" />

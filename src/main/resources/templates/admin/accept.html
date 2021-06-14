@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/header.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <title>Title</title>
+</head>
+<style>
+    html,body{
+        width: 100%;
+        height: 100%;
+    }
+    #contents{
+        display: none;
+    }
+    .tableContainer{
+        justify-content: center;
+        display: flex;
+        padding:30px;
+    }
+    table{
+        border-top:2px solid rgb(190,190,190);
+        width:1000px;
+        border-collapse: collapse;
+    }
+    td{
+        border-bottom: 1px solid rgb(235,235,235);
+        padding:5px;
+        font-size: 13px;
+    }
+    th{
+        padding:5px;
+        font-weight: normal;
+    }
+    tbody{
+        border-top:1px solid rgb(215,215,215)
+    }
+
+</style>
+<body>
+<div th:replace="/fixed/header :: header"></div>
+<div class="container">
+    <div class="tableContainer">
+        <div class="tableZone">
+           <table>
+               <thead>
+                   <tr>
+                       <th style="width: 70%">제목</th>
+                       <th>판매자</th>
+                       <th>구매자</th>
+                       <th>가격</th>
+                       <th>수락</th>
+                   </tr>
+               </thead>
+               <tbody>
+                   <block th:each="list,index : ${lists}">
+
+                       <tr>
+                           <td th:text="${list.room_title}"></td>
+                           <td th:text="${list.room_host}"></td>
+                           <td th:text="${list.room_user}"></td>
+                           <td th:text="${list.price}"></td>
+                           <td>
+                               <input type="button" th:onclick="showContent([[${index.index}]],this)" value="열기">
+                           </td>
+                       </tr>
+
+                       <tr id="contents" class="contents" style="width: 100%;">
+                           <td>
+                               <img th:src="${list.img}" style="width: 100px; height: 100px;">
+                           </td>
+                           <td colspan="3" style="width:100%">
+                               <span th:utext="${list.content}" style="overflow: auto;"></span>
+                           </td>
+                           <td>
+                               <input type="button" value="수락" th:onclick="acceptBtn([[${list.roomId}]],[[${list.service_no}]])">
+                           </td>
+                       </tr>
+
+                   </block>
+               </tbody>
+           </table>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: center">
+        <span th:for>
+
+        </span>
+    </div>
+</div>
+<script>
+    function acceptBtn(roomId,serviceNo){
+        console.log(roomId, serviceNo);
+
+        $.ajax({
+            url: '/admin/accept',
+            type: 'POST',
+            data: JSON.stringify({room_id: roomId, service_no: serviceNo}),
+            contentType: 'application/json;charset=utf-8',
+            success: (data) => {
+                location.reload();
+            }
+        });
+
+    }
+
+    function showContent(idx,here){
+        const contents = document.querySelectorAll('.contents');
+        if(here.value==='열기'){
+            contents[idx].style.display = 'block';
+            here.value = '접기';
+        }else{
+            contents[idx].style.display = 'none';
+            here.value = '열기';
+        };
+    }
+</script>
+</body>
+</html>

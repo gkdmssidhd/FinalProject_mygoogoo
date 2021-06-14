@@ -4,6 +4,7 @@ import com.mygg.mygg.dto.MemberDTO;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,4 +30,6 @@ public interface MemberRepository {
     Double getTotal();
     int disableMember(Map<String, String> disable);
 
+    // insertLevelPoint
+    int updateLevelPoint(HashMap<String,Object> formData);
 }
