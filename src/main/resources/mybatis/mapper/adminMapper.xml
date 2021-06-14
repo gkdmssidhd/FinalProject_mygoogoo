@@ -5,9 +5,10 @@
 <mapper namespace="com.mygg.mygg.domain.repository.AdminRepository">
 
     <select id="getAcceptLists" resultType="java.util.HashMap">
-        SELECT roomId,A.service_no,room_title,room_status,room_host,room_user,review_id,user_name,A.reg_date,img,price,rv_state,A.content FROM
-            (SELECT  c.room_id AS roomId, c.service_no, c.room_title, c.room_status, c.room_host, c.room_user, r.review_id, r.user_name, r.reg_date, r.img, r.content
-             FROM chatroom c, review r WHERE c.room_id=r.room_id) A, market m
+        SELECT
+               roomId,A.service_no,room_title,room_status,room_host,room_user,review_id,user_name,A.reg_date,img,price,rv_state,A.content
+        FROM (SELECT  c.room_id AS roomId, c.service_no, c.room_title, c.room_status, c.room_host, c.room_user, r.review_id, r.user_name, r.reg_date, r.img, r.content
+        FROM chatroom c, review r WHERE c.room_id=r.room_id) A, market m
         WHERE m.service_no = A.service_no AND room_status=#{rv_state} ORDER BY roomId DESC limit 20 OFFSET #{page};;
     </select>
 
@@ -15,4 +16,21 @@
         UPDATE market SET rv_state = 4 WHERE service_no = #{service_no}
     </update>
 
+    <select id="memberList" parameterType="Integer" resultType="java.util.HashMap" >
+        SELECT *
+        FROM member
+        ORDER BY id DESC
+            LIMIT 20 OFFSET #{member_page}
+    </select>
+
+    <select id="getTotal" resultType="Double">
+        SELECT count(*) AS total
+        FROM member
+    </select>
+
+    <update id="disableMember" parameterType="java.util.HashMap">
+        UPDATE member
+        SET authority = 3
+        WHERE authority = 1
+    </update>
 </mapper>
