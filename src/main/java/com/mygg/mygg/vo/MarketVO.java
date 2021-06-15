@@ -21,10 +21,9 @@ public class MarketVO {
 	private Timestamp regDate;		// 등록일시
 	private Timestamp updateDate;	// 수정일시
 	private String location;		// 장소
-	private int id;					// 작성자 pk값(찜에도 쓰임)
+	private int id;					// 작성자 닉네임 pk값(찜에도 쓰임)
 	private String nickname;		// 작성자 닉네임(상세보기에서 마이페이지로이동)
 	private String category;		// 카테고리
-	private String[] categorys;		// 카테고리들 담는곳
 	private int rvState;			// 예약상태
 	private int chState;			// 채팅상태
 	private int svState;			// 등록자의 매물상태
@@ -36,6 +35,7 @@ public class MarketVO {
 	private int price;				// 가격
 	
 	private String gubun;			// 저장&수정 작업을 구분하기 위한 변수
+	private String categoryGubun;	// 저장&수정 작업을 구분하기 위한 변수
 	private String jmGubun;			// 찜구분
 	private int returnCnt;			// 작업처리 결과건수(1건이면 1받고, 2건이면 2받고)
 	

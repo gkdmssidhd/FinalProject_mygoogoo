@@ -10,29 +10,17 @@ import org.springframework.stereotype.Repository;
 import com.mygg.mygg.vo.MarketVO;
 
 @Repository("marketDAO")
+@SuppressWarnings("unchecked")
 public class MarketDAO extends AbstractDAO {
 	private static final Logger logger = LoggerFactory.getLogger(MarketDAO.class);
 
 	// 쿼리 "namespace.id", 값
 	
 	// 서비스 리스트
-	public List<MarketVO> marketList() throws Exception {
-
-		@SuppressWarnings("unchecked")
-		List<MarketVO> marketList = (List<MarketVO>) selectList("market.selectMarketList");
-
-		return marketList;
+	public List<MarketVO> marketList(MarketVO marketVO) throws Exception {
+		return (List<MarketVO>) selectList("market.selectMarketList", marketVO);
 	}
 	
-	// 카테고리 리스트
-//	public List<MarketVO> categoryList() throws Exception {
-//
-//		@SuppressWarnings("unchecked")
-//		List<MarketVO> categoryList = (List<MarketVO>) selectList("market.selectcategoryList");
-//		
-//		return categoryList;
-//	}
-
 	// 상세보기
 	public MarketVO serviceDetail(MarketVO marketVO) throws Exception {
 		return (MarketVO) select("market.selectServiceDetail", marketVO);
