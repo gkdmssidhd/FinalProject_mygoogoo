@@ -6,5 +6,5 @@
 <p>팀명 구구즈</p>
 
 <p>
-  <a href="개발환경"></a>
+  <a href="" rel="nofollow">개발환경</a>
 </p>
